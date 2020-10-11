@@ -1,0 +1,18 @@
+package is.hi.hbv501g.matbjorg.matbjorg.Repositories;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+
+import java.util.List;
+import java.util.Optional;
+
+@Repository
+public interface AdvertisementRepository extends JpaRepository<Advertisement, Long> {
+
+    Advertisement save(Advertisement advertisement);
+    void delete(Advertisement advertisement);
+    List<Advertisement> findAll();
+    List<Advertisement> findByName(String name);
+    Optional<Advertisement> findById(long id);
+}
