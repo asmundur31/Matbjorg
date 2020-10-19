@@ -10,6 +10,7 @@ public interface SellerService {
     void delete(Seller seller);
     List<Seller> findAll();
     List<Seller> findByName(String name);
-    List<Seller> findByEmail(String email);
+    Seller findByEmail(String email);
     Optional<Seller> findById(long id);
+    Seller login(Seller seller);
 }

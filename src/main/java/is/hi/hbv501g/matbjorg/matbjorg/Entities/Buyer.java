@@ -11,6 +11,8 @@ public class Buyer {
     private long id;
     private String name;
     private String password;
+
+    @Column(unique = true)
     private String email;
 
     @OneToMany(mappedBy = "buyer")
@@ -25,7 +27,7 @@ public class Buyer {
     public Buyer() {
     }
 
-    public Buyer(String name, String password, String email) {
+    public Buyer(String email, String password) {
         this.name = name;
         this.password = password;
         this.email = email;
