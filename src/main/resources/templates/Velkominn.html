@@ -28,6 +28,9 @@
     </div>
     <p><a href="/addadvertisement">Add a new advertisement</a></p>
 </div>
-<p><a href="/newseller">Add a new seller</a></p>
+<div th:switch="${loggedInUser}">
+    <p th:case="null"><a href="/login">Login</a></p>
+    <p th:case="*"><a href="/logout">Logout</a></p>
+</div>
 </body>
 </html>

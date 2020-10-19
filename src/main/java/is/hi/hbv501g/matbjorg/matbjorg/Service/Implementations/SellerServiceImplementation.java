@@ -17,6 +17,7 @@ public class SellerServiceImplementation implements SellerService {
     public SellerServiceImplementation(SellerRepository sellerRepository) {
         this.repository = sellerRepository;
     }
+
     @Override
     public Seller save(Seller seller) {
         return repository.save(seller);
@@ -37,12 +38,24 @@ public class SellerServiceImplementation implements SellerService {
         return repository.findByName(name);
     }
 
-    public List<Seller> findByEmail(String email) {
+    @Override
+    public Seller findByEmail(String email) {
         return repository.findByEmail(email);
     }
 
     @Override
     public Optional<Seller> findById(long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public Seller login(Seller seller) {
+        Seller exists = findByEmail(seller.getEmail());
+        if(exists != null) {
+            if(exists.getPassword().equals(seller.getPassword())) {
+                return seller;
+            }
+        }
+        return null;
     }
 }

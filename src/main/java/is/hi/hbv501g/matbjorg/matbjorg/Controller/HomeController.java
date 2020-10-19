@@ -1,13 +1,13 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Controller;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
-import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,8 +24,9 @@ public class HomeController {
     }
 
     @RequestMapping("/")
-    public String Home(Model model) {
+    public String Home(Model model, HttpSession session) {
         model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
         return "Velkominn";
     }
 
@@ -40,8 +41,7 @@ public class HomeController {
     }
 
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
-    public String addadvertisement(Model model) {
-        model.addAttribute("advertisement", new Advertisement());
+    public String addadvertisement(Advertisement advertisement) {
         return "add-advertisement";
     }
 

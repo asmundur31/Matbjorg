@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-//@Table(name = "Seller", uniqueConstraints = {@UniqueConstraint(columnNames = {"email"})})
 public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,7 +27,7 @@ public class Seller {
     public Seller() {
     }
 
-    public Seller(String name, String password, String email) {
+    public Seller(String email, String password) {
         this.name = name;
         this.password = password;
         this.email = email;

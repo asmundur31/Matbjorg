@@ -6,17 +6,18 @@
 </head>
 <body>
 <h1>Login</h1>
-<form action="#" th:action="@{/newseller}" th:object="${seller}" method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name">
-    <span th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
+<form action="#" th:action="@{/login}" th:object="${user}" method="post">
     <label for="email">Email</label>
     <input type="email" th:field="*{email}" id="email" placeholder="Email">
     <span th:if="${#fields.hasErrors('email')}" th:error="*{email}"></span>
     <label for="password">Password</label>
     <input type="password" th:field="*{password}" id="password" placeholder="Password">
     <span th:if="${#fields.hasErrors('password')}" th:error="*{password}"></span>
-    <input type="submit" value="New seller">
+    <input type="submit" value="Login">
 </form>
+<p>
+    Do not have an account?
+    <a href="\signup">Sign up</a>
+</p>
 </body>
 </html>
