@@ -1,10 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 public class Advertisement {
@@ -19,6 +16,8 @@ public class Advertisement {
     private boolean active;
     private double originalAmount;
     private double currentAmount;
+    private double price;
+    private Date expireDate;
 
     @OneToMany(mappedBy = "advertisement")
     private List<OrderItem> items = new ArrayList<>();
@@ -93,6 +92,38 @@ public class Advertisement {
 
     public void setCurrentAmount(double currentAmount) {
         this.currentAmount = currentAmount;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    public Date getExpireDate() {
+        return expireDate;
+    }
+
+    public void setExpireDate(Date expireDate) {
+        this.expireDate = expireDate;
+    }
+
+    public List<OrderItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<OrderItem> items) {
+        this.items = items;
+    }
+
+    public Set<Tag> getTags() {
+        return tags;
+    }
+
+    public void setTags(Set<Tag> tags) {
+        this.tags = tags;
     }
 
     @Override

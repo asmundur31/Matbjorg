@@ -5,33 +5,13 @@
     <title>Velkominn</title>
 </head>
 <body>
-<div th:switch="${advertisements}">
-    <h2 th:case="null"> No advertisement yet!</h2>
-    <div th:case="*">
-        <h2>Advertisements</h2>
-        <table>
-            <thead>
-            <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Delete</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="advertisement : ${advertisements}">
-                <td th:text="${advertisement.name}"></td>
-                <td th:text="${advertisement.description}"></td>
-                <td><a th:href="@{/delete/{id}(id=${advertisement.id})}">Delete</a></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-    <p><a href="/addadvertisement">Add a new advertisement</a></p>
-</div>
+<h1>Velkominn á Matbjörg</h1>
+<p><a href="/advertisements">Advertisements</a></p>
 <div th:switch="${loggedInUser}">
     <p th:case="null"><a href="/login">Login</a></p>
     <p th:case="*">
         <a th:href="@{/profile/} + ${userType}">Profile</a>
+        </br>
         <a href="/logout">Logout</a>
     </p>
 </div>
