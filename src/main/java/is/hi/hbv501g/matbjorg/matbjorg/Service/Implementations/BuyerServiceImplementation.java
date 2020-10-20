@@ -51,6 +51,9 @@ public class BuyerServiceImplementation implements BuyerService {
 
     @Override
     public Buyer login(Buyer buyer) {
+        if(buyer == null) {
+            return null;
+        }
         Buyer exists = findByEmail(buyer.getEmail());
         if(exists != null) {
             if(exists.getPassword().equals(buyer.getPassword())) {

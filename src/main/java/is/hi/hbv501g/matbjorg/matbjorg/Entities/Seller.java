@@ -28,7 +28,6 @@ public class Seller {
     }
 
     public Seller(String email, String password) {
-        this.name = name;
         this.password = password;
         this.email = email;
     }

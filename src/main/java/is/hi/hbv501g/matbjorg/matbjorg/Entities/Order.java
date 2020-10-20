@@ -11,7 +11,7 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany(mappedBy = "order")
+    @OneToMany
     private List<OrderItem> items;
 
     @ManyToOne
