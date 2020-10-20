@@ -27,28 +27,28 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage(User user) {
+    public String loginPageGET(User user) {
         return "loginPage";
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPage(@Valid User user, BindingResult result, Model model, HttpSession session) {
+    public String loginPagePOST(@Valid User user, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "loginPage";
         }
-        Seller exists1 = sellerService.login(new Seller(user.getEmail(), user.getPassword()));
-        Buyer exists2 = buyerService.login(new Buyer(user.getEmail(), user.getPassword()));
+        Seller exists1 = sellerService.login(sellerService.findByEmail(user.getEmail()));
+        Buyer exists2 = buyerService.login(buyerService.findByEmail(user.getEmail()));
         if (exists1 == null && exists2 == null) {
             System.out.println("Notandi með " + user.getEmail() + " er ekki til eða rangt lykilorð");
             return "loginPage";
         } else if(exists2 == null) {
             System.out.println("Notandi með " + user.getEmail() + " er Seller");
             session.setAttribute("loggedInUser", exists1);
-            session.setAttribute("usertype", "seller");
+            session.setAttribute("userType", "seller");
         } else {
             System.out.println("Notandi með " + user.getEmail() + " er Buyer");
             session.setAttribute("loggedInUser", exists2);
-            session.setAttribute("usertype", "buyer");
+            session.setAttribute("userType", "buyer");
         }
         return "redirect:/";
     }
@@ -56,6 +56,7 @@ public class LoginController {
     @RequestMapping(value = "/logout")
     public String logout(Model model, HttpSession session) {
         session.removeAttribute("loggedInUser");
+        session.removeAttribute("userType");
         return "redirect:/";
     }
 
@@ -65,21 +66,21 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signup/newseller", method = RequestMethod.GET)
-    public String signupSeller(Model model) {
-        model.addAttribute("usertype", "newseller");
+    public String signupSellerGET(Model model) {
+        model.addAttribute("userType", "seller");
         model.addAttribute("user", new Seller());
         return "signupUser";
     }
 
     @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.GET)
-    public String signupBuyer(Buyer user,  Model model) {
-        model.addAttribute("usertype", "newbuyer");
+    public String signupBuyerGET(Model model) {
+        model.addAttribute("userType", "buyer");
         model.addAttribute("user", new Buyer());
         return "signupUser";
     }
 
     @RequestMapping(value = "/signup/newseller", method = RequestMethod.POST)
-    public String signupSeller(@Valid Seller user, BindingResult result, Model model) {
+    public String signupSellerPOST(@Valid Seller user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "signupUser";
         }
@@ -95,7 +96,7 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.POST)
-    public String signupBuyer(@Valid Buyer user, BindingResult result, Model model) {
+    public String signupBuyerPOST(@Valid Buyer user, BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "signupUser";
         }
@@ -111,23 +112,23 @@ public class LoginController {
     }
 
     @RequestMapping(value = "/loggedin", method = RequestMethod.GET)
-    public String loggedin(HttpSession session, Model model) {
-        String usertype = (String) session.getAttribute("usertype");
+    public String loggedinGET(HttpSession session, Model model) {
+        String usertype = (String) session.getAttribute("userType");
         if(usertype == null) {
             return "redirect:/";
         }
         if(usertype.equals("seller")) {
             Seller sessionUser = (Seller) session.getAttribute("loggedInUser");
             if(sessionUser  != null){
-                model.addAttribute("loggedinuser", sessionUser);
-                model.addAttribute("loggedintype", usertype);
+                model.addAttribute("loggedInUser", sessionUser);
+                model.addAttribute("userType", usertype);
                 return "loggedInUser";
             }
         } else {
             Buyer sessionUser = (Buyer) session.getAttribute("loggedInUser");
             if (sessionUser != null) {
-                model.addAttribute("loggedinuser", sessionUser);
-                model.addAttribute("loggedintype", usertype);
+                model.addAttribute("loggedInUser", sessionUser);
+                model.addAttribute("userType", usertype);
                 return "loggedInUser";
             }
         }

@@ -27,6 +27,7 @@ public class HomeController {
     public String Home(Model model, HttpSession session) {
         model.addAttribute("advertisements", advertisementService.findAll());
         model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
+        model.addAttribute("userType", session.getAttribute("userType"));
         return "Velkominn";
     }
 

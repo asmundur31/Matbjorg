@@ -9,9 +9,6 @@ public class OrderItem {
     private long id;
 
     @ManyToOne
-    private Order order;
-
-    @ManyToOne
     private Advertisement advertisement;
 
     private double amount;
@@ -30,14 +27,6 @@ public class OrderItem {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public Advertisement getAdvertisement() {

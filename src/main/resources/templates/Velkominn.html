@@ -30,7 +30,10 @@
 </div>
 <div th:switch="${loggedInUser}">
     <p th:case="null"><a href="/login">Login</a></p>
-    <p th:case="*"><a href="/logout">Logout</a></p>
+    <p th:case="*">
+        <a th:href="@{/profile/} + ${userType}">Profile</a>
+        <a href="/logout">Logout</a>
+    </p>
 </div>
 </body>
 </html>

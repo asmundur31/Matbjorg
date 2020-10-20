@@ -50,6 +50,9 @@ public class SellerServiceImplementation implements SellerService {
 
     @Override
     public Seller login(Seller seller) {
+        if(seller == null) {
+            return null;
+        }
         Seller exists = findByEmail(seller.getEmail());
         if(exists != null) {
             if(exists.getPassword().equals(seller.getPassword())) {
