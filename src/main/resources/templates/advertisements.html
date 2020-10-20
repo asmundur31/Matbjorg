@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Advertisments</title>
+</head>
+<body>
+<h1>Auglýsingar</h1>
+<div th:switch="${advertisements}">
+    <h2 th:case="null"> No advertisement yet!</h2>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Amount</th>
+                <th>Price</th>
+                <th>Expires</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="advertisement : ${advertisements}">
+                <td th:text="${advertisement.name}"></td>
+                <td th:text="${advertisement.description}"></td>
+                <td th:text="${advertisement.amount}"></td>
+                <td th:text="${advertisement.price}"></td>
+                <td th:text="${advertisement.expireDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>
