@@ -22,12 +22,12 @@
     <input type="datetime-local" th:field="*{expireDate}" id="expireDate">
     <span th:if="${#fields.hasErrors('expireDate')}" th:error="*{expireDate}"></span>
     <label for="tags">Tags</label>
-    <select id="tags" th:field="*{tags}" multiple>
-        <option value="">Select</option>
-        <div th:each="tag : ${tags}">
-            <option th:value="${tag}" th:text="${tag}"></option>
-        </div>
-    </select>
+    <input type="checkbox" id="tags"
+           th:each="tag : ${tags}"
+           th:text="${tag}"
+           th:value="${tag}"
+           th:field="*{tags}"
+    />
     <span th:if="${#fields.hasErrors('tags')}" th:error="*{tags}"></span>
     <input type="submit" value="Add advertisement">
 </form>
