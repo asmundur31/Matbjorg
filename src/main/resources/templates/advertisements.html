@@ -12,18 +12,22 @@
         <table>
             <thead>
             <tr>
+                <th>Owner</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>Amount</th>
+                <th>Original amount</th>
+                <th>Current amount</th>
                 <th>Price</th>
                 <th>Expires</th>
             </tr>
             </thead>
             <tbody>
             <tr th:each="advertisement : ${advertisements}">
+                <td th:text="${advertisement.owner}"></td>
                 <td th:text="${advertisement.name}"></td>
                 <td th:text="${advertisement.description}"></td>
-                <td th:text="${advertisement.amount}"></td>
+                <td th:text="${advertisement.originalAmount}"></td>
+                <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
             </tr>

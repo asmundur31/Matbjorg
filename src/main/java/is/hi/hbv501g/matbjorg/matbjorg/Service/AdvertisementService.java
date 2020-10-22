@@ -7,9 +7,10 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdvertisementService {
-    Advertisement save(Advertisement advertisement);
+    Advertisement save(Advertisement advertisement, Seller seller);
     void delete(Advertisement advertisement);
     List<Advertisement> findAll();
     List<Advertisement> findByName(String name);
     Optional<Advertisement> findById(long id);
+    List<Advertisement> findByOwner(Seller seller);
 }

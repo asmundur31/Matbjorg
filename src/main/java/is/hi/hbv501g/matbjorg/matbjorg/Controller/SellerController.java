@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Controller;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,10 +14,12 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class SellerController {
     private SellerService sellerService;
+    private AdvertisementService advertisementService;
 
     @Autowired
-    public SellerController(SellerService sellerService) {
+    public SellerController(SellerService sellerService, AdvertisementService advertisementService) {
         this.sellerService = sellerService;
+        this.advertisementService = advertisementService;
     }
 
     @RequestMapping(value = "/profile/seller")
@@ -26,6 +29,7 @@ public class SellerController {
             return "redirect:/";
         }
         model.addAttribute("seller", seller);
+        model.addAttribute("advertisements", advertisementService.findByOwner(seller));
         return "sellerProfile";
     }
 }
