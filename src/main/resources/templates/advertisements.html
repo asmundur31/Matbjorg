@@ -6,8 +6,8 @@
 </head>
 <body>
 <h1>Auglýsingar</h1>
-<div th:switch="${advertisements}">
-    <h2 th:case="null"> No advertisement yet!</h2>
+<div th:switch="${#lists.size(advertisements)}">
+    <h2 th:case="0"> No advertisement yet!</h2>
     <div th:case="*">
         <table>
             <thead>

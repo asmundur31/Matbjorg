@@ -7,8 +7,8 @@
 <body>
 <h1 th:text="${seller.name}"></h1>
 <p>Birta allar upplýsingar um viðkomandi seller og lista yfir auglýsingar og stöður þeirra.</p>
-<div th:switch="${advertisements}">
-    <h2 th:case="null"> No advertisement yet!</h2>
+<div th:switch="${#lists.size(advertisements)}">
+    <h2 th:case="0"> No advertisement yet!</h2>
     <div th:case="*">
         <table>
             <thead>
