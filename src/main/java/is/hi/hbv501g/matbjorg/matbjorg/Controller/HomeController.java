@@ -30,27 +30,4 @@ public class HomeController {
         model.addAttribute("userType", session.getAttribute("userType"));
         return "Velkominn";
     }
-
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
-    public String addadvertisement(@Valid Advertisement advertisement, BindingResult result, Model model) {
-        if(result.hasErrors()) {
-            return "add-advertisement";
-        }
-        advertisementService.save(advertisement);
-        model.addAttribute("advertisements", advertisementService.findAll());
-        return "Velkominn";
-    }
-
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
-    public String addadvertisement(Advertisement advertisement) {
-        return "add-advertisement";
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String addadvertisement(@PathVariable("id") long id, Model model) {
-        Advertisement advertisement = advertisementService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid advertisement ID"));
-        advertisementService.delete(advertisement);
-        model.addAttribute("advertisements", advertisementService.findAll());
-        return "Velkominn";
-    }
 }

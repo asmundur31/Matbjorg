@@ -1,6 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Entity
@@ -17,7 +21,9 @@ public class Advertisement {
     private double originalAmount;
     private double currentAmount;
     private double price;
-    private Date expireDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime expireDate;
 
     @OneToMany(mappedBy = "advertisement")
     private List<OrderItem> items = new ArrayList<>();
@@ -30,13 +36,15 @@ public class Advertisement {
     public Advertisement() {
     }
 
-    public Advertisement(String name, String description, double originalAmount, HashSet<Tag> tags) {
+    public Advertisement(String name, Seller owner, String description, double originalAmount, double price, LocalDateTime expireDate, Set<Tag> tags) {
         this.name = name;
+        this.owner = owner;
         this.description = description;
         this.originalAmount = originalAmount;
+        this.price = price;
+        this.expireDate = expireDate;
         this.tags = tags;
     }
-
 
     public long getId() {
         return id;
@@ -102,11 +110,11 @@ public class Advertisement {
         this.price = price;
     }
 
-    public Date getExpireDate() {
+    public LocalDateTime getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(Date expireDate) {
+    public void setExpireDate(LocalDateTime expireDate) {
         this.expireDate = expireDate;
     }
 
