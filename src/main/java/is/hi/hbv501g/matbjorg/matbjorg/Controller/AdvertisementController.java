@@ -45,7 +45,6 @@ public class AdvertisementController {
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
     public String addAdvertisementPOST(@Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            System.out.println(result.getFieldError());
             return "addAdvertisement";
         }
         advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"));
