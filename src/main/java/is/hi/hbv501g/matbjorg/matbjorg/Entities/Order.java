@@ -1,7 +1,6 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -17,16 +16,15 @@ public class Order {
     @ManyToOne
     private Buyer buyer;
 
-    @ManyToOne
-    private Seller seller;
+    @Column(columnDefinition = "boolean default true")
+    private boolean active;
 
     public Order() {
     }
 
-    public Order(List<OrderItem> items, Buyer buyer, Seller seller) {
+    public Order(List<OrderItem> items, Buyer buyer) {
         this.items = items;
         this.buyer = buyer;
-        this.seller = seller;
     }
 
     public long getId() {
@@ -53,11 +51,11 @@ public class Order {
         this.buyer = buyer;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

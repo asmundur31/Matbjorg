@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @Controller
 public class AdvertisementController {
@@ -28,6 +29,17 @@ public class AdvertisementController {
     public String advertisements(Model model) {
         model.addAttribute("advertisements", advertisementService.findAll());
         return "advertisements";
+    }
+
+    @RequestMapping(value = "/advertisements/{id}")
+    public String advertisement(@PathVariable("id") long id, Model model) {
+        Optional<Advertisement> ad = advertisementService.findById(id);
+        if(ad.isEmpty()){
+            model.addAttribute("advertisements", advertisementService.findAll());
+            return "redirect:/advertisements";
+        }
+        model.addAttribute("advertisement", ad.get());
+        return "advertisement";
     }
 
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
@@ -52,7 +64,7 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = "/advertisements/delete/{id}", method = RequestMethod.GET)
-    public String addadvertisement(@PathVariable("id") long id, Model model, HttpSession session) {
+    public String deleteAdvertisementGET(@PathVariable("id") long id, Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
         if(seller == null) {
             return "redirect:/";

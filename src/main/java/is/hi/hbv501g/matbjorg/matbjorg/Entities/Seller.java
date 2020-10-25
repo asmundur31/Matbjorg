@@ -21,7 +21,7 @@ public class Seller {
     @OneToMany(mappedBy = "owner")
     private List<Advertisement> pastAdvertisements = new ArrayList<>();
 
-    @OneToMany(mappedBy = "seller")
+    @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
 
     public Seller() {

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+<body>
+<h1 th:text="@{Karfa fyrir } + ${order.buyer}"></h1>
+<div th:switch="${#lists.size(order.items)}">
+    <h2 th:case="0">No orders yet!</h2>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Owner</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Original amount</th>
+                <th>Current amount</th>
+                <th>Price</th>
+                <th>Expires</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.advertisement.owner}"></td>
+                <td th:text="${item.advertisement.name}"></td>
+                <td th:text="${item.advertisement.description}"></td>
+                <td th:text="${item.advertisement.originalAmount}"></td>
+                <td th:text="${item.advertisement.currentAmount}"></td>
+                <td th:text="${item.advertisement.price}"></td>
+                <td th:text="${item.advertisement.expireDate}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

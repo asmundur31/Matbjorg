@@ -10,7 +10,6 @@ public class OrderItem {
 
     @ManyToOne
     private Advertisement advertisement;
-
     private double amount;
 
     public OrderItem() {

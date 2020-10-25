@@ -15,20 +15,10 @@ public class Buyer {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> pendingOrders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> finishedOrders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> outstandingOrders = new ArrayList<>();
-
     public Buyer() {
     }
 
     public Buyer(String email, String password) {
-        this.name = name;
         this.password = password;
         this.email = email;
     }
@@ -63,30 +53,6 @@ public class Buyer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Order> getPendingOrders() {
-        return pendingOrders;
-    }
-
-    public void setPendingOrders(List<Order> pendingOrders) {
-        this.pendingOrders = pendingOrders;
-    }
-
-    public List<Order> getFinishedOrders() {
-        return finishedOrders;
-    }
-
-    public void setFinishedOrders(List<Order> finishedOrders) {
-        this.finishedOrders = finishedOrders;
-    }
-
-    public List<Order> getOutstandingOrders() {
-        return outstandingOrders;
-    }
-
-    public void setOutstandingOrders(List<Order> outstandingOrders) {
-        this.outstandingOrders = outstandingOrders;
     }
 
     @Override
