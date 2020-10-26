@@ -11,22 +11,19 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    private List<OrderItem> items;
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items = new ArrayList<>();
 
     @ManyToOne
     private Buyer buyer;
 
-    @ManyToOne
-    private Seller seller;
+    private boolean active = true;
 
     public Order() {
     }
 
-    public Order(List<OrderItem> items, Buyer buyer, Seller seller) {
-        this.items = items;
+    public Order(Buyer buyer) {
         this.buyer = buyer;
-        this.seller = seller;
     }
 
     public long getId() {
@@ -53,11 +50,11 @@ public class Order {
         this.buyer = buyer;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

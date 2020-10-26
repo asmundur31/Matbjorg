@@ -19,6 +19,7 @@
                 <th>Current amount</th>
                 <th>Price</th>
                 <th>Expires</th>
+                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -30,6 +31,7 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
+                <td><a th:href="@{/orderitem/} + ${advertisement.id}">Skoða</a></td>
             </tr>
             </tbody>
         </table>
