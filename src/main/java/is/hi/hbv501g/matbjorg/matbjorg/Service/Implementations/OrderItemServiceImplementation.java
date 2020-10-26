@@ -23,7 +23,12 @@ public class OrderItemServiceImplementation implements OrderItemService {
 
     @Override
     public OrderItem save(OrderItem orderItem) {
-        return repository.save(orderItem);
+        OrderItem exists = findByAdvertisement(orderItem.getAdvertisement());
+        if(exists == null) {
+            return repository.save(orderItem);
+        }
+        exists.setAmount(orderItem.getAmount());
+        return repository.save(exists);
     }
 
     @Override
