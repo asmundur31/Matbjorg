@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -29,9 +27,9 @@ public class OrderItemController {
         this.orderService = orderService;
     }
 
-    @RequestMapping(value = "/orderitem/{id}", method = RequestMethod.GET)
-    public String addToOrderGET(@PathVariable long id, Model model) {
-        Optional<Advertisement> ad = advertisementService.findById(id);
+    @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
+    public String addToOrderGET(@PathVariable long advertisementId, Model model) {
+        Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
             model.addAttribute("advertisements", advertisementService.findAll());
             return "redirect:/advertisements";
@@ -41,29 +39,28 @@ public class OrderItemController {
         return "orderItemForm";
     }
 
-    @RequestMapping(value = "/orderitem/{id}", method = RequestMethod.POST)
-    public String addToOrderPOST(@PathVariable long id, @Valid OrderItem orderItem, BindingResult result, Model model, HttpSession session) {
+    @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.POST)
+    public String addToOrderPOST(@Valid OrderItem orderItem, @PathVariable long advertisementId, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "redirect:/orderitem/"+id;
+            return "redirect:/orderitem/"+advertisementId;
         }
         // Sækjum buyer sem ætlar að kaupa
         Buyer b = (Buyer) session.getAttribute("loggedInUser");
-        // Sækjum advertisement sem er verið að kaupa
-        Optional<Advertisement> ad = advertisementService.findById(id);
-        orderItem.setAdvertisement(ad.get());
 
-        // Vista OrderItem í gangnagrunn
-        orderItemService.save(orderItem);
-
-        // Byrjum að tékka hvor buyer á til Order sem er virkt
+        // Byrjum að tékka hvort til er Order sem er virkt fyrir Buyer b
         Order exists = orderService.findByBuyerAndActive(b, true);
         if(exists == null) { // Ekkert til virkt order fyrir buyer
             exists = new Order(b);
+            orderService.save(exists);
         }
 
-        // Bætum item-inu við listann
-        orderService.insertItem(exists, orderItem);
-        orderService.save(exists);
+        // Sækjum advertisement sem er verið að kaupa
+        Optional<Advertisement> ad = advertisementService.findById(advertisementId);
+        orderItem.setAdvertisement(ad.get());
+        orderItem.setOrder(exists);
+
+        // Vista OrderItem í gangnagrunn
+        orderItemService.save(orderItem);
 
         // Förum í körfuna
         model.addAttribute("order", exists);

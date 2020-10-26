@@ -5,9 +5,9 @@
     <title>Order</title>
 </head>
 <body>
-<h1 th:text="@{Karfa fyrir } + ${order.buyer}"></h1>
-<div th:switch="${#lists.size(order.items)}">
-    <h2 th:case="0">No items yet!</h2>
+<h1 th:text="@{Karfa fyrir } + ${buyer}"></h1>
+<div th:switch="${order}">
+    <h2 th:case="null">No items yet!</h2>
     <div th:case="*">
         <table>
             <thead>

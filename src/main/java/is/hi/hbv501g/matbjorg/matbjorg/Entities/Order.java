@@ -11,8 +11,8 @@ public class Order {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToMany
-    private List<OrderItem> items = new ArrayList<OrderItem>();
+    @OneToMany(mappedBy = "order")
+    private List<OrderItem> items = new ArrayList<>();
 
     @ManyToOne
     private Buyer buyer;

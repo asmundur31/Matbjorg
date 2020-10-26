@@ -30,7 +30,7 @@ public class OrderServiceImplementation implements OrderService {
         repository.delete(order);
     }
 
-    @Override
+    /*@Override
     public Order insertItem(Order order, OrderItem item) {
         List<OrderItem> l = order.getItems();
         boolean addItem = true;
@@ -45,7 +45,7 @@ public class OrderServiceImplementation implements OrderService {
         }
         order.setItems(l);
         return order;
-    }
+    }*/
 
     @Override
     public List<Order> findAll() {

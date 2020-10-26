@@ -10,7 +10,7 @@ import java.util.Optional;
 public interface OrderService {
     Order save(Order order);
     void delete(Order order);
-    Order insertItem(Order order, OrderItem item);
+    //Order insertItem(Order order, OrderItem item);
     List<Order> findAll();
     Optional<Order> findById(long id);
     List<Order> findByBuyer(Buyer buyer);

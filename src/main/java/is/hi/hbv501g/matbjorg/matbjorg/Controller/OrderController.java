@@ -30,6 +30,7 @@ public class OrderController {
         }
         Order o = orderService.findByBuyerAndActive(b, true);
         model.addAttribute("order", o);
+        model.addAttribute("buyer", b);
         return "order";
     }
 }

@@ -12,12 +12,16 @@ public class OrderItem {
     private Advertisement advertisement;
     private double amount;
 
+    @ManyToOne
+    private Order order;
+
     public OrderItem() {
     }
 
-    public OrderItem(Advertisement advertisement, double amount) {
+    public OrderItem(Advertisement advertisement, double amount, Order order) {
         this.advertisement = advertisement;
         this.amount = amount;
+        this.order = order;
     }
 
     public long getId() {
@@ -42,5 +46,13 @@ public class OrderItem {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }
