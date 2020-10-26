@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.OrderItem;
 
 import java.util.List;
@@ -12,5 +13,5 @@ public interface OrderItemService {
     void delete(OrderItem orderItem);
     List<OrderItem> findAll();
     Optional<OrderItem> findById(long id);
-    OrderItem findByAdvertisement(Advertisement advertisement);
+    OrderItem findByAdvertisementAndOrder(Advertisement advertisement, Order order);
 }

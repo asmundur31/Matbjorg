@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Repositories;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.OrderItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,5 +15,5 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Long> {
     void delete(OrderItem orderItem);
     List<OrderItem> findAll();
     Optional<OrderItem> findById(long id);
-    OrderItem findByAdvertisement(Advertisement advertisement);
+    OrderItem findByAdvertisementAndOrder(Advertisement advertisement, Order order);
 }
