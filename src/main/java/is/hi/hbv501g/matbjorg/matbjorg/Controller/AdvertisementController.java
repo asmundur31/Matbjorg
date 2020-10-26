@@ -31,17 +31,6 @@ public class AdvertisementController {
         return "advertisements";
     }
 
-    @RequestMapping(value = "/advertisements/{id}")
-    public String advertisement(@PathVariable("id") long id, Model model) {
-        Optional<Advertisement> ad = advertisementService.findById(id);
-        if(ad.isEmpty()){
-            model.addAttribute("advertisements", advertisementService.findAll());
-            return "redirect:/advertisements";
-        }
-        model.addAttribute("advertisement", ad.get());
-        return "advertisement";
-    }
-
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
     public String addAdvertisementGET(Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");

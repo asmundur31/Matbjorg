@@ -1,6 +1,8 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.OrderItem;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.OrderItemRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderItemService;
@@ -20,8 +22,7 @@ public class OrderItemServiceImplementation implements OrderItemService {
     }
 
     @Override
-    public OrderItem save(OrderItem orderItem, Buyer buyer) {
-
+    public OrderItem save(OrderItem orderItem) {
         return repository.save(orderItem);
     }
 
@@ -38,5 +39,10 @@ public class OrderItemServiceImplementation implements OrderItemService {
     @Override
     public Optional<OrderItem> findById(long id) {
         return repository.findById(id);
+    }
+
+    @Override
+    public OrderItem findByAdvertisement(Advertisement advertisement) {
+        return repository.findByAdvertisement(advertisement);
     }
 }

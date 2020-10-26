@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,19 +12,17 @@ public class Order {
     private long id;
 
     @OneToMany
-    private List<OrderItem> items;
+    private List<OrderItem> items = new ArrayList<OrderItem>();
 
     @ManyToOne
     private Buyer buyer;
 
-    @Column(columnDefinition = "boolean default true")
-    private boolean active;
+    private boolean active = true;
 
     public Order() {
     }
 
-    public Order(List<OrderItem> items, Buyer buyer) {
-        this.items = items;
+    public Order(Buyer buyer) {
         this.buyer = buyer;
     }
 

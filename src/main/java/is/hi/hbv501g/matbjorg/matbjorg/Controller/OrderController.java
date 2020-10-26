@@ -28,8 +28,8 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        /*Order o = orderService.findByBuyerAndActive(b);
-        model.addAttribute("order", orderService.findById(o.getId()));*/
+        Order o = orderService.findByBuyerAndActive(b, true);
+        model.addAttribute("order", o);
         return "order";
     }
 }

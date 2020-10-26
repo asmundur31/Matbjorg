@@ -20,10 +20,7 @@
     <label for="amount">Amount</label>
     <input type="number" th:field="*{amount}" id="amount" placeholder="Amount">
     <span th:if="${#fields.hasErrors('amount')}" th:error="*{amount}"></span>
-    <input type="submit" value="Bæta í körfu">
+    <input type="submit" value="Setja í körfu">
 </form>
-<div>
-    <p><a th:href="@{/orderitem/} + ${advertisement.id}">Setja í körfu</a></p>
-</div>
 </body>
 </html>

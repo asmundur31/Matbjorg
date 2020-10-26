@@ -48,15 +48,25 @@ public class OrderItemController {
         }
         // Sækjum buyer sem ætlar að kaupa
         Buyer b = (Buyer) session.getAttribute("loggedInUser");
-        // Byrjum að tékka hvor buyer er búinn að búa til Order
-        List<Order> exists = orderService.findByBuyer(b);
-        if(exists.size() == 0) {
-            // Hér ef þetta er fyrsta item sem buyer kaupir
-        } else {
-            // Hér ef hann hefur keypt áður
+        // Sækjum advertisement sem er verið að kaupa
+        Optional<Advertisement> ad = advertisementService.findById(id);
+        orderItem.setAdvertisement(ad.get());
+
+        // Vista OrderItem í gangnagrunn
+        orderItemService.save(orderItem);
+
+        // Byrjum að tékka hvor buyer á til Order sem er virkt
+        Order exists = orderService.findByBuyerAndActive(b, true);
+        if(exists == null) { // Ekkert til virkt order fyrir buyer
+            exists = new Order(b);
         }
-        orderItemService.save(orderItem, b);
-        model.addAttribute("advertisements", advertisementService.findAll());
-        return "redirect:/advertisements";
+
+        // Bætum item-inu við listann
+        orderService.insertItem(exists, orderItem);
+        orderService.save(exists);
+
+        // Förum í körfuna
+        model.addAttribute("order", exists);
+        return "redirect:/order";
     }
 }

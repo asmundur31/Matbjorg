@@ -16,5 +16,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
     List<Order> findAll();
     Optional<Order> findById(long id);
     List<Order> findByBuyer(Buyer buyer);
-    /*Order findByBuyerAndActive(Buyer buyer);*/
+    Order findByBuyerAndActive(Buyer buyer, boolean active);
 }
