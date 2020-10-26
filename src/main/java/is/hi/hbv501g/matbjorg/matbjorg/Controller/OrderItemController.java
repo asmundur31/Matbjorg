@@ -46,7 +46,9 @@ public class OrderItemController {
         }
         // Sækjum buyer sem ætlar að kaupa
         Buyer b = (Buyer) session.getAttribute("loggedInUser");
-
+        if(b == null) {
+            return "redirect:/login";
+        }
         // Byrjum að tékka hvort til er Order sem er virkt fyrir Buyer b
         Order exists = orderService.findByBuyerAndActive(b, true);
         if(exists == null) { // Ekkert til virkt order fyrir buyer
