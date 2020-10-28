@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Signup</title>
 </head>
@@ -18,5 +21,7 @@
     <span th:if="${#fields.hasErrors('password')}" th:error="*{password}"></span>
     <input type="submit" value="Confirm">
 </form>
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 </body>
 </html>

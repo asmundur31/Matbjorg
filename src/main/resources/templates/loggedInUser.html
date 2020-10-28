@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="http://cdn.jsdelivr.net/webjars/bootstrap/3.2.0/css/bootstrap.min.css"
+          th:href="@{/webjars/bootstrap/3.2.0/css/bootstrap.min.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Logged In User</title>
 </head>
@@ -10,5 +13,7 @@
 <p th:text="${loggedInUser.email}"></p>
 <p th:text="${loggedInUser.password}"></p>
 <p th:text="${userType}"></p>
+<script src="http://cdn.jsdelivr.net/webjars/jquery/2.1.1/jquery.min.js"
+        th:src="@{/webjars/jquery/2.1.1/jquery.min.js}"></script>
 </body>
 </html>
