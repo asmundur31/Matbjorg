@@ -2,12 +2,42 @@
 <html xmlns:th="https://thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Advertisments</title>
+    <title>Search</title>
 </head>
 <body>
-<h1>Auglýsingar</h1>
+
+<p>Sláðu inn leitarorð</p>
+<form th:action="@{/searchByKeyword}">
+    <input type="text" name="search" id="search" th:value="${search}" placeholder="Leitarorð"/>
+    <input type="submit" value="Leita"/>
+</form>
+
+<p>Vöruflokkar</p>
+<form th:action="@{/filterByTags}">
+    <input type="checkbox" id="tags" name="tags"
+           th:each="tag : ${tags}"
+           th:text="${tag}"
+           th:value="${tag}"/>
+    <input type="submit" value="Search"/>
+</form>
+
+<p>Söluaðilar</p>
+<form th:action="@{/filterBySellers}">
+    <input type="checkbox" id="sellers" name="sellers"
+           th:each="seller : ${sellers}"
+           th:text="${seller}"
+           th:value="${seller}"
+    />
+    <input type="submit" value="Search"/>
+</form>
+
+<p><a href="/showAllAdvertisements">Sýna allar auglýsingar</a></p>
+
+</form>
+
+<h2>Leitarniðurstöður</h2>
 <div th:switch="${#lists.size(advertisements)}">
-    <h2 th:case="0"> No advertisement yet!</h2>
+    <h2 th:case="0"> Það passar ekkert við leitarorðið </h2>
     <div th:case="*">
         <table>
             <thead>
@@ -19,7 +49,6 @@
                 <th>Current amount</th>
                 <th>Price</th>
                 <th>Expires</th>
-                <th></th>
             </tr>
             </thead>
             <tbody>
@@ -31,12 +60,11 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
-                <td><a th:href="@{/orderitem/} + ${advertisement.id}">Skoða</a></td>
             </tr>
             </tbody>
         </table>
     </div>
 </div>
-<p><a href="/search">Leita í auglýsingum</a></p>
+
 </body>
 </html>
