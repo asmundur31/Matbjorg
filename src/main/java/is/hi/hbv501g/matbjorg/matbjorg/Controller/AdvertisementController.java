@@ -26,8 +26,14 @@ public class AdvertisementController {
     }
 
     @RequestMapping(value = "/advertisements")
-    public String advertisements(Model model) {
+    public String advertisements(Model model, HttpSession session) {
         model.addAttribute("advertisements", advertisementService.findAll());
+        String userType = (String) session.getAttribute("userType");
+        if(userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
         return "advertisements";
     }
 

@@ -31,7 +31,7 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
-                <td><a th:href="@{/orderitem/} + ${advertisement.id}">Skoða</a></td>
+                <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
             </tr>
             </tbody>
         </table>
