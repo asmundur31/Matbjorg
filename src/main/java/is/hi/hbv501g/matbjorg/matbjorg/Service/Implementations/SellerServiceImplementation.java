@@ -34,7 +34,7 @@ public class SellerServiceImplementation implements SellerService {
     }
 
     @Override
-    public List<Seller> findByName(String name) {
+    public Seller findByName(String name) {
         return repository.findByName(name);
     }
 

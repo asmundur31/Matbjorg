@@ -3,12 +3,14 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -51,5 +53,55 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public List<Advertisement> findByOwner(Seller seller) {
         return repository.findByOwner(seller);
+    }
+
+    @Override
+    public List<Advertisement> findByKeyWord(String search) {
+        if (search != null) {
+            return repository.findByKeyWord(search);
+        }
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Advertisement> filterBySellers(List<Seller> sellerList) {
+        if (!sellerList.isEmpty()) {
+            List<Advertisement> advertisementList = new ArrayList<Advertisement>();
+            for (Seller seller : sellerList) {
+                List<Advertisement> advertisementBySeller = repository.findByOwner(seller);
+                for (Advertisement advertisement : advertisementBySeller) {
+                    advertisementList.add(advertisement);
+                }
+            }
+            return advertisementList;
+        }
+        return repository.findAll();
+    }
+
+    @Override
+    public List<Advertisement> filterByTags(List<String> tags) {
+
+        if (!tags.isEmpty()) {
+
+            List<Tag> listOfTags = new ArrayList<Tag>();
+            for (String tag : tags) {
+                listOfTags.add(Tag.valueOf(tag));
+            }
+
+            List<Advertisement> advertisements = repository.findAll();
+            List<Advertisement> filterResults = new ArrayList<>();
+
+            for (Tag tag : listOfTags) {
+                for (Advertisement advertisement : advertisements) {
+                    if (advertisement.getTags().contains(tag)) {
+                        if (!filterResults.contains(advertisement)) {
+                            filterResults.add(advertisement);
+                        }
+                    }
+                }
+            }
+            return filterResults;
+        }
+        return repository.findAll();
     }
 }

@@ -9,7 +9,7 @@ public interface SellerService {
     Seller save(Seller seller);
     void delete(Seller seller);
     List<Seller> findAll();
-    List<Seller> findByName(String name);
+    Seller findByName(String name);
     Seller findByEmail(String email);
     Optional<Seller> findById(long id);
     Seller login(Seller seller);
