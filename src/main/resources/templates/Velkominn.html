@@ -1,11 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Velkominn</title>
 </head>
 <body>
-<h1>Velkominn á Matbjörg</h1>
+<h1>Velkomin á vefsíðuna Matbjörg</h1>
 <p><a href="/advertisements">Advertisements</a></p>
 <div th:switch="${loggedInUser}">
     <p th:case="null"><a href="/login">Login</a></p>

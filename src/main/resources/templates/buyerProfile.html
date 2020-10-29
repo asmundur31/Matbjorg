@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
 <h1 th:text="${buyer.name}"></h1>
-<p>Birta allar upplýsingar um viðkomandi buyer.</p>
+<p th:text = ${buyer.email}></p>
+<hr>
 </body>
 </html>

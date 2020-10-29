@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
 <h1 th:text="${seller.name}"></h1>
-<p>Birta allar upplýsingar um viðkomandi seller og lista yfir auglýsingar og stöður þeirra.</p>
+<p th:text="${seller.email}"></p>
+<hr>
 <div th:switch="${#lists.size(advertisements)}">
     <h2 th:case="0"> No advertisement yet!</h2>
     <div th:case="*">
