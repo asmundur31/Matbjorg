@@ -15,4 +15,6 @@ public interface OrderService {
     Optional<Order> findById(long id);
     List<Order> findByBuyer(Buyer buyer);
     Order findByBuyerAndActive(Buyer buyer, boolean active);
+    Order confirmOrder(Order order);
+    double totalPrice(Order order);
 }

@@ -4,6 +4,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.*;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderItemService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,7 @@ public class OrderItemController {
     private AdvertisementService advertisementService;
     private OrderService orderService;
 
+    @Autowired
     public OrderItemController(OrderItemService orderItemService, AdvertisementService advertisementService, OrderService orderService) {
         this.orderItemService = orderItemService;
         this.advertisementService = advertisementService;

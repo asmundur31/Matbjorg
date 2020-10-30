@@ -17,7 +17,7 @@ public class Advertisement {
     @ManyToOne
     private Seller owner;
     private String description;
-    private boolean active;
+    private boolean active = true;
     private double originalAmount;
     private double currentAmount;
     private double price;
