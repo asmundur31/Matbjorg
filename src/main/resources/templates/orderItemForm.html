@@ -10,15 +10,15 @@
     <h2 th:text="${advertisement.name}"></h2>
     <p th:text="${advertisement.description}"></p>
     </br>
-    <p th:text="@{Available: } + ${advertisement.currentAmount}"></p>
+    <p th:text="@{Eftirstöðvar: } + ${advertisement.currentAmount}"></p>
     </br>
-    <p th:text="@{Price: } + ${advertisement.price}"></p>
+    <p th:text="@{Verð: } + ${advertisement.price}"></p>
     </br>
-    <p th:text="@{Expires: } + ${advertisement.expireDate}"></p>
+    <p th:text="@{Gildir til: } + ${advertisement.expireDate}"></p>
 </div>
 <form action="#" th:action="@{/orderitem/} + ${advertisement.id}" th:object="${orderItem}" method="post">
-    <label for="amount">Amount</label>
-    <input type="number" th:field="*{amount}" id="amount" placeholder="Amount">
+    <label for="amount">Magn</label>
+    <input type="number" th:field="*{amount}" id="amount" placeholder="Magn">
     <span th:if="${#fields.hasErrors('amount')}" th:error="*{amount}"></span>
     <input type="submit" value="Setja í körfu">
 </form>

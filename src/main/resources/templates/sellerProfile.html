@@ -3,7 +3,7 @@
 <head>
     <link href="../static/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
@@ -12,18 +12,19 @@
 <p th:text="${seller.email}"></p>
 <hr>
 <div th:switch="${#lists.size(advertisements)}">
-    <h2 th:case="0"> No advertisement yet!</h2>
+    <h2 th:case="0"> Þú hefur ekki sett inn auglýsingar</h2>
     <div th:case="*">
+        <h2>Þínar auglýsingar</h2>
         <table>
             <thead>
             <tr>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Original amount</th>
-                <th>Current amount</th>
-                <th>Price</th>
-                <th>Expires</th>
-                <th>Delete</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Upphaflegt magn</th>
+                <th>Eftirstöðvar</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
+                <th>Eyða auglýsingu</th>
             </tr>
             </thead>
             <tbody>
@@ -34,7 +35,7 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
-                <td><a th:href="@{/advertisements/delete/{id}(id=${advertisement.id})}">Delete</a></td>
+                <td><a th:href="@{/advertisements/delete/{id}(id=${advertisement.id})}">Eyða</a></td>
             </tr>
             </tbody>
         </table>

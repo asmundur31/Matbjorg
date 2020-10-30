@@ -7,17 +7,17 @@
 <body>
 <h1 th:text="@{Karfa fyrir } + ${buyer}"></h1>
 <div th:switch="${order}">
-    <h2 th:case="null">No items yet!</h2>
+    <h2 th:case="null">Karfan er tóm</h2>
     <div th:case="*">
         <table>
             <thead>
             <tr>
-                <th>Owner</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Amount</th>
-                <th>Price</th>
-                <th>Expires</th>
+                <th>Söluaðili</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Magn</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
             </tr>
             </thead>
             <tbody>

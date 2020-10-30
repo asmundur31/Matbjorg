@@ -3,25 +3,25 @@
 <head>
     <link href="../static/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Advertisments</title>
 </head>
 <body>
 <h1>Auglýsingar</h1>
 <div th:switch="${#lists.size(advertisements)}">
-    <h2 th:case="0"> No advertisement yet!</h2>
+    <h2 th:case="0"> Það eru engar virkar auglýsingar</h2>
     <div th:case="*">
         <table>
             <thead>
             <tr>
-                <th>Owner</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Original amount</th>
-                <th>Current amount</th>
-                <th>Price</th>
-                <th>Expires</th>
+                <th>Söluaðili</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Upphaflegt magn</th>
+                <th>Eftirstöðvar</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
                 <th></th>
             </tr>
             </thead>

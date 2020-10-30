@@ -3,27 +3,27 @@
 <head>
     <link href="../static/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <link href="../static/css/login.css"
           th:href="@{/css/login.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Login</title>
 </head>
 <body>
 
 <form action="#" th:action="@{/login}" th:object="${user}" method="post" class="form-signin">
-    <h1 class="font-weight-bold">Login</h1>
+    <h1 class="font-weight-bold">Innskráning</h1>
     <label for="email" class="sr-only">Email</label>
-    <input type="email" th:field="*{email}" id="email" placeholder="Email" class="form-control">
+    <input type="email" th:field="*{email}" id="email" placeholder="Netfang" class="form-control">
     <span th:if="${#fields.hasErrors('email')}" th:error="*{email}"></span>
     <label for="password" class="sr-only">Password</label>
-    <input type="password" th:field="*{password}" id="password" placeholder="Password" class="form-control">
+    <input type="password" th:field="*{password}" id="password" placeholder="Lykilorð" class="form-control">
     <span th:if="${#fields.hasErrors('password')}" th:error="*{password}"></span>
-    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Login</button>
+    <button class="btn btn-lg btn-primary btn-block" type="submit" value="Login">Skrá inn</button>
     <p>
-        Do not have an account?
-        <a href="\signup">Sign up</a>
+        Nýr notandi?
+        <a href="\signup">Nýskráning</a>
     </p>
 </form>
 </body>
