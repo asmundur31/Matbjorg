@@ -3,12 +3,12 @@
 <head>
     <link href="../static/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Logged In User</title>
 </head>
 <body>
-<h1>Notandi sem er loggaður inn</h1>
+<h1>Notandi sem er srkáður inn</h1>
 <p th:text="${loggedInUser.name}"></p>
 <p th:text="${loggedInUser.email}"></p>
 <p th:text="${loggedInUser.password}"></p>

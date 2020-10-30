@@ -18,7 +18,7 @@
            th:each="tag : ${tags}"
            th:text="${tag}"
            th:value="${tag}"/>
-    <input type="submit" value="Search"/>
+    <input type="submit" value="Leita"/>
 </form>
 
 <p>Söluaðilar</p>
@@ -28,7 +28,7 @@
            th:text="${seller}"
            th:value="${seller}"
     />
-    <input type="submit" value="Search"/>
+    <input type="submit" value="Leita"/>
 </form>
 
 <p><a href="/showAllAdvertisements">Sýna allar auglýsingar</a></p>
@@ -42,13 +42,13 @@
         <table>
             <thead>
             <tr>
-                <th>Owner</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Original amount</th>
-                <th>Current amount</th>
-                <th>Price</th>
-                <th>Expires</th>
+                <th>Söluaðili</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Upphaflegt magn</th>
+                <th>Eftirstöðvar</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
             </tr>
             </thead>
             <tbody>

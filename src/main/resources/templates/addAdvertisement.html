@@ -3,28 +3,28 @@
 <head>
     <link href="../static/css/bootstrap.css"
           th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+          rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Add advertisement</title>
 </head>
 <body>
 <form action="#" th:action="@{/addadvertisement}" th:object="${advertisement}" method="post">
-    <label for="name">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Name">
+    <label for="name">Heiti</label>
+    <input type="text" th:field="*{name}" id="name" placeholder="Gefðu auglýsingunni heiti">
     <span th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
-    <label for="description">Description</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="Description">
+    <label for="description">Lýsing</label>
+    <input type="text" th:field="*{description}" id="description" placeholder="Lýsing á vöru">
     <span th:if="${#fields.hasErrors('description')}" th:error="*{description}"></span>
-    <label for="amount">Amount</label>
-    <input type="number" th:field="*{originalAmount}" id="amount" placeholder="Amount(kg)">
+    <label for="amount">Magn</label>
+    <input type="number" th:field="*{originalAmount}" id="amount" placeholder="Magn(kg)">
     <span th:if="${#fields.hasErrors('originalAmount')}" th:error="*{originalAmount}"></span>
-    <label for="price">Price</label>
-    <input type="number" th:field="*{price}" id="price" placeholder="Price(kr.)">
+    <label for="price">Verð</label>
+    <input type="number" th:field="*{price}" id="price" placeholder="Verð(kr.)">
     <span th:if="${#fields.hasErrors('price')}" th:error="*{price}"></span>
-    <label for="expireDate">Expire date</label>
+    <label for="expireDate">Gildir til</label>
     <input type="datetime-local" th:field="*{expireDate}" id="expireDate">
     <span th:if="${#fields.hasErrors('expireDate')}" th:error="*{expireDate}"></span>
-    <label for="tags">Tags</label>
+    <label for="tags">Vöruflokkar</label>
     <input type="checkbox" id="tags"
            th:each="tag : ${tags}"
            th:text="${tag}"
@@ -32,7 +32,7 @@
            th:field="*{tags}"
     />
     <span th:if="${#fields.hasErrors('tags')}" th:error="*{tags}"></span>
-    <input type="submit" value="Add advertisement">
+    <input type="submit" value="Birta auglýsingu">
 </form>
 </body>
 </html>
