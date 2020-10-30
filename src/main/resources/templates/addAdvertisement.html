@@ -16,7 +16,7 @@
     <input type="text" th:field="*{description}" id="description" placeholder="Lýsing á vöru">
     <span th:if="${#fields.hasErrors('description')}" th:error="*{description}"></span>
     <label for="amount">Magn</label>
-    <input type="number" th:field="*{originalAmount}" id="amount" placeholder="Magn(kg)">
+    <input type="number" th:field="*{originalAmount}" id="amount" placeholder="Magn(kg)" step=".25">
     <span th:if="${#fields.hasErrors('originalAmount')}" th:error="*{originalAmount}"></span>
     <label for="price">Verð</label>
     <input type="number" th:field="*{price}" id="price" placeholder="Verð(kr.)">

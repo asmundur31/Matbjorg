@@ -18,6 +18,7 @@
                 <th>Magn</th>
                 <th>Verð</th>
                 <th>Gildir til</th>
+                <th>Fjarlægja úr körfu</th>
             </tr>
             </thead>
             <tbody>
@@ -28,6 +29,15 @@
                 <td th:text="${item.amount}"></td>
                 <td th:text="${item.advertisement.price}"></td>
                 <td th:text="${item.advertisement.expireDate}"></td>
+                <td><a th:href="@{/removeFromOrder/{id}(id=${item.id})}">Eyða úr körfu</a></td>
+                <td>
+                    <form th:action="@{/changeAmount/} + ${item.id}">
+                        <label for="amount">Breyta magni</label>
+                        <input type="number" name="amount" id="amount" th:value="${amount}" step=".25" required>
+                        <input type="submit" value="Staðfesta">
+                    </form>
+                </td>
+
             </tr>
             </tbody>
         </table>
