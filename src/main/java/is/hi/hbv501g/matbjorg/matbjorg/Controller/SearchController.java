@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,32 +28,56 @@ public class SearchController {
     }
 
     @RequestMapping("/search")
-    public String Search(Model model) {
+    public String Search(Model model, HttpSession session) {
         model.addAttribute("advertisements", advertisementService.findAll());
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
+        
         return "search";
     }
 
     @RequestMapping("/showAllAdvertisements")
-    public String showAll(Model model) {
+    public String showAll(Model model, HttpSession session) {
         model.addAttribute("advertisements", advertisementService.findAll());
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
+
         return "search";
     }
 
     @RequestMapping("/searchByKeyword")
-    public String SearchByKeyword(@Param("search") String search, Model model) {
+    public String SearchByKeyword(@Param("search") String search, Model model, HttpSession session) {
         List<Advertisement> advertisementList = advertisementService.findByKeyWord(search);
         model.addAttribute("advertisements", advertisementList);
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
+
         return "search";
     }
 
     @RequestMapping("/filterBySellers")
-    public String filterBySellers(@RequestParam List<String> sellers, Model model) {
+    public String filterBySellers(@RequestParam List<String> sellers, Model model, HttpSession session) {
 
         List<Seller> sellerList = new ArrayList<Seller>();
 
@@ -65,18 +90,34 @@ public class SearchController {
         model.addAttribute("advertisements", advertisementList);
         model.addAttribute("sellers", sellerService.findAll());
         model.addAttribute("tags", Tag.values());
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
+
         return "search";
     }
 
 
     @RequestMapping("/filterByTags")
-    public String filterByTags(@RequestParam List<String> tags, Model model) {
+    public String filterByTags(@RequestParam List<String> tags, Model model, HttpSession session) {
 
         List<Advertisement> advertisementList = advertisementService.filterByTags(tags);
 
         model.addAttribute("advertisements", advertisementList);
         model.addAttribute("sellers", sellerService.findAll());
         model.addAttribute("tags", Tag.values());
+
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
+
         return "search";
     }
 
