@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Kvittun</title>
+</head>
+<body>
+<h1>Kvittun</h1>
+<p th:text="'Tími kaupa: ' + ${time}"></p>
+<div th:switch="${order}">
+    <h2 th:case="null">Þetta ætti ekki að geta gerst</h2>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Heiti</th>
+                <th>Magn</th>
+                <th>Verð</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.advertisement.name}"></td>
+                <td th:text="${item.amount}"></td>
+                <td th:text="${item.advertisement.price}"></td>
+            </tr>
+            </tbody>
+        </table>
+        <p th:text="'Samtals: ' + ${totalPrice}"></p>
+    </div>
+</div>
+<p><a href="/">Heim</a></p>
+</body>
+</html>
