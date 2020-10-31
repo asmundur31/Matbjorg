@@ -24,6 +24,7 @@ public class SellerController {
 
     @RequestMapping(value = "/profile/seller")
     public String sellerProfile(Model model, HttpSession session) {
+        advertisementService.updateActive();
         Seller seller = (Seller) session.getAttribute("loggedInUser");
         if(seller == null) {
             return "redirect:/";
