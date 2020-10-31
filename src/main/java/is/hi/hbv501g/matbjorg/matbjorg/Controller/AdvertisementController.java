@@ -27,7 +27,8 @@ public class AdvertisementController {
 
     @RequestMapping(value = "/advertisements")
     public String advertisements(Model model, HttpSession session) {
-        model.addAttribute("advertisements", advertisementService.findAll());
+        advertisementService.updateActive();
+        model.addAttribute("advertisements", advertisementService.findByActive(true));
         String userType = (String) session.getAttribute("userType");
         if(userType == null) {
             model.addAttribute("userType", "noUser");
@@ -54,7 +55,7 @@ public class AdvertisementController {
             return "addAdvertisement";
         }
         advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"));
-        model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
     }
 
@@ -66,7 +67,7 @@ public class AdvertisementController {
         }
         Advertisement advertisement = advertisementService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid advertisement ID"));
         advertisementService.delete(advertisement);
-        model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
     }
 }

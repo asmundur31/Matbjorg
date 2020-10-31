@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -24,6 +25,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     @Override
+    public List<Advertisement> findByActive(boolean active) {
+        return repository.findByActive(active);
+    }
+
+    @Override
     public Advertisement save(Advertisement advertisement, Seller seller) {
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
@@ -33,6 +39,16 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public void delete(Advertisement advertisement) {
         repository.delete(advertisement);
+    }
+
+   @Override
+    public void updateActive() {
+        LocalDateTime lt = LocalDateTime.now();
+        for(Advertisement ad: repository.findAll()){
+            if(ad.getCurrentAmount()<=0 || lt.compareTo(ad.getExpireDate())>0) {
+                repository.updateActive(ad.getId(),false);
+            }
+        }
     }
 
     @Override
@@ -53,6 +69,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public List<Advertisement> findByOwner(Seller seller) {
         return repository.findByOwner(seller);
+    }
+
+    @Override
+    public List<Advertisement> findByOwnerAndActive(Seller seller, boolean active) {
+        return repository.findByOwnerAndActive(seller, active);
     }
 
     @Override
