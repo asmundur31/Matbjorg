@@ -22,7 +22,6 @@
                 <th>Eftirstöðvar</th>
                 <th>Verð</th>
                 <th>Gildir til</th>
-                <th>Virkur</th>
                 <th></th>
             </tr>
             </thead>
@@ -35,7 +34,6 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
-                <td th:text="${advertisement.active}"></td>
                 <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
             </tr>
             </tbody>

@@ -26,13 +26,6 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
 
     @Override
     public List<Advertisement> findByActive(boolean active) {
-        /*List<Advertisement> allActive = null;
-        for(Advertisement add: repository.findAll()) {
-            if(add.isActive()){
-                allActive.add(add);
-            }
-        }
-        return allActive;*/
         return repository.findByActive(active);
     }
 
@@ -53,7 +46,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         LocalDateTime lt = LocalDateTime.now();
         for(Advertisement ad: repository.findAll()){
             if(ad.getCurrentAmount()<=0 || lt.compareTo(ad.getExpireDate())>0) {
-                ad.setActive(false);
+                repository.updateActive(ad.getId(),false);
             }
         }
     }
