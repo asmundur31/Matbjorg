@@ -72,6 +72,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     @Override
+    public List<Advertisement> findByOwnerAndActive(Seller seller, boolean active) {
+        return repository.findByOwnerAndActive(seller, active);
+    }
+
+    @Override
     public List<Advertisement> findByKeyWord(String search) {
         if (search != null) {
             return repository.findByKeyWord(search);

@@ -15,6 +15,7 @@ public interface AdvertisementService {
     List<Advertisement> findByName(String name);
     Optional<Advertisement> findById(long id);
     List<Advertisement> findByOwner(Seller seller);
+    List<Advertisement> findByOwnerAndActive(Seller seller, boolean active);
     List<Advertisement> findByKeyWord(String search);
     List<Advertisement> filterBySellers(List<Seller> sellerList);
     List<Advertisement> filterByTags(List<String> tags);

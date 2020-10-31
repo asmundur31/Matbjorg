@@ -27,6 +27,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     List<Advertisement> findByName(String name);
     Optional<Advertisement> findById(long id);
     List<Advertisement> findByOwner(Seller seller);
+    List<Advertisement> findByOwnerAndActive(Seller seller, boolean active);
 
     @Query(value = "SELECT advertisement FROM Advertisement advertisement WHERE advertisement.name LIKE %?1%"
             + "OR advertisement.description LIKE %?1%")

@@ -29,7 +29,8 @@ public class SellerController {
             return "redirect:/";
         }
         model.addAttribute("seller", seller);
-        model.addAttribute("advertisements", advertisementService.findByOwner(seller));
+        model.addAttribute("advertisementsActive", advertisementService.findByOwnerAndActive(seller, true));
+        model.addAttribute("advertisementsInactive", advertisementService.findByOwnerAndActive(seller, false));
         return "sellerProfile";
     }
 }
