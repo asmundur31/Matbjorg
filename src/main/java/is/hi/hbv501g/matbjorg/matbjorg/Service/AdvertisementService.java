@@ -10,6 +10,7 @@ public interface AdvertisementService {
     Advertisement save(Advertisement advertisement, Seller seller);
     void delete(Advertisement advertisement);
     List<Advertisement> findAll();
+    List<Advertisement> findByActive(boolean active);
     List<Advertisement> findByName(String name);
     Optional<Advertisement> findById(long id);
     List<Advertisement> findByOwner(Seller seller);

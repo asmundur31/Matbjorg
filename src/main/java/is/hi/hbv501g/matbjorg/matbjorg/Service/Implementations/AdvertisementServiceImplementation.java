@@ -24,6 +24,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     @Override
+    public List<Advertisement> findByActive(boolean active) {
+        return repository.findByActive(active);
+    }
+
+    @Override
     public Advertisement save(Advertisement advertisement, Seller seller) {
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());

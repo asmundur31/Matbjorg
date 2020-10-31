@@ -14,6 +14,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     Advertisement save(Advertisement advertisement);
     void delete(Advertisement advertisement);
     List<Advertisement> findAll();
+    List<Advertisement> findByActive(boolean active);
     List<Advertisement> findByName(String name);
     Optional<Advertisement> findById(long id);
     List<Advertisement> findByOwner(Seller seller);
