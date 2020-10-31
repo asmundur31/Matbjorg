@@ -9,6 +9,7 @@ import java.util.Optional;
 public interface AdvertisementService {
     Advertisement save(Advertisement advertisement, Seller seller);
     void delete(Advertisement advertisement);
+    void updateActive();
     List<Advertisement> findAll();
     List<Advertisement> findByActive(boolean active);
     List<Advertisement> findByName(String name);

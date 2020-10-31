@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,6 +26,13 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
 
     @Override
     public List<Advertisement> findByActive(boolean active) {
+        /*List<Advertisement> allActive = null;
+        for(Advertisement add: repository.findAll()) {
+            if(add.isActive()){
+                allActive.add(add);
+            }
+        }
+        return allActive;*/
         return repository.findByActive(active);
     }
 
@@ -38,6 +46,16 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public void delete(Advertisement advertisement) {
         repository.delete(advertisement);
+    }
+
+   @Override
+    public void updateActive() {
+        LocalDateTime lt = LocalDateTime.now();
+        for(Advertisement ad: repository.findAll()){
+            if(ad.getCurrentAmount()<=0 || lt.compareTo(ad.getExpireDate())>0) {
+                ad.setActive(false);
+            }
+        }
     }
 
     @Override

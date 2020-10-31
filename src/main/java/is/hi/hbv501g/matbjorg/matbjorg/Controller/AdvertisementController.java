@@ -27,6 +27,7 @@ public class AdvertisementController {
 
     @RequestMapping(value = "/advertisements")
     public String advertisements(Model model, HttpSession session) {
+        advertisementService.updateActive();
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         String userType = (String) session.getAttribute("userType");
         if(userType == null) {
