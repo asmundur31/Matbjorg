@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Order</title>
+</head>
+<body>
+<h1 th:text="@{Karfa fyrir } + ${buyer}"></h1>
+<div th:switch="${order}">
+    <h2 th:case="null">Karfan er tóm</h2>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Söluaðili</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Magn</th>
+                <!--<th>Breyta magni</th>-->
+                <th>Verð</th>
+                <th>Gildir til</th>
+                <th>Fjarlægja úr körfu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="item : ${order.items}">
+                <td th:text="${item.advertisement.owner}"></td>
+                <td th:text="${item.advertisement.name}"></td>
+                <td th:text="${item.advertisement.description}"></td>
+                <td th:text="${item.amount}"></td>
+                <td th:text="${item.advertisement.price}"></td>
+                <td th:text="${item.advertisement.expireDate}"></td>
+                <td><a th:href="@{/removeFromOrder/{id}(id=${item.id})}">Eyða úr körfu</a></td>
+                <td>
+                    <form th:action="@{/changeAmount/} + ${item.id}">
+                        <label for="amount">Breyta magni</label>
+                        <input type="number" name="amount" id="amount" th:value="${amount}" step=".25" required>
+                        <input type="submit" value="Staðfesta">
+                    </form>
+                </td>
+
+            </tr>
+            </tbody>
+        </table>
+        <p th:text="'Samtals: ' + ${totalPrice}"></p>
+        <p><a href="/receipt">Kaupa</a></p>
+    </div>
+</div>
+</body>
+</html>

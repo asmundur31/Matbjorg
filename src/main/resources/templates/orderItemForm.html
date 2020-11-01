@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Advertisement</title>
+</head>
+<body>
+<h1>Hér er ein valinn auglýsing</h1>
+<div>
+    <h2 th:text="${advertisement.name}"></h2>
+    <p th:text="${advertisement.description}"></p>
+    </br>
+    <p th:text="@{Eftirstöðvar: } + ${advertisement.currentAmount}"></p>
+    </br>
+    <p th:text="@{Verð: } + ${advertisement.price}"></p>
+    </br>
+    <p th:text="@{Gildir til: } + ${advertisement.expireDate}"></p>
+</div>
+<form action="#" th:action="@{/orderitem/} + ${advertisement.id}" th:object="${orderItem}" method="post">
+    <label for="amount">Magn</label>
+    <input type="number" th:field="*{amount}" id="amount" placeholder="Magn" step=".25">
+    <span th:if="${#fields.hasErrors('amount')}" th:error="*{amount}"></span>
+    <input type="submit" value="Setja í körfu">
+</form>
+</body>
+</html>

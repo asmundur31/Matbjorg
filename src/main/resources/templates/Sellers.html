@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <link href="../static/css/bootstrap.css"
+          th:href="@{/css/bootstrap.css}"
+          rel="stylesheet" media="screen" />
     <meta charset="UTF-8">
     <title>Sellers</title>
 </head>
 <body>
-<div th:switch="${sellers}">
-    <h2 th:case="null"> No sellers yet!</h2>
+<div th:switch="${lists.size(sellers)}">
+    <h2 th:case="0"> No sellers yet!</h2>
     <div th:case="*">
         <h2>Sellers</h2>
         <table>

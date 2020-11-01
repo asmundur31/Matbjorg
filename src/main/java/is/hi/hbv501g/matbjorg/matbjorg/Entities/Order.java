@@ -4,31 +4,45 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity klasi fyrir Order
+ */
 @Entity
 @Table(name = "order_order")
 public class Order {
+    /**
+     * id er long tala sem er id fyrir Order-ið
+     * items er listi af þeim OrderItem sem tilheyra Order-inu
+     * buyer er sá Buyer sem býr til Order-ið
+     * active segir til um hvort Order-ið sé virkt
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @OneToMany(mappedBy = "order")
-    private List<OrderItem> items;
+    private List<OrderItem> items = new ArrayList<>();
 
     @ManyToOne
     private Buyer buyer;
 
-    @ManyToOne
-    private Seller seller;
+    private boolean active = true;
 
+    /**
+     * tómur smiður fyrir Order
+     */
     public Order() {
     }
 
-    public Order(List<OrderItem> items, Buyer buyer, Seller seller) {
-        this.items = items;
+    /**
+     * Smiður fyrir Order
+     *
+     * @param buyer hlutur af taginu Buyer
+     */
+    public Order(Buyer buyer) {
         this.buyer = buyer;
-        this.seller = seller;
     }
-
+    
     public long getId() {
         return id;
     }
@@ -53,11 +67,11 @@ public class Order {
         this.buyer = buyer;
     }
 
-    public Seller getSeller() {
-        return seller;
+    public boolean isActive() {
+        return active;
     }
 
-    public void setSeller(Seller seller) {
-        this.seller = seller;
+    public void setActive(boolean active) {
+        this.active = active;
     }
 }

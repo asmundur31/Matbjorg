@@ -13,43 +13,30 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+/**
+ * HomeController er controller klasi sem grípur fyrirspurnina þegar við ræsum síðuna
+ */
+
 @Controller
 public class HomeController {
 
-    private AdvertisementService advertisementService;
-
+    /**
+     * Smiður fyrir HomeController
+     */
     @Autowired
-    public HomeController(AdvertisementService advertisementService) {
-        this.advertisementService = advertisementService;
+    public HomeController() {
     }
 
+    /**
+     * Grípur fyrirspurnina þegar við förum á aðalsíðuna
+     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @return skilar okkur á html-síðuna Velkominn
+     */
     @RequestMapping("/")
     public String Home(Model model, HttpSession session) {
-        model.addAttribute("advertisements", advertisementService.findAll());
         model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
-        return "Velkominn";
-    }
-
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
-    public String addadvertisement(@Valid Advertisement advertisement, BindingResult result, Model model) {
-        if(result.hasErrors()) {
-            return "add-advertisement";
-        }
-        advertisementService.save(advertisement);
-        model.addAttribute("advertisements", advertisementService.findAll());
-        return "Velkominn";
-    }
-
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
-    public String addadvertisement(Advertisement advertisement) {
-        return "add-advertisement";
-    }
-
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public String addadvertisement(@PathVariable("id") long id, Model model) {
-        Advertisement advertisement = advertisementService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid advertisement ID"));
-        advertisementService.delete(advertisement);
-        model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("userType", session.getAttribute("userType"));
         return "Velkominn";
     }
 }

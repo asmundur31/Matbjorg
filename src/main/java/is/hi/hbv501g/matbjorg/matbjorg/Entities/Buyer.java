@@ -4,8 +4,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Buyer er klasi sem tilgreinir kaupanda
+ */
 @Entity
 public class Buyer {
+    /**
+     * id sem auðkennir kaupanda
+     * name sem tilgreinir nafn kaupanda
+     * password sem er lykilorð kaupanda
+     * email sem er netfang kaupanda
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -15,20 +24,16 @@ public class Buyer {
     @Column(unique = true)
     private String email;
 
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> pendingOrders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> finishedOrders = new ArrayList<>();
-
-    @OneToMany(mappedBy = "buyer")
-    private List<Order> outstandingOrders = new ArrayList<>();
-
     public Buyer() {
     }
 
+    /**
+     * Smiður fyrir klasann Buyer
+     * @param email netfang nýs kaupanda
+     * @param password lykilorð nýs kaupanda
+     */
+
     public Buyer(String email, String password) {
-        this.name = name;
         this.password = password;
         this.email = email;
     }
@@ -63,30 +68,6 @@ public class Buyer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<Order> getPendingOrders() {
-        return pendingOrders;
-    }
-
-    public void setPendingOrders(List<Order> pendingOrders) {
-        this.pendingOrders = pendingOrders;
-    }
-
-    public List<Order> getFinishedOrders() {
-        return finishedOrders;
-    }
-
-    public void setFinishedOrders(List<Order> finishedOrders) {
-        this.finishedOrders = finishedOrders;
-    }
-
-    public List<Order> getOutstandingOrders() {
-        return outstandingOrders;
-    }
-
-    public void setOutstandingOrders(List<Order> outstandingOrders) {
-        this.outstandingOrders = outstandingOrders;
     }
 
     @Override

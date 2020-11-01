@@ -2,26 +2,45 @@ package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
 
+/**
+ * OrderItem er klasi sem býr til og skilgreinir alla eiginleika OrderItem
+ */
 @Entity
 public class OrderItem {
+    /**
+     * id til að auðkenna hvert OrderItem
+     * advertisement er auglýsingin sem OrderItem vísar á
+     * amount er magnið sem notandi langar að fá af vörunni í auglýsingunni
+     * order er pöntunin sem OrderItem er hluti af, þ.e. order er karfan fyrir alla hlutina sem notandinn pantar
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @ManyToOne
-    private Order order;
-
-    @ManyToOne
     private Advertisement advertisement;
-
     private double amount;
 
+    @ManyToOne
+    private Order order;
+
+    /**
+     * tómur smiður fyrir OrderItem
+     */
     public OrderItem() {
     }
 
-    public OrderItem(Advertisement advertisement, double amount) {
+    /**
+     * Smiður fyrir OrderItem
+     *
+     * @param advertisement hlutur af taginu Advertisement
+     * @param amount        double tala
+     * @param order         hlutur af taginu Order
+     */
+    public OrderItem(Advertisement advertisement, double amount, Order order) {
         this.advertisement = advertisement;
         this.amount = amount;
+        this.order = order;
     }
 
     public long getId() {
@@ -30,14 +49,6 @@ public class OrderItem {
 
     public void setId(long id) {
         this.id = id;
-    }
-
-    public Order getOrder() {
-        return order;
-    }
-
-    public void setOrder(Order order) {
-        this.order = order;
     }
 
     public Advertisement getAdvertisement() {
@@ -54,5 +65,13 @@ public class OrderItem {
 
     public void setAmount(double amount) {
         this.amount = amount;
+    }
+
+    public Order getOrder() {
+        return order;
+    }
+
+    public void setOrder(Order order) {
+        this.order = order;
     }
 }

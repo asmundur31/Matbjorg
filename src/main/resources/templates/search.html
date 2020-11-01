@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Search</title>
+</head>
+<body>
+
+<p>Sláðu inn leitarorð</p>
+<form th:action="@{/searchByKeyword}">
+    <input type="text" name="search" id="search" th:value="${search}" placeholder="Leitarorð"/>
+    <input type="submit" value="Leita"/>
+</form>
+
+<p>Vöruflokkar</p>
+<form th:action="@{/filterByTags}">
+    <input type="checkbox" id="tags" name="tags"
+           th:each="tag : ${tags}"
+           th:text="${tag}"
+           th:value="${tag}"/>
+    <input type="submit" value="Leita"/>
+</form>
+
+<p>Söluaðilar</p>
+<form th:action="@{/filterBySellers}">
+    <input type="checkbox" id="sellers" name="sellers"
+           th:each="seller : ${sellers}"
+           th:text="${seller}"
+           th:value="${seller}"
+    />
+    <input type="submit" value="Leita"/>
+</form>
+
+<p><a href="/showAllAdvertisements">Sýna allar auglýsingar</a></p>
+
+</form>
+
+<h2>Leitarniðurstöður</h2>
+<div th:switch="${#lists.size(advertisements)}">
+    <h2 th:case="0"> Það passar ekkert við leitarorðið </h2>
+    <div th:case="*">
+        <table>
+            <thead>
+            <tr>
+                <th>Söluaðili</th>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Upphaflegt magn</th>
+                <th>Eftirstöðvar</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="advertisement : ${advertisements}">
+                <td th:text="${advertisement.owner}"></td>
+                <td th:text="${advertisement.name}"></td>
+                <td th:text="${advertisement.description}"></td>
+                <td th:text="${advertisement.originalAmount}"></td>
+                <td th:text="${advertisement.currentAmount}"></td>
+                <td th:text="${advertisement.price}"></td>
+                <td th:text="${advertisement.expireDate}"></td>
+                <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>

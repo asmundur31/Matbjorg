@@ -9,10 +9,22 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * SellerServiceImplementation er klasi sem implementar SellerService
+ * og útfærir viðeigandi aðferðir og kallar á ServiceRepository
+ */
 @Service
 public class SellerServiceImplementation implements SellerService {
+    /**
+     * repository hefur samskipti við töfluna Seller í gagnagrunninum
+     */
     private SellerRepository repository;
 
+    /**
+     * Smiður fyrir SellerServiceImplementation
+     *
+     * @param sellerRepository Repository sem hefur samskipti við töfluna Seller í gagnagrunninum
+     */
     @Autowired
     public SellerServiceImplementation(SellerRepository sellerRepository) {
         this.repository = sellerRepository;
@@ -34,7 +46,7 @@ public class SellerServiceImplementation implements SellerService {
     }
 
     @Override
-    public List<Seller> findByName(String name) {
+    public Seller findByName(String name) {
         return repository.findByName(name);
     }
 
@@ -50,9 +62,12 @@ public class SellerServiceImplementation implements SellerService {
 
     @Override
     public Seller login(Seller seller) {
+        if (seller == null) {
+            return null;
+        }
         Seller exists = findByEmail(seller.getEmail());
-        if(exists != null) {
-            if(exists.getPassword().equals(seller.getPassword())) {
+        if (exists != null) {
+            if (exists.getPassword().equals(seller.getPassword())) {
                 return seller;
             }
         }
