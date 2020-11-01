@@ -24,9 +24,19 @@ public class OrderItem {
     @ManyToOne
     private Order order;
 
+    /**
+     * tómur smiður fyrir OrderItem
+     */
     public OrderItem() {
     }
 
+    /**
+     * Smiður fyrir OrderItem
+     *
+     * @param advertisement hlutur af taginu Advertisement
+     * @param amount        double tala
+     * @param order         hlutur af taginu Order
+     */
     public OrderItem(Advertisement advertisement, double amount, Order order) {
         this.advertisement = advertisement;
         this.amount = amount;
