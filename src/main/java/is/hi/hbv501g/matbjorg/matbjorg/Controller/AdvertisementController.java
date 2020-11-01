@@ -16,15 +16,32 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
 
+/**
+ * AdvertisementController er controller klasi sem sér um breytingar og birtingar á auglýsingum (klasanum Advertisement)
+ */
+
 @Controller
 public class AdvertisementController {
+    /**
+     * advertisementService er þjónusta fyrir Advertisement
+     */
     private AdvertisementService advertisementService;
 
+    /**
+     * Smiður fyrir AdvertisementController
+     * @param advertisementService þjónusta fyrir Advertisement
+     */
     @Autowired
     public AdvertisementController(AdvertisementService advertisementService) {
         this.advertisementService = advertisementService;
     }
 
+    /**
+     * Grípur fyrirspurn þegar notandi vill skoða auglýsingar
+     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @return sendum notanda á html-síðuna advertisement sem inniheldur allar auglýsingar
+     */
     @RequestMapping(value = "/advertisements")
     public String advertisements(Model model, HttpSession session) {
         advertisementService.updateActive();
@@ -38,6 +55,13 @@ public class AdvertisementController {
         return "advertisements";
     }
 
+    /**
+     * Grípur fyrirspurn þegar seller vill bæta við auglýsingu
+     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @return ef notandi er ekki seller förum við á aðalsíðuna annars förum við á html-síðuna addAdvertisement
+     * til að bæta við auglýsingu
+     */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
     public String addAdvertisementGET(Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
@@ -49,6 +73,15 @@ public class AdvertisementController {
         return "addAdvertisement";
     }
 
+    /**
+     * Grípur fyrirspurn til að bæta við auglýsingu
+     * @param advertisement auglýsing sem á að bæta við
+     * @param result hlutur af taginu BindingResult sem geymir upplýsingar um villur í Advertisement hlutnum
+     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @return ef upp kemur villa, þ.e. auglýsing sem átti að bæta við var ekki á réttu formi, þá erum við aftur
+     * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á profile síðuna hjá seller
+     */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
     public String addAdvertisementPOST(@Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
@@ -59,6 +92,13 @@ public class AdvertisementController {
         return "redirect:/profile/seller";
     }
 
+    /**
+     * Grípur fyrirspurn til að eyða auglýsingu
+     * @param id auðkenning á auglýsingu sem á að eyða
+     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @return skilar okkur á aðalsíðuna ef við erum ekki seller. Annars förum við á profile hjá seller
+     */
     @RequestMapping(value = "/advertisements/delete/{id}", method = RequestMethod.GET)
     public String deleteAdvertisementGET(@PathVariable("id") long id, Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
