@@ -14,12 +14,27 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * Interface fyrir OrderService
+ */
 @Service
 public class OrderServiceImplementation implements OrderService {
+    /**
+     * orderRepository er Repository fyrir Order
+     * advertisementRepository er Repository fyrir Advertisement
+     * orderItemRepository er Repository fyrir orderItem
+     */
     private OrderRepository orderRepository;
     private AdvertisementRepository advertisementRepository;
     private OrderItemRepository orderItemRepository;
 
+    /**
+     * Smiður fyrir OrderServiceImplementation
+     *
+     * @param orderRepository         Repository fyrir Order
+     * @param advertisementRepository Repository fyrir Advertisement
+     * @param orderItemRepository     Repository fyrir OrderItem
+     */
     @Autowired
     public OrderServiceImplementation(OrderRepository orderRepository, AdvertisementRepository advertisementRepository, OrderItemRepository orderItemRepository) {
         this.orderRepository = orderRepository;
@@ -27,36 +42,64 @@ public class OrderServiceImplementation implements OrderService {
         this.orderItemRepository = orderItemRepository;
     }
 
+    /**
+     * @param order hlutur af taginu Order
+     * @return kall á fallið save úr orderRepository með order
+     */
     @Override
     public Order save(Order order) {
         return orderRepository.save(order);
     }
 
+    /**
+     * @param order hlutur af taginu Order
+     */
     @Override
     public void delete(Order order) {
         orderRepository.delete(order);
     }
 
+    /**
+     * @return kall á fallið findAll úr orderRepository
+     */
     @Override
     public List<Order> findAll() {
         return orderRepository.findAll();
     }
 
+    /**
+     * @param id long tala
+     * @return kall á fallið findById úr orderRepository með id
+     */
     @Override
     public Optional<Order> findById(long id) {
         return orderRepository.findById(id);
     }
 
+    /**
+     * @param buyer hlutur af taginu Buyer
+     * @return kall á fallið findByBuyer úr orderRepository með buyer
+     */
     @Override
     public List<Order> findByBuyer(Buyer buyer) {
         return orderRepository.findByBuyer(buyer);
     }
 
+    /**
+     * @param buyer  hlutur af taginu Buyer
+     * @param active boolean gildi
+     * @return kall á fallið findByBuyerAndActive úr orderRepository með buyer og active
+     */
     @Override
     public Order findByBuyerAndActive(Buyer buyer, boolean active) {
         return orderRepository.findByBuyerAndActive(buyer, active);
     }
 
+    /**
+     * @param order hlutur af taginu Order
+     * @return skilar null ef order inniheldur OrderItem sem ekki er hægt að kaupa,
+     * annars skilar fallið order sem er búið að uppfæra
+     */
     @Override
     public Order confirmOrder(Order order) {
         boolean valid = true;
@@ -83,6 +126,10 @@ public class OrderServiceImplementation implements OrderService {
         return order;
     }
 
+    /**
+     * @param order hlutur af taginu Order
+     * @return double tala sem segir til um heildarkostnað OrderItem-a í Order
+     */
     @Override
     public double totalPrice(Order order) {
         double total = 0;

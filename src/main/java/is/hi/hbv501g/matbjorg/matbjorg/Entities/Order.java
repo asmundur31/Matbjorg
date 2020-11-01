@@ -4,9 +4,18 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity klasi fyrir Order
+ */
 @Entity
 @Table(name = "order_order")
 public class Order {
+    /**
+     * id er long tala sem er id fyrir Order-ið
+     * items er listi af þeim OrderItem sem tilheyra Order-inu
+     * buyer er sá Buyer sem býr til Order-ið
+     * active segir til um hvort Order-ið sé virkt
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -19,13 +28,21 @@ public class Order {
 
     private boolean active = true;
 
+    /**
+     * tómur smiður fyrir Order
+     */
     public Order() {
     }
 
+    /**
+     * Smiður fyrir Order
+     *
+     * @param buyer hlutur af taginu Buyer
+     */
     public Order(Buyer buyer) {
         this.buyer = buyer;
     }
-
+    
     public long getId() {
         return id;
     }
