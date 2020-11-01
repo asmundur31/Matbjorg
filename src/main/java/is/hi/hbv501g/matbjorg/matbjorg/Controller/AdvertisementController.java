@@ -59,7 +59,7 @@ public class AdvertisementController {
      * Grípur fyrirspurn þegar seller vill bæta við auglýsingu
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
-     * @return ef notandi er ekki seller förum við á aðalsíðuna annars förum við á html-síðuna addAdvertisement
+     * @return ef notandi er ekki seller förum við á forsíðuna annars förum við á html-síðuna addAdvertisement
      * til að bæta við auglýsingu
      */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
@@ -80,7 +80,7 @@ public class AdvertisementController {
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return ef upp kemur villa, þ.e. auglýsing sem átti að bæta við var ekki á réttu formi, þá erum við aftur
-     * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á profile síðuna hjá seller
+     * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
     public String addAdvertisementPOST(@Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
@@ -97,7 +97,7 @@ public class AdvertisementController {
      * @param id auðkenning á auglýsingu sem á að eyða
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
-     * @return skilar okkur á aðalsíðuna ef við erum ekki seller. Annars förum við á profile hjá seller
+     * @return skilar okkur á forsíðuna ef við erum ekki seller. Annars förum við á heimasvæði hjá seller
      */
     @RequestMapping(value = "/advertisements/delete/{id}", method = RequestMethod.GET)
     public String deleteAdvertisementGET(@PathVariable("id") long id, Model model, HttpSession session) {

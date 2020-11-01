@@ -10,10 +10,21 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * BuyerServiceImplementation er klasi sem implementar BuyerService
+ * og útfærir viðeigandi aðferðir og kallar á BuyerRepository
+ */
 @Service
 public class BuyerServiceImplementation implements BuyerService {
+    /**
+     * repository hefur samskipti við töfluna Buyer í gagnagrunninum
+     */
     private BuyerRepository repository;
 
+    /**
+     * Smiður fyrir BuyerServiceImplementation
+     * @param buyerRepository repository sem hefur samskipti við töfluna Buyer í gagnagrunninum
+     */
     @Autowired
     public BuyerServiceImplementation(BuyerRepository buyerRepository) {
         this.repository = buyerRepository;
