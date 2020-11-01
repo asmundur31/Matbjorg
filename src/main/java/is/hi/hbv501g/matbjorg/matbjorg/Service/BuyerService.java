@@ -46,7 +46,7 @@ public interface BuyerService {
     /**
      * Finnum kaupanda eftir id/auðkenni
      * @param id auðkenni sem leita á að
-     * @return skilar kaupanda með tilgreint auðkenni
+     * @return skilar ílát með hlut af kaupanda með tilgreint auðkenni
      */
     Optional<Buyer> findById(long id);
 
