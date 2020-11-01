@@ -18,7 +18,7 @@
         <a href="/logout">Útskráning</a>
         </br>
         </br>
-        <a th:href="@{/order}">Skoða körfu</a>
+        <a th:href="@{/order}" th:if="${userType} == 'buyer'">Skoða körfu</a>
 
     </p>
 </div>
