@@ -4,8 +4,17 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Buyer er klasi sem tilgreinir kaupanda
+ */
 @Entity
 public class Buyer {
+    /**
+     * id sem auðkennir kaupanda
+     * name sem tilgreinir nafn kaupanda
+     * password sem er lykilorð kaupanda
+     * email sem er netfang kaupanda
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -17,6 +26,12 @@ public class Buyer {
 
     public Buyer() {
     }
+
+    /**
+     * Smiður fyrir klasann Buyer
+     * @param email netfang nýs kaupanda
+     * @param password lykilorð nýs kaupanda
+     */
 
     public Buyer(String email, String password) {
         this.password = password;

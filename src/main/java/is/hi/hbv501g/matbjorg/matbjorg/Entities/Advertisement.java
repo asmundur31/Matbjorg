@@ -8,7 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
- * Advertisement er klasi sem býr til og skilgreinir alla eiginleika auglýsingar
+ * Advertisement er klasi sem tilgreinir auglýsingu
  */
 
 @Entity
