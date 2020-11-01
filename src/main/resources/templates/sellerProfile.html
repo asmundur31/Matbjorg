@@ -11,10 +11,10 @@
 <h1 th:text="${seller.name}"></h1>
 <p th:text="${seller.email}"></p>
 <hr>
-<div th:switch="${#lists.size(advertisements)}">
-    <h2 th:case="0"> Þú hefur ekki sett inn auglýsingar</h2>
+<div th:switch="${#lists.size(advertisementsActive)}">
+    <h2 th:case="0"> Þú hefur ekki sett inn virkar auglýsingar</h2>
     <div th:case="*">
-        <h2>Þínar auglýsingar</h2>
+        <h2>Þínar virku auglýsingar</h2>
         <table>
             <thead>
             <tr>
@@ -28,7 +28,38 @@
             </tr>
             </thead>
             <tbody>
-            <tr th:each="advertisement : ${advertisements}">
+            <tr th:each="advertisement : ${advertisementsActive}">
+                <td th:text="${advertisement.name}"></td>
+                <td th:text="${advertisement.description}"></td>
+                <td th:text="${advertisement.originalAmount}"></td>
+                <td th:text="${advertisement.currentAmount}"></td>
+                <td th:text="${advertisement.price}"></td>
+                <td th:text="${advertisement.expireDate}"></td>
+                <td><a th:href="@{/advertisements/delete/{id}(id=${advertisement.id})}">Eyða</a></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div th:switch="${#lists.size(advertisementsInactive)}">
+    <h2 th:case="0"> Engar óvirkar auglýsingar</h2>
+    <div th:case="*">
+        <h2>Þínar óvirku auglýsingar</h2>
+        <table>
+            <thead>
+            <tr>
+                <th>Heiti</th>
+                <th>Lýsing</th>
+                <th>Upphaflegt magn</th>
+                <th>Eftirstöðvar</th>
+                <th>Verð</th>
+                <th>Gildir til</th>
+                <th>Eyða auglýsingu</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="advertisement : ${advertisementsInactive}">
                 <td th:text="${advertisement.name}"></td>
                 <td th:text="${advertisement.description}"></td>
                 <td th:text="${advertisement.originalAmount}"></td>

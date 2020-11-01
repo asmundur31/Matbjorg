@@ -24,12 +24,14 @@ public class SellerController {
 
     @RequestMapping(value = "/profile/seller")
     public String sellerProfile(Model model, HttpSession session) {
+        advertisementService.updateActive();
         Seller seller = (Seller) session.getAttribute("loggedInUser");
         if(seller == null) {
             return "redirect:/";
         }
         model.addAttribute("seller", seller);
-        model.addAttribute("advertisements", advertisementService.findByOwner(seller));
+        model.addAttribute("advertisementsActive", advertisementService.findByOwnerAndActive(seller, true));
+        model.addAttribute("advertisementsInactive", advertisementService.findByOwnerAndActive(seller, false));
         return "sellerProfile";
     }
 }
