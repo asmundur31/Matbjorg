@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Interface fyrir OrderService
+ * Klasi sem implementar OrderService
  */
 @Service
 public class OrderServiceImplementation implements OrderService {
@@ -104,20 +104,20 @@ public class OrderServiceImplementation implements OrderService {
     public Order confirmOrder(Order order) {
         boolean valid = true;
         // Er eitthver auglýsing active=false eða með currentAmount < amount
-        for(OrderItem item : order.getItems()) {
-            if(!item.getAdvertisement().isActive() || item.getAdvertisement().getCurrentAmount() < item.getAmount()) {
+        for (OrderItem item : order.getItems()) {
+            if (!item.getAdvertisement().isActive() || item.getAdvertisement().getCurrentAmount() < item.getAmount()) {
                 // Eyðum orderItem ef hann er ekki lengur mögulegur
                 orderItemRepository.delete(item);
                 valid = false;
             }
         }
-        if(!valid) {
+        if (!valid) {
             return null;
         }
         // Minnkum currentAmount hjá öllum auglýsingum
-        for(OrderItem item : order.getItems()) {
+        for (OrderItem item : order.getItems()) {
             Advertisement adToUpdate = item.getAdvertisement();
-            adToUpdate.setCurrentAmount(adToUpdate.getCurrentAmount()-item.getAmount());
+            adToUpdate.setCurrentAmount(adToUpdate.getCurrentAmount() - item.getAmount());
             advertisementRepository.save(adToUpdate);
         }
         // Setjum order sem false og vistum
@@ -133,7 +133,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public double totalPrice(Order order) {
         double total = 0;
-        for(OrderItem item : order.getItems()) {
+        for (OrderItem item : order.getItems()) {
             total += item.getAmount() * item.getAdvertisement().getPrice();
         }
         return total;
