@@ -4,8 +4,20 @@ import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Entity klasi sem býr til og skilgreinir alla eiginleika söluaðila (Seller)
+ */
 @Entity
 public class Seller {
+    /**
+     * id er auðkennisnúmer fyrir söluaðilann
+     * name er notendanafn söluaðilans
+     * password er lykilorð söluaðilans
+     * email er netfang söluaðilans
+     * activeAdvertisements er listi af öllum virkum auglýsingum söluaðilans
+     * pastAdvertisements er listi af öllum óvirku auglýsingum söluaðilans
+     * activeOrders er listi af öllum virku pöntunum söluaðilans
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
@@ -25,9 +37,18 @@ public class Seller {
     @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
 
+    /**
+     * tómur smiður fyrir Seller
+     */
     public Seller() {
     }
 
+    /**
+     * Smiður fyrir Seller
+     *
+     * @param email    strengur
+     * @param password strengur
+     */
     public Seller(String email, String password) {
         this.password = password;
         this.email = email;

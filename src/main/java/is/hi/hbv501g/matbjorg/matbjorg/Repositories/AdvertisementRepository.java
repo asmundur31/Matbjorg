@@ -64,7 +64,7 @@ public interface AdvertisementRepository extends JpaRepository<Advertisement, Lo
     /**
      * Nær í auglýsingu með ákveðið id
      * @param id auðkenning á auglýsingu
-     * @return auglýsingu með viðkomandi id
+     * @return ílát með hlut af auglýsingu með viðkomandi id
      */
     Optional<Advertisement> findById(long id);
 
