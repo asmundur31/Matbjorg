@@ -7,8 +7,25 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+/**
+ * Advertisement er klasi sem tilgreinir auglýsingu
+ */
+
 @Entity
 public class Advertisement {
+    /**
+     * id til að auðkenna hverja auglýsingu
+     * name er nafn auglýsingar
+     * owner er eigandi auglýsingar
+     * description er lýsing á auglýsingu og því vörunni sem hún er að auglýsa
+     * active segir til um hvort að auglýsing sé virk eða ekki
+     * originalAmount segr tli um upprunalegt magn á vöru sem verið er að auglýsa
+     * currentAmount er núverandi magn á vöru, þ.e. það sem hægt er að kaupa
+     * price er verð vöru
+     * expireDate er hvenær auglýsing verður óvirk
+     * items er listi af OrderItems sem auglýsing auglýsir
+     * tag er flokkun á tegund vörunnar
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;

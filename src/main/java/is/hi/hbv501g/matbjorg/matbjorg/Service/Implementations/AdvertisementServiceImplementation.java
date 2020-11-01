@@ -15,10 +15,22 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * AdvertisementServiceImplementation er klasi sem implementar AdvertisementService
+ * og útfærir viðeigandi aðferðir og kallar á AdvertisementRepository
+ */
+
 @Service
 public class AdvertisementServiceImplementation implements AdvertisementService {
+    /**
+     * repository hefur samskipti við töfluna Advertisement í gagnagrunninum
+     */
     AdvertisementRepository repository;
 
+    /**
+     * Smiður fyrir AdvertisementServiceImplementation
+     * @param advertisementRepository repository sem hefur samskipti við töfluna Advertisement í gagnagrunninum
+     */
     @Autowired
     public AdvertisementServiceImplementation(AdvertisementRepository advertisementRepository) {
         this.repository = advertisementRepository;

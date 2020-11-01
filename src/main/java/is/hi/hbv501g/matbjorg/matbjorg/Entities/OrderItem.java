@@ -3,15 +3,15 @@ package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 import javax.persistence.*;
 
 /**
- * Entity klasi fyrir OrderItem
+ * OrderItem er klasi sem býr til og skilgreinir alla eiginleika OrderItem
  */
 @Entity
 public class OrderItem {
     /**
-     * id er long tala sem er id fyrir OrderItem-ið
-     * advertisement er það Advertisement sem OrderItem-ið byggir á
-     * amount er double tala sem segir til um hversu mikið magn OrderItemið inniheldur
-     * order er það Order sem OrdemItem tilheyrir
+     * id til að auðkenna hvert OrderItem
+     * advertisement er auglýsingin sem OrderItem vísar á
+     * amount er magnið sem notandi langar að fá af vörunni í auglýsingunni
+     * order er pöntunin sem OrderItem er hluti af, þ.e. order er karfan fyrir alla hlutina sem notandinn pantar
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
