@@ -1,5 +1,5 @@
 # Matbjörg
-Þetta verkefni er að stuðla að matarsóun á Íslandi með því að gefa mat annað tækifæri í neyslu.
+Þetta verkefni er að stuðla gegn matarsóun á Íslandi með því að gefa mat annað tækifæri í neyslu.
 ## Keyra verkefnið
 Við ætlum að gera ráð fyrir að verkefnið sé keyrt í forritunarumhverfinu IntelliJ IDEA.
 1. Sækja IntelliJ IDEA
