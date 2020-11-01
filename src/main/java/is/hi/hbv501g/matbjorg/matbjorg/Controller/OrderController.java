@@ -8,6 +8,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -58,13 +59,6 @@ public class OrderController {
         // Eyðum OrderItem-inu
         orderItemService.delete(orderItem);
 
-        // Finna active order fyrir Buyer b
-        Order o = orderService.findByBuyerAndActive(b, true);
-        // Ef Order inniheldur engin OrderItem þá eyðum við Order-inu
-        if (o.getItems().isEmpty()) {
-            orderService.delete(o);
-        }
-
         return "redirect:/order";
     }
 
@@ -83,12 +77,6 @@ public class OrderController {
             orderItemService.delete(orderItem);
         } else {
             orderItemService.save(orderItem);
-        }
-
-        Order o = orderService.findByBuyerAndActive(b, true);
-
-        if (o.getItems().isEmpty()) {
-            orderService.delete(o);
         }
 
         return "redirect:/order";
