@@ -1,0 +1,17 @@
+#hero-section {
+  width: 100%;
+  height: 40vh;
+  background-image: url("../img/markus.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: 100%;
+}
+
+.card-linkable {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-linkable:hover {
+    color: inherit;
+}
