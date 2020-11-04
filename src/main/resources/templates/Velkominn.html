@@ -12,18 +12,26 @@
 
 
     </section>
-    <section class="container pt-5">
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="card h-100">
+    <section class="container mt-n5">
+        <div class="row row-cols-3 justify-content-center main-cards">
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
                     <div class="card-body">
                         <h5 class="card-title">Auglýsingar</h5>
                         <a href="/advertisements">Skoða allar auglýsingar</a>
                     </div>
                 </div>
             </div>
-            <div class="col-4">
-                <div class="card h-100">
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Flokkar</h5>
+                        <a href="/advertisements">Skoða allar flokka</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
                     <div class="card-body">
                         <div  th:switch="${loggedInUser}">
                             <div th:case="null">

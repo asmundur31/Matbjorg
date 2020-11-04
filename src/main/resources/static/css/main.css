@@ -13,8 +13,28 @@ body {
   background-size: 100%;
 }
 
-#ad-section {
-    min-height: 50vh;
+.main-nav {
+  justify-content: space-between;
+}
+
+.main-search-box {
+  width: 50%;
+}
+
+.searchBar {
+  border-color: none;
+  border: 1px solid white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+}
+
+.main-cards {
+  align-items: stretch;
+}
+
+.main-cards > *{
+  min-height: 25vh;
 }
 
 .card-linkable {
