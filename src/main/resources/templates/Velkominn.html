@@ -1,26 +1,55 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
     <title>Velkomin</title>
 </head>
 <body>
-<h1>Velkomin á vefsíðuna Matbjörg</h1>
-<p><a href="/advertisements">Skoða auglýsingar</a></p>
-<div th:switch="${loggedInUser}">
-    <p th:case="null"><a href="/login">Innskráning</a></p>
-    <p th:case="*">
-        <a th:href="@{/profile/} + ${userType}">Heimasvæði</a>
-        </br>
-        <a href="/logout">Útskráning</a>
-        </br>
-        </br>
-        <a th:href="@{/order}" th:if="${userType} == 'buyer'">Skoða körfu</a>
+    <div th:insert="Fragments/navbar.html"></div>
+    <section id="hero-section">
 
-    </p>
-</div>
+
+    </section>
+    <section class="container mt-n5">
+        <div class="row row-cols-3 justify-content-center main-cards">
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Auglýsingar</h5>
+                        <a href="/advertisements">Skoða allar auglýsingar</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">Flokkar</h5>
+                        <a href="/advertisements">Skoða allar flokka</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <div class="card shadow p-3 mb-5 bg-white rounded h-100">
+                    <div class="card-body">
+                        <div  th:switch="${loggedInUser}">
+                            <div th:case="null">
+                                <h5 class="card-title">Skráðu þig inn!</h5>
+                                <a href="/login" class="btn btn-outline-primary">Innskráning</a>
+                                <a href="/signup" class="btn btn-primary">Nýskráning</a>
+                            </div>
+                            <div th:case="*">
+                                <h5 class="card-title">Profile</h5>
+                                <a th:href="@{/profile/} + ${userType}">Heimasvæði</a>
+                                <a th:href="@{/order}" th:if="${userType} == 'buyer'">Skoða körfu</a>
+                                <a href="/logout">Útskráning</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>
