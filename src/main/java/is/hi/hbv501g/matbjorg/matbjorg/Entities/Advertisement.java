@@ -4,7 +4,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -49,6 +48,8 @@ public class Advertisement {
     @Column(name = "tag", nullable = false)
     @CollectionTable(name = "advertisement_tags", joinColumns = {@JoinColumn(name = "advertisement_id")})
     private Set<Tag> tags;
+
+    private String pictureName;
 
     public Advertisement() {
     }
@@ -149,6 +150,14 @@ public class Advertisement {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
     }
 
     @Override

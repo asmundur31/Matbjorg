@@ -1,15 +1,17 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +30,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     AdvertisementRepository repository;
 
     /**
+     * Strengur sem að hefur rétt path á möppuna sem á að geyma myndir
+     */
+    public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir")+"/src/main/resources/static/img/advertisementImages/";
+
+    /**
      * Smiður fyrir AdvertisementServiceImplementation
      * @param advertisementRepository repository sem hefur samskipti við töfluna Advertisement í gagnagrunninum
      */
@@ -42,10 +49,30 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     @Override
-    public Advertisement save(Advertisement advertisement, Seller seller) {
+    public Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture) {
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
+        // Uploadum myndinni í img/advertisementImages
+        Boolean tokst = uploadImage(picture);
+        if(tokst) {
+            advertisement.setPictureName(picture.getOriginalFilename());
+        } else {
+            advertisement.setPictureName("default.jpg");
+        }
         return repository.save(advertisement);
+    }
+
+    private Boolean uploadImage(MultipartFile picture) {
+        try {
+            byte[] bytes = picture.getBytes();
+            Path path = Paths.get(UPLOAD_PICTURE_PATH, picture.getOriginalFilename());
+            Files.write(path, bytes);
+        } catch (Exception e) {
+            System.out.println("Villa við að uploada mynd");
+            e.printStackTrace();
+            return false;
+        }
+        return true;
     }
 
     @Override
