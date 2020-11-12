@@ -11,10 +11,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Optional;
 
 /**
  * AdvertisementController er controller klasi sem sér um breytingar og birtingar á auglýsingum (klasanum Advertisement)
@@ -83,11 +84,11 @@ public class AdvertisementController {
      * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
-    public String addAdvertisementPOST(@Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
+    public String addAdvertisementPOST(@RequestParam("picture") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             return "addAdvertisement";
         }
-        advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"));
+        advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"), picture);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
     }

@@ -1,6 +1,6 @@
 html,
 body {
-    width 100%;
+    width: 100%;
     min-height: 100vh;
 }
 
@@ -22,7 +22,6 @@ body {
 }
 
 .searchBar {
-  border-color: none;
   border: 1px solid white;
   border-top-left-radius: 5px;
   border-bottom-left-radius: 5px;
