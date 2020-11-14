@@ -3,6 +3,9 @@ package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -28,16 +31,32 @@ public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
     private Seller owner;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String description;
     private boolean active = true;
+
+    @DecimalMin(value = "0.25")
+    @Column(nullable = false)
     private double originalAmount;
+
+    @Min(0)
+    @Column(nullable = false)
     private double currentAmount;
+
+    @Min(0)
+    @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime expireDate;
 
@@ -48,7 +67,6 @@ public class Advertisement {
     @Column(name = "tag", nullable = false)
     @CollectionTable(name = "advertisement_tags", joinColumns = {@JoinColumn(name = "advertisement_id")})
     private Set<Tag> tags;
-
     private String pictureName;
 
     public Advertisement() {

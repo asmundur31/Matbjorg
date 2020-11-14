@@ -1,8 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
 
 /**
  * Buyer er klasi sem tilgreinir kaupanda
@@ -18,10 +20,17 @@ public class Buyer {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @Column(unique = true, nullable = false)
     private String email;
 
     public Buyer() {
@@ -29,11 +38,13 @@ public class Buyer {
 
     /**
      * Smiður fyrir klasann Buyer
+     * @param name nafn nýs kaupanda
      * @param email netfang nýs kaupanda
      * @param password lykilorð nýs kaupanda
      */
 
-    public Buyer(String email, String password) {
+    public Buyer(String name, String email, String password) {
+        this.name = name;
         this.password = password;
         this.email = email;
     }
