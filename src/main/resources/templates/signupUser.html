@@ -14,13 +14,18 @@
 <form action="#" th:action="@{/signup/new} + ${userType}" th:object="${user}" method="post" class="form-signin">
     <h1 class="font-weight-bold">Nýskráning</h1>
     <label for="name" class="sr-only">Name</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Notandanafn" class="form-control">
+    <input type="text" th:field="*{name}" id="name" placeholder="Notandanafn" class="form-control" required>
     <span th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
     <label for="email" class="sr-only">Email</label>
-    <input type="email" th:field="*{email}" id="email" placeholder="Netfang" class="form-control">
+    <input type="email" th:field="*{email}"
+           id="email"
+           pattern="^[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$"
+           title="Vinsamlegast setjið inn gilt netfang"
+           placeholder="Netfang"
+           class="form-control" required>
     <span th:if="${#fields.hasErrors('email')}" th:error="*{email}"></span>
     <label for="password" class="sr-only">Password</label>
-    <input type="password" th:field="*{password}" id="password" placeholder="Lykilorð" class="form-control">
+    <input type="password" th:field="*{password}" id="password" placeholder="Lykilorð" class="form-control" required>
     <span th:if="${#fields.hasErrors('password')}" th:error="*{password}"></span>
     <button class="btn btn-lg btn-primary btn-block" type="submit" value="Confirm">Staðfesta</button>
 </form>

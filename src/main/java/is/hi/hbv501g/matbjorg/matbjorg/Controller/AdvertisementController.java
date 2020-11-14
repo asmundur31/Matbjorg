@@ -86,7 +86,8 @@ public class AdvertisementController {
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
     public String addAdvertisementPOST(@RequestParam("picture") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "addAdvertisement";
+            System.out.println(result.getFieldError());
+            return "redirect:/addadvertisement";
         }
         advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"), picture);
         model.addAttribute("advertisements", advertisementService.findByActive(true));

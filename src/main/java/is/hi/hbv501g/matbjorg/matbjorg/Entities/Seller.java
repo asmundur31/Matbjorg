@@ -1,6 +1,8 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +23,17 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column(unique = true)
+
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String password;
 
-    @Column(unique = true)
+    @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
+    @Column(unique = true, nullable = false)
     private String email;
 
     @OneToMany(mappedBy = "owner")
@@ -45,11 +53,12 @@ public class Seller {
 
     /**
      * Smiður fyrir Seller
-     *
+     * @param name strengur
      * @param email    strengur
      * @param password strengur
      */
-    public Seller(String email, String password) {
+    public Seller(String name, String email, String password) {
+        this.name = name;
         this.password = password;
         this.email = email;
     }

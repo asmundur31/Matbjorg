@@ -14,6 +14,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,12 +27,9 @@ import java.util.Optional;
 public class AdvertisementServiceImplementation implements AdvertisementService {
     /**
      * repository hefur samskipti við töfluna Advertisement í gagnagrunninum
+     * UPLOAD_PICTURE_PATH er strengur sem að hefur rétt path á möppuna sem á að geyma myndir
      */
     AdvertisementRepository repository;
-
-    /**
-     * Strengur sem að hefur rétt path á möppuna sem á að geyma myndir
-     */
     public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir")+"/src/main/resources/static/img/advertisementImages/";
 
     /**
@@ -63,16 +61,21 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     private Boolean uploadImage(MultipartFile picture) {
-        try {
-            byte[] bytes = picture.getBytes();
-            Path path = Paths.get(UPLOAD_PICTURE_PATH, picture.getOriginalFilename());
-            Files.write(path, bytes);
-        } catch (Exception e) {
-            System.out.println("Villa við að uploada mynd");
-            e.printStackTrace();
-            return false;
+        Boolean tokst = false;
+        List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/jpg", "image/gif");
+        // Ef mynd er með rétt extension
+        if(contentTypes.contains(picture.getContentType())) {
+            try {
+                byte[] bytes = picture.getBytes();
+                Path path = Paths.get(UPLOAD_PICTURE_PATH, picture.getOriginalFilename());
+                Files.write(path, bytes);
+                tokst = true;
+            } catch (Exception e) {
+                System.out.println("Villa við að uploada mynd");
+                e.printStackTrace();
+            }
         }
-        return true;
+        return tokst;
     }
 
     @Override

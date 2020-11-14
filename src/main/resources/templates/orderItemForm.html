@@ -22,7 +22,7 @@
                             <div  class="pl-2 pt-2"><strong>Gildir til: </strong><p th:text="${advertisement.expireDate}"></p></div>
                             <form action="#" th:action="@{/orderitem/} + ${advertisement.id}" th:object="${orderItem}" method="post" class="pl-2 pt-2">
                                 <div class="input-group">
-                                    <input type="number" th:field="*{amount}" id="amount" placeholder="Magn" step=".25">
+                                    <input type="number" th:field="*{amount}" id="amount" placeholder="Magn" step=".25" value=".25" required>
                                     <div class="input-group-append">
                                         <input class="btn btn-outline-primary" type="submit" value="Setja í körfu">
                                     </div>

@@ -1,6 +1,8 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 
 /**
  * OrderItem er klasi sem býr til og skilgreinir alla eiginleika OrderItem
@@ -19,6 +21,9 @@ public class OrderItem {
 
     @ManyToOne
     private Advertisement advertisement;
+
+    @DecimalMin(value = "0.25")
+    @Column(nullable = false)
     private double amount;
 
     @ManyToOne
