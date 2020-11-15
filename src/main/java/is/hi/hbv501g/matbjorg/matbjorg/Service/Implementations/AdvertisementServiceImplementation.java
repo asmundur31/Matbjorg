@@ -121,7 +121,14 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public List<Advertisement> findByKeyWord(String search) {
         if (search != null) {
-            return repository.findByKeyWord(search);
+            List<Advertisement> found = repository.findByKeyWord(search);
+            List<Advertisement> foundAndActive = new ArrayList<>();
+            for (Advertisement ad : found) {
+                if (ad.isActive()) {
+                    foundAndActive.add(ad);
+                }
+            }
+            return foundAndActive;
         }
         return repository.findAll();
     }
@@ -133,7 +140,9 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             for (Seller seller : sellerList) {
                 List<Advertisement> advertisementBySeller = repository.findByOwner(seller);
                 for (Advertisement advertisement : advertisementBySeller) {
-                    advertisementList.add(advertisement);
+                    if (advertisement.isActive()) {
+                        advertisementList.add(advertisement);
+                    }
                 }
             }
             return advertisementList;
@@ -156,10 +165,8 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
 
             for (Tag tag : listOfTags) {
                 for (Advertisement advertisement : advertisements) {
-                    if (advertisement.getTags().contains(tag)) {
-                        if (!filterResults.contains(advertisement)) {
-                            filterResults.add(advertisement);
-                        }
+                    if (advertisement.getTags().contains(tag) && !filterResults.contains(advertisement) && advertisement.isActive()) {
+                        filterResults.add(advertisement);
                     }
                 }
             }

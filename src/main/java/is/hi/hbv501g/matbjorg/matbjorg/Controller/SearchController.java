@@ -50,7 +50,7 @@ public class SearchController {
      */
     @RequestMapping("/search")
     public String Search(Model model, HttpSession session) {
-        model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("advertisements", advertisementService.findByActive(true));
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
 
@@ -73,7 +73,7 @@ public class SearchController {
      */
     @RequestMapping("/showAllAdvertisements")
     public String showAll(Model model, HttpSession session) {
-        model.addAttribute("advertisements", advertisementService.findAll());
+        model.addAttribute("advertisements", advertisementService.findByActive(true));
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
 
