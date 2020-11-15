@@ -82,4 +82,8 @@ public interface AdvertisementService {
      * @return skilar lista af auglýsingum sem valin tög eiga
      */
     List<Advertisement> filterByTags(List<String> tags);
+
+    List<Advertisement> createdToday();
+
+    List<Advertisement> expireToday();
 }

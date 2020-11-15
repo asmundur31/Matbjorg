@@ -60,6 +60,10 @@ public class Advertisement {
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime expireDate;
 
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdAt;
+
     @OneToMany(mappedBy = "advertisement")
     private List<OrderItem> items = new ArrayList<>();
 
@@ -79,6 +83,7 @@ public class Advertisement {
         this.originalAmount = originalAmount;
         this.price = price;
         this.expireDate = expireDate;
+        this.createdAt = LocalDateTime.now();
         this.tags = tags;
     }
 
@@ -176,6 +181,14 @@ public class Advertisement {
 
     public void setPictureName(String pictureName) {
         this.pictureName = pictureName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

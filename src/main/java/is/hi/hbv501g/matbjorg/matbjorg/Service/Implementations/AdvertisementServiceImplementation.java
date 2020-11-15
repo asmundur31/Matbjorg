@@ -5,6 +5,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -12,7 +13,9 @@ import org.springframework.web.multipart.MultipartFile;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -50,6 +53,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture) {
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
+        advertisement.setCreatedAt(LocalDateTime.now());
         // Uploadum myndinni í img/advertisementImages
         Boolean tokst = uploadImage(picture);
         if(tokst) {
@@ -173,5 +177,29 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             return filterResults;
         }
         return repository.findAll();
+    }
+
+    @Override
+    public List<Advertisement> createdToday() {
+        LocalDate lt = LocalDate.now();
+        List<Advertisement> adToday = new ArrayList<>();
+        for(Advertisement ad: repository.findAll()){
+            if(lt.isEqual(ad.getCreatedAt().toLocalDate())) {
+                adToday.add(ad);
+            }
+        }
+        return adToday;
+    }
+
+    @Override
+    public List<Advertisement> expireToday() {
+        LocalDate lt = LocalDate.now();
+        List<Advertisement> exToday = new ArrayList<>();
+        for(Advertisement ad: repository.findAll()){
+            if(lt.isEqual(ad.getExpireDate().toLocalDate())) {
+                exToday.add(ad);
+            }
+        }
+        return exToday;
     }
 }
