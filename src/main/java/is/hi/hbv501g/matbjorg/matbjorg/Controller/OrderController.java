@@ -59,7 +59,7 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        Order o = orderService.findByBuyerAndActive(b, true);
+        Order o = orderService.findByBuyerAndActive(b, true).get(0);
         model.addAttribute("order", o);
         model.addAttribute("buyer", b);
         model.addAttribute("totalPrice", orderService.totalPrice(o));
@@ -140,12 +140,16 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        Order o = orderService.findByBuyerAndActive(b, true);
+        Order o = orderService.findByBuyerAndActive(b, true).get(0);
+        o.setTimeOfPurchase(LocalDateTime.now());
+        o.setTotalPrice(orderService.totalPrice(o));
         o = orderService.confirmOrder(o);
+
         if (o == null) {
             // Eitthver villuskilaboð um að eitthver hluttur í körfunni er active=false eða currentAmount < amount
             return "redirect:/order";
         }
+
         model.addAttribute("order", o);
         model.addAttribute("time", LocalDateTime.now());
         model.addAttribute("totalPrice", orderService.totalPrice(o));
