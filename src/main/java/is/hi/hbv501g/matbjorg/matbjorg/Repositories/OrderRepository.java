@@ -59,5 +59,5 @@ public interface OrderRepository extends JpaRepository<Order, Long> {
      * @param active boolean gildi
      * @return Order hlutur sem hefur buyer sem Buyer og Active=active
      */
-    Order findByBuyerAndActive(Buyer buyer, boolean active);
+    List<Order> findByBuyerAndActive(Buyer buyer, boolean active);
 }

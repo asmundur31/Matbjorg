@@ -2,7 +2,6 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.OrderItem;
 
 import java.util.List;
 import java.util.Optional;
@@ -56,7 +55,7 @@ public interface OrderService {
      * @param active boolean gildi
      * @return Hlutur af taginu Order sem hefur buyer sem Buyer og Active=active
      */
-    Order findByBuyerAndActive(Buyer buyer, boolean active);
+    List<Order> findByBuyerAndActive(Buyer buyer, boolean active);
 
     /**
      * Staðfestir order og setur Active=false ef gengur upp
