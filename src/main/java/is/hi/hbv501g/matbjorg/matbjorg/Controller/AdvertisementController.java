@@ -69,7 +69,9 @@ public class AdvertisementController {
         if(seller == null) {
             return "redirect:/";
         }
-        model.addAttribute("advertisement", new Advertisement());
+        Advertisement newAdvertisement = new Advertisement();
+        newAdvertisement.setOriginalAmount(0.25);
+        model.addAttribute("advertisement", newAdvertisement);
         model.addAttribute("tags", Tag.values());
         return "addAdvertisement";
     }
