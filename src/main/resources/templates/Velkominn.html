@@ -53,7 +53,7 @@
     </section>
     <h3>Nýjar auglýsingar</h3>
     <div th:switch="${#lists.size(adToday)}">
-        <h2 th:case="0"> Það eru engar nýjar auglýsingar í dag</h2>
+        <h4 th:case="0"> Það eru engar nýjar auglýsingar í dag</h4>
         <div th:case="*">
             <table>
                 <thead>
@@ -70,6 +70,38 @@
                 </thead>
                 <tbody>
                 <tr th:each="advertisement : ${adToday}">
+                    <td th:text="${advertisement.owner}"></td>
+                    <td th:text="${advertisement.name}"></td>
+                    <td th:text="${advertisement.description}"></td>
+                    <td th:text="${advertisement.originalAmount}"></td>
+                    <td th:text="${advertisement.currentAmount}"></td>
+                    <td th:text="${advertisement.price}"></td>
+                    <td th:text="${advertisement.expireDate}"></td>
+                    <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <h3>Síðasti séns</h3>
+    <div th:switch="${#lists.size(lastChance)}">
+        <h4 th:case="0"> Það renna engar auglýsingar út í dag</h4>
+        <div th:case="*">
+            <table>
+                <thead>
+                <tr>
+                    <th>Söluaðili</th>
+                    <th>Heiti</th>
+                    <th>Lýsing</th>
+                    <th>Upphaflegt magn</th>
+                    <th>Eftirstöðvar</th>
+                    <th>Verð</th>
+                    <th>Gildir til</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="advertisement : ${lastChance}">
                     <td th:text="${advertisement.owner}"></td>
                     <td th:text="${advertisement.name}"></td>
                     <td th:text="${advertisement.description}"></td>

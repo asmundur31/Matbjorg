@@ -84,4 +84,6 @@ public interface AdvertisementService {
     List<Advertisement> filterByTags(List<String> tags);
 
     List<Advertisement> createdToday();
+
+    List<Advertisement> expireToday();
 }

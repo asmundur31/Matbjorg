@@ -41,6 +41,7 @@ public class HomeController {
             model.addAttribute("userType", userType);
         }
         model.addAttribute("adToday", advertisementService.createdToday());
+        model.addAttribute("lastChance", advertisementService.expireToday());
         return "Velkominn";
     }
 }
