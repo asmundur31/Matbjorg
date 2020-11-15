@@ -58,7 +58,9 @@ public class OrderItemController {
             return "redirect:/advertisements";
         }
         model.addAttribute("advertisement", ad.get());
-        model.addAttribute("orderItem", new OrderItem());
+        OrderItem newOrderItem = new OrderItem();
+        newOrderItem.setAmount(0.25);
+        model.addAttribute("orderItem", newOrderItem);
         return "orderItemForm";
     }
 
