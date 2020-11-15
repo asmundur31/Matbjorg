@@ -34,7 +34,12 @@ public class HomeController {
     @RequestMapping("/")
     public String Home(Model model, HttpSession session) {
         model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
-        model.addAttribute("userType", session.getAttribute("userType"));
+        String userType = (String) session.getAttribute("userType");
+        if(userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
         model.addAttribute("adToday", advertisementService.createdToday());
         return "Velkominn";
     }
