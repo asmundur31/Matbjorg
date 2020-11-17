@@ -1,15 +1,31 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+    </head>
     <title>Signup</title>
 </head>
 <body>
-<h1>Nýskráning</h1>
-<p><a href="/signup/newseller">Ég er söluaðili</a></p>
-<p><a href="/signup/newbuyer">Ég er kaupandi</a></p>
+<div th:insert="Fragments/navbar.html"></div>
+<section class="container d-flex flex-column justify-content-center vh-an-navbar">
+        <div class="row signup-header">
+            <div class="col text-center pb-md-4">
+                <h1 class="signup-heading">Nýskráning</h1>
+                <p class="signup-text lead text-muted">
+                    Hér getur þú valið söluaðili, sem er notandi sem getur aðeins sellt vörur en ekki keypt þær, eða kaupandi,
+                    sem er notandi sem getur aðeins keypt vörur en ekki sellt þær.
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col border-r-thick">
+                <a class="signup-option btn btn-primary btn-block p-4 shadow font-2x" href="/signup/newseller">Ég er söluaðili</a>
+            </div>
+            <div class="col">
+                <a class="signup-option btn btn-primary btn-block p-4 shadow font-2x" href="/signup/newbuyer">Ég er kaupandi</a>
+            </div>
+        </div>
+</section>
+
 </body>
 </html>
