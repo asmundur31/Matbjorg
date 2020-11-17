@@ -6802,6 +6802,10 @@ button.bg-dark:focus {
   border: 1px solid #dee2e6 !important;
 }
 
+.border-r-thick {
+  border-right: 5px solid #dee2e6 !important;
+}
+
 .border-top {
   border-top: 1px solid #dee2e6 !important;
 }
@@ -8125,6 +8129,10 @@ button.bg-dark:focus {
 
 .vh-100 {
   height: 100vh !important;
+}
+
+.vh-an-navbar {
+  height: 96vh !important;
 }
 
 .m-0 {
@@ -10067,6 +10075,10 @@ button.bg-dark:focus {
 
 .font-italic {
   font-style: italic !important;
+}
+
+.font-2x {
+  font-size: 2rem;
 }
 
 .text-white {
