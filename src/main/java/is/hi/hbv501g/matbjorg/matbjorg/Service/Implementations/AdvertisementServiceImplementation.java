@@ -54,24 +54,28 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
         advertisement.setCreatedAt(LocalDateTime.now());
+        // Vistum auglýsinguna í gagnagrunnin til að gefa því id
+        repository.save(advertisement);
+        // Pössu uppá að þetta sé unique nafn
+        String pictureName = "("+advertisement.getId()+")"+picture.getOriginalFilename();
         // Uploadum myndinni í img/advertisementImages
-        Boolean tokst = uploadImage(picture);
+        Boolean tokst = uploadImage(picture, pictureName);
         if(tokst) {
-            advertisement.setPictureName(picture.getOriginalFilename());
+            advertisement.setPictureName(pictureName);
         } else {
             advertisement.setPictureName("default.jpg");
         }
         return repository.save(advertisement);
     }
 
-    private Boolean uploadImage(MultipartFile picture) {
+    private Boolean uploadImage(MultipartFile picture, String pictureName) {
         Boolean tokst = false;
         List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/jpg", "image/gif");
         // Ef mynd er með rétt extension
         if(contentTypes.contains(picture.getContentType())) {
             try {
                 byte[] bytes = picture.getBytes();
-                Path path = Paths.get(UPLOAD_PICTURE_PATH, picture.getOriginalFilename());
+                Path path = Paths.get(UPLOAD_PICTURE_PATH, pictureName);
                 Files.write(path, bytes);
                 tokst = true;
             } catch (Exception e) {
