@@ -1,21 +1,27 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Picture;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
+import is.hi.hbv501g.matbjorg.matbjorg.Repositories.PictureRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import org.springframework.util.FileCopyUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,7 +38,8 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
      * repository hefur samskipti við töfluna Advertisement í gagnagrunninum
      * UPLOAD_PICTURE_PATH er strengur sem að hefur rétt path á möppuna sem á að geyma myndir
      */
-    AdvertisementRepository repository;
+    AdvertisementRepository advertisementRepository;
+    PictureRepository pictureRepository;
     public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir")+"/src/main/resources/static/img/advertisementImages/";
 
     /**
@@ -40,32 +47,46 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
      * @param advertisementRepository repository sem hefur samskipti við töfluna Advertisement í gagnagrunninum
      */
     @Autowired
-    public AdvertisementServiceImplementation(AdvertisementRepository advertisementRepository) {
-        this.repository = advertisementRepository;
+    public AdvertisementServiceImplementation(AdvertisementRepository advertisementRepository, PictureRepository pictureRepository) {
+        this.advertisementRepository = advertisementRepository;
+        this.pictureRepository = pictureRepository;
     }
 
     @Override
     public List<Advertisement> findByActive(boolean active) {
-        return repository.findByActive(active);
+        return advertisementRepository.findByActive(active);
     }
 
     @Override
     public Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture) {
+        // Byrjum á því að vista myndina
+        String pictureName = StringUtils.cleanPath(picture.getOriginalFilename());
+        Picture pic = new Picture();
+        try {
+            pic = new Picture(pictureName, picture.getContentType(), picture.getBytes());
+        } catch (IOException e) {
+            // Förum hingað ef valda myndin klikkar
+            // Setja default mynd
+            Resource resource = new ClassPathResource(UPLOAD_PICTURE_PATH+"default.jpg");
+            try {
+                // Reynum að sækja default mynd í file system
+                InputStream inputStream = resource.getInputStream();
+                pic = new Picture("default", "jpg", FileCopyUtils.copyToByteArray(inputStream));
+            } catch (IOException ioException) {
+                // Allt klikkar, ættum vonandi aldrei að lenda í þessu
+                ioException.printStackTrace();
+            }
+        }
+        pictureRepository.save(pic);
+
+        // Næst vistum við auglýsinguna
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
         advertisement.setCreatedAt(LocalDateTime.now());
-        // Vistum auglýsinguna í gagnagrunnin til að gefa því id
-        repository.save(advertisement);
-        // Pössu uppá að þetta sé unique nafn
-        String pictureName = "("+advertisement.getId()+")"+picture.getOriginalFilename();
-        // Uploadum myndinni í img/advertisementImages
-        Boolean tokst = uploadImage(picture, pictureName);
-        if(tokst) {
-            advertisement.setPictureName(pictureName);
-        } else {
-            advertisement.setPictureName("default.jpg");
-        }
-        return repository.save(advertisement);
+        advertisement.setPicture(pic);
+
+        System.out.println("Hér");
+        return advertisementRepository.save(advertisement);
     }
 
     private Boolean uploadImage(MultipartFile picture, String pictureName) {
@@ -88,48 +109,48 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
 
     @Override
     public void delete(Advertisement advertisement) {
-        repository.delete(advertisement);
+        advertisementRepository.delete(advertisement);
     }
 
    @Override
     public void updateActive() {
         LocalDateTime lt = LocalDateTime.now();
-        for(Advertisement ad: repository.findAll()){
+        for(Advertisement ad: advertisementRepository.findAll()){
             if(ad.getCurrentAmount()<=0 || lt.compareTo(ad.getExpireDate())>0) {
-                repository.updateActive(ad.getId(),false);
+                advertisementRepository.updateActive(ad.getId(),false);
             }
         }
     }
 
     @Override
     public List<Advertisement> findAll() {
-        return repository.findAll();
+        return advertisementRepository.findAll();
     }
 
     @Override
     public List<Advertisement> findByName(String name) {
-        return repository.findByName(name);
+        return advertisementRepository.findByName(name);
     }
 
     @Override
     public Optional<Advertisement> findById(long id) {
-        return repository.findById(id);
+        return advertisementRepository.findById(id);
     }
 
     @Override
     public List<Advertisement> findByOwner(Seller seller) {
-        return repository.findByOwner(seller);
+        return advertisementRepository.findByOwner(seller);
     }
 
     @Override
     public List<Advertisement> findByOwnerAndActive(Seller seller, boolean active) {
-        return repository.findByOwnerAndActive(seller, active);
+        return advertisementRepository.findByOwnerAndActive(seller, active);
     }
 
     @Override
     public List<Advertisement> findByKeyWord(String search) {
         if (search != null) {
-            List<Advertisement> found = repository.findByKeyWord(search);
+            List<Advertisement> found = advertisementRepository.findByKeyWord(search);
             List<Advertisement> foundAndActive = new ArrayList<>();
             for (Advertisement ad : found) {
                 if (ad.isActive()) {
@@ -138,7 +159,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             }
             return foundAndActive;
         }
-        return repository.findAll();
+        return advertisementRepository.findAll();
     }
 
     @Override
@@ -146,7 +167,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         if (!sellerList.isEmpty()) {
             List<Advertisement> advertisementList = new ArrayList<Advertisement>();
             for (Seller seller : sellerList) {
-                List<Advertisement> advertisementBySeller = repository.findByOwner(seller);
+                List<Advertisement> advertisementBySeller = advertisementRepository.findByOwner(seller);
                 for (Advertisement advertisement : advertisementBySeller) {
                     if (advertisement.isActive()) {
                         advertisementList.add(advertisement);
@@ -155,7 +176,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             }
             return advertisementList;
         }
-        return repository.findAll();
+        return advertisementRepository.findAll();
     }
 
     @Override
@@ -168,7 +189,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
                 listOfTags.add(Tag.valueOf(tag));
             }
 
-            List<Advertisement> advertisements = repository.findAll();
+            List<Advertisement> advertisements = advertisementRepository.findAll();
             List<Advertisement> filterResults = new ArrayList<>();
 
             for (Tag tag : listOfTags) {
@@ -180,14 +201,14 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             }
             return filterResults;
         }
-        return repository.findAll();
+        return advertisementRepository.findAll();
     }
 
     @Override
     public List<Advertisement> createdToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> adToday = new ArrayList<>();
-        for(Advertisement ad: repository.findAll()){
+        for(Advertisement ad: advertisementRepository.findAll()){
             if(lt.isEqual(ad.getCreatedAt().toLocalDate())) {
                 adToday.add(ad);
             }
@@ -199,7 +220,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public List<Advertisement> expireToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> exToday = new ArrayList<>();
-        for(Advertisement ad: repository.findAll()){
+        for(Advertisement ad: advertisementRepository.findAll()){
             if(lt.isEqual(ad.getExpireDate().toLocalDate())) {
                 exToday.add(ad);
             }

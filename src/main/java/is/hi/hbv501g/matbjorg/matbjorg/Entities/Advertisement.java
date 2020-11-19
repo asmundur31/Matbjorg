@@ -71,7 +71,10 @@ public class Advertisement {
     @Column(name = "tag", nullable = false)
     @CollectionTable(name = "advertisement_tags", joinColumns = {@JoinColumn(name = "advertisement_id")})
     private Set<Tag> tags;
-    private String pictureName;
+
+    @OneToOne
+    @JoinColumn(name = "picture_id", referencedColumnName = "id")
+    private Picture picture;
 
     public Advertisement() {
     }
@@ -175,12 +178,12 @@ public class Advertisement {
         this.tags = tags;
     }
 
-    public String getPictureName() {
-        return pictureName;
+    public Picture getPicture() {
+        return picture;
     }
 
-    public void setPictureName(String pictureName) {
-        this.pictureName = pictureName;
+    public void setPicture(Picture picture) {
+        this.picture = picture;
     }
 
     public LocalDateTime getCreatedAt() {

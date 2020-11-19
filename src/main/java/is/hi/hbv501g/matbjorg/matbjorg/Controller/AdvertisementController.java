@@ -86,8 +86,9 @@ public class AdvertisementController {
      * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
-    public String addAdvertisementPOST(@RequestParam("picture") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
+    public String addAdvertisementPOST(@RequestParam("pic") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
+            System.out.println("Hérna");
             System.out.println(result.getFieldError());
             return "redirect:/addadvertisement";
         }
