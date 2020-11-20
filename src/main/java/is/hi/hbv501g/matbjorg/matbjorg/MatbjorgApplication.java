@@ -14,7 +14,7 @@ import java.io.File;
 public class MatbjorgApplication {
 
     public static void main(String[] args) {
-        new File(AdvertisementServiceImplementation.UPLOAD_PICTURE_PATH).mkdir();
+        new File("/src/main/resources/static/img/advertisementImages/").mkdir();
         SpringApplication.run(MatbjorgApplication.class, args);
     }
 
