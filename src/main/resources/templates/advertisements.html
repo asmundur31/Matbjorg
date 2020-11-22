@@ -1,8 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
+    <link th:href="@{/css/bootstrap.css}"
+          rel="stylesheet" media="screen"/>
+    <link th:href="@{/css/main.css}"
           rel="stylesheet" media="screen"/>
     <meta charset="UTF-8">
     <title>Advertisments</title>
@@ -22,6 +23,7 @@
                 <th>Eftirstöðvar</th>
                 <th>Verð</th>
                 <th>Gildir til</th>
+                <th>Mynd</th>
                 <th></th>
             </tr>
             </thead>
@@ -34,6 +36,7 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
+                <td><img th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img advertisement-image" th:alt="${advertisement.pictureName}"></td>
                 <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
             </tr>
             </tbody>

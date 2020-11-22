@@ -44,3 +44,7 @@ body {
 .card-linkable:hover {
     color: inherit;
 }
+
+.advertisement-image {
+  width: 200px;
+}
