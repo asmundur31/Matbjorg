@@ -8,7 +8,7 @@
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${seller.name}"></h1>
+<h1 th:text="${seller.name} + ' söluaðili'"></h1>
 <p th:text="${seller.email}"></p>
 <hr>
 <div th:switch="${#lists.size(advertisementsActive)}">

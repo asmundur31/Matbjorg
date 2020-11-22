@@ -11,14 +11,34 @@
                 </div>
             </div>
         </form>
-        <ul class="navbar-nav nav-auto">
-            <li class="nav-item">
-                <a href="#" class="nav-link">Mitt svæði</a>
-            </li>
-            <li class="nav item ml-auto">
-                <a href="#" class="nav-link">Karfa</a>
-            </li>
-        </ul>
+        <div th:switch="${loggedInUser}">
+            <div th:case="null">
+                <ul class="navbar-nav nav-auto">
+                    <li class="nav-item">
+                        <a href="/login" class="nav-link">Innskráning</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/signup" class="nav-link">Nýskráning</a>
+                    </li>
+                    <li class="nav item ml-auto">
+                        <a th:href="@{/order}" th:if="${userType} == 'buyer'" class="nav-link">Karfa</a>
+                    </li>
+                </ul>
+            </div>
+            <div th:case="*">
+                <ul class="navbar-nav nav-auto">
+                    <li class="nav-item">
+                        <a th:href="@{/profile/} + ${userType}" th:text="${loggedInUser.name}" class="nav-link"></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/logout" class="nav-link">Útskráning</a>
+                    </li>
+                    <li class="nav item ml-auto">
+                        <a th:href="@{/order}" th:if="${userType} == 'buyer'" class="nav-link">Karfa</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
     </nav>
 </div>
 </html>
