@@ -49,7 +49,7 @@ public class BuyerController {
         if(buyer == null) {
             return "redirect:/";
         }
-        model.addAttribute("Buyer", buyer);
+        model.addAttribute("buyer", buyer);
         model.addAttribute("previousOrders", orderService.findByBuyerAndActive(buyer, false));
         return "buyerProfile";
     }
