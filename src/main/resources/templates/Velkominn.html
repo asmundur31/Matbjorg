@@ -42,7 +42,7 @@
                             <div th:case="*">
                                 <h5 class="card-title">Profile</h5>
                                 <a th:href="@{/profile/} + ${userType}">Heimasvæði</a>
-                                <a th:href="@{/order}" th:if="${userType} == 'buyer'">Skoða körfu</a>
+                                <a th:href="@{/order}" th:if="${userType} == 'Buyer'">Skoða körfu</a>
                                 <a href="/logout">Útskráning</a>
                             </div>
                         </div>
@@ -77,7 +77,7 @@
                     <td th:text="${advertisement.currentAmount}"></td>
                     <td th:text="${advertisement.price}"></td>
                     <td th:text="${advertisement.expireDate}"></td>
-                    <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
+                    <td><a th:href="@{/orderItem/} + ${advertisement.id}" th:if="${userType.equals('Buyer')}">Skoða</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -109,7 +109,7 @@
                     <td th:text="${advertisement.currentAmount}"></td>
                     <td th:text="${advertisement.price}"></td>
                     <td th:text="${advertisement.expireDate}"></td>
-                    <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
+                    <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('Buyer')}">Skoða</a></td>
                 </tr>
                 </tbody>
             </table>

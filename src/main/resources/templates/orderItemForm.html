@@ -20,7 +20,7 @@
                             <p th:text="${advertisement.description}" class="pl-2 pt-2 lead"></p>
                             <div  class="pl-2 pt-2"><strong>Eftirstöðvar: </strong><p th:text="${advertisement.currentAmount}"></p></div>
                             <div  class="pl-2 pt-2"><strong>Gildir til: </strong><p th:text="${advertisement.expireDate}"></p></div>
-                            <form action="#" th:action="@{/orderitem/} + ${advertisement.id}" th:object="${orderItem}" method="post" class="pl-2 pt-2">
+                            <form action="#" th:action="@{/orderItem/} + ${advertisement.id}" th:object="${orderItem}" method="post" class="pl-2 pt-2">
                                 <div class="input-group">
                                     <div class="input-group-append">
                                         <input class="btn btn-outline-primary" type="submit" value="Setja í körfu">

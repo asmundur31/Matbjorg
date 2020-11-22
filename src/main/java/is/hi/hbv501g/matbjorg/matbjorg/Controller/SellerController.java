@@ -42,14 +42,14 @@ public class SellerController {
      * @return ef notandi er ekki af taginu Seller þá er hann sendur til baka á upphafs síðu,
      * annars á heimasvæði þar sem birtar eru upplýsingar um hann
      */
-    @RequestMapping(value = "/profile/seller")
+    @RequestMapping(value = "/profile/Seller")
     public String sellerProfile(Model model, HttpSession session) {
         advertisementService.updateActive();
         Seller seller = (Seller) session.getAttribute("loggedInUser");
         if (seller == null) {
             return "redirect:/";
         }
-        model.addAttribute("seller", seller);
+        model.addAttribute("Seller", seller);
         model.addAttribute("advertisementsActive", advertisementService.findByOwnerAndActive(seller, true));
         model.addAttribute("advertisementsInactive", advertisementService.findByOwnerAndActive(seller, false));
         return "sellerProfile";

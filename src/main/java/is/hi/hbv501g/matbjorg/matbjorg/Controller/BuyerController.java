@@ -43,13 +43,13 @@ public class BuyerController {
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return skilar okkur á forsíðuna ef notandi er ekki Buyer. Annars förum við á heimasvæði kaupanda
      */
-    @RequestMapping(value = "/profile/buyer")
+    @RequestMapping(value = "/profile/Buyer")
     public String buyerProfile(Model model, HttpSession session) {
         Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
         if(buyer == null) {
             return "redirect:/";
         }
-        model.addAttribute("buyer", buyer);
+        model.addAttribute("Buyer", buyer);
         model.addAttribute("previousOrders", orderService.findByBuyerAndActive(buyer, false));
         return "buyerProfile";
     }
