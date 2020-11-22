@@ -8,7 +8,7 @@
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${buyer.name}"></h1>
+<h1 th:text="${buyer.name} + ' kaupandi'"></h1>
 <p th:text = ${buyer.email}></p>
 <hr>
 <div th:switch="${#lists.size(previousOrders)}">
