@@ -53,7 +53,14 @@ public class OrderItemController {
      *         skránni sem birtir auglýsinguna sem var valin
      */
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
-    public String addToOrderGET(@PathVariable long advertisementId, Model model) {
+    public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
+        Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
+        if(buyer == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInUser", buyer);
+        model.addAttribute("userType", "buyer");
+        
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
             model.addAttribute("advertisements", advertisementService.findAll());
