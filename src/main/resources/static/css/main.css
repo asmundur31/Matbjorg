@@ -1,0 +1,66 @@
+html,
+body {
+    width: 100%;
+    min-height: 100vh;
+}
+
+#hero-section {
+  width: 100%;
+  height: 40vh;
+  background-repeat: no-repeat;
+  background-image: url('https://source.unsplash.com/O70hwncRDC8');
+  background-attachment: fixed;
+  background-size: 100%;
+}
+
+.main-nav {
+  justify-content: space-between;
+}
+
+.main-search-box {
+  width: 50%;
+}
+
+.searchBar {
+  border: 1px solid white;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  outline: none;
+}
+
+.main-cards {
+  align-items: stretch;
+}
+
+.main-cards > *{
+  min-height: 25vh;
+}
+
+.card-linkable {
+  text-decoration: none;
+  color: inherit;
+}
+
+.card-linkable:hover {
+    color: inherit;
+}
+
+.advertisement-image {
+  width: 200px;
+}
+
+.lowercase-capitalize {
+    text-transform: lowercase;
+}
+
+.lowercase-capitalize:first-letter {
+    text-transform: uppercase;
+}
+
+.btn-delete {
+  background-color: #b21f2d;
+}
+
+.btn-delete:hover {
+  background-color: #721c24;
+}

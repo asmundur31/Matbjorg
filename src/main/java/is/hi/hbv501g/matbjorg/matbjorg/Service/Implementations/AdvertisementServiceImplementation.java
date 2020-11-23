@@ -1,17 +1,23 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
+import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpSession;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,8 +30,10 @@ import java.util.Optional;
 public class AdvertisementServiceImplementation implements AdvertisementService {
     /**
      * repository hefur samskipti við töfluna Advertisement í gagnagrunninum
+     * UPLOAD_PICTURE_PATH er strengur sem að hefur rétt path á möppuna sem á að geyma myndir
      */
     AdvertisementRepository repository;
+    public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir")+"/src/main/resources/static/img/advertisementImages/";
 
     /**
      * Smiður fyrir AdvertisementServiceImplementation
@@ -42,10 +50,40 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     }
 
     @Override
-    public Advertisement save(Advertisement advertisement, Seller seller) {
+    public Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture) {
         advertisement.setOwner(seller);
         advertisement.setCurrentAmount(advertisement.getOriginalAmount());
+        advertisement.setCreatedAt(LocalDateTime.now());
+        // Vistum auglýsinguna í gagnagrunnin til að gefa því id
+        repository.save(advertisement);
+        // Pössu uppá að þetta sé unique nafn
+        String pictureName = "("+advertisement.getId()+")"+picture.getOriginalFilename();
+        // Uploadum myndinni í img/advertisementImages
+        Boolean tokst = uploadImage(picture, pictureName);
+        if(tokst) {
+            advertisement.setPictureName(pictureName);
+        } else {
+            advertisement.setPictureName("default.jpg");
+        }
         return repository.save(advertisement);
+    }
+
+    private Boolean uploadImage(MultipartFile picture, String pictureName) {
+        Boolean tokst = false;
+        List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/jpg", "image/gif");
+        // Ef mynd er með rétt extension
+        if(contentTypes.contains(picture.getContentType())) {
+            try {
+                byte[] bytes = picture.getBytes();
+                Path path = Paths.get(UPLOAD_PICTURE_PATH, pictureName);
+                Files.write(path, bytes);
+                tokst = true;
+            } catch (Exception e) {
+                System.out.println("Villa við að uploada mynd");
+                e.printStackTrace();
+            }
+        }
+        return tokst;
     }
 
     @Override
@@ -91,7 +129,14 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     @Override
     public List<Advertisement> findByKeyWord(String search) {
         if (search != null) {
-            return repository.findByKeyWord(search);
+            List<Advertisement> found = repository.findByKeyWord(search);
+            List<Advertisement> foundAndActive = new ArrayList<>();
+            for (Advertisement ad : found) {
+                if (ad.isActive()) {
+                    foundAndActive.add(ad);
+                }
+            }
+            return foundAndActive;
         }
         return repository.findAll();
     }
@@ -103,7 +148,9 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             for (Seller seller : sellerList) {
                 List<Advertisement> advertisementBySeller = repository.findByOwner(seller);
                 for (Advertisement advertisement : advertisementBySeller) {
-                    advertisementList.add(advertisement);
+                    if (advertisement.isActive()) {
+                        advertisementList.add(advertisement);
+                    }
                 }
             }
             return advertisementList;
@@ -126,15 +173,37 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
 
             for (Tag tag : listOfTags) {
                 for (Advertisement advertisement : advertisements) {
-                    if (advertisement.getTags().contains(tag)) {
-                        if (!filterResults.contains(advertisement)) {
-                            filterResults.add(advertisement);
-                        }
+                    if (advertisement.getTags().contains(tag) && !filterResults.contains(advertisement) && advertisement.isActive()) {
+                        filterResults.add(advertisement);
                     }
                 }
             }
             return filterResults;
         }
         return repository.findAll();
+    }
+
+    @Override
+    public List<Advertisement> createdToday() {
+        LocalDate lt = LocalDate.now();
+        List<Advertisement> adToday = new ArrayList<>();
+        for(Advertisement ad: repository.findAll()){
+            if(lt.isEqual(ad.getCreatedAt().toLocalDate())) {
+                adToday.add(ad);
+            }
+        }
+        return adToday;
+    }
+
+    @Override
+    public List<Advertisement> expireToday() {
+        LocalDate lt = LocalDate.now();
+        List<Advertisement> exToday = new ArrayList<>();
+        for(Advertisement ad: repository.findAll()){
+            if(lt.isEqual(ad.getExpireDate().toLocalDate())) {
+                exToday.add(ad);
+            }
+        }
+        return exToday;
     }
 }

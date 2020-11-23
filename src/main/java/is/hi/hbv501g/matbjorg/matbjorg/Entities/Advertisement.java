@@ -3,8 +3,10 @@ package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 /**
@@ -29,18 +31,38 @@ public class Advertisement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String name;
 
     @ManyToOne
     private Seller owner;
+
+    @NotEmpty
+    @Column(nullable = false)
     private String description;
     private boolean active = true;
+
+    @DecimalMin(value = "0.25")
+    @Column(nullable = false)
     private double originalAmount;
+
+    @Min(0)
+    @Column(nullable = false)
     private double currentAmount;
+
+    @Min(0)
+    @Column(nullable = false)
     private double price;
 
+    @Column(nullable = false)
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime expireDate;
+
+    @Column(nullable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime createdAt;
 
     @OneToMany(mappedBy = "advertisement")
     private List<OrderItem> items = new ArrayList<>();
@@ -49,6 +71,7 @@ public class Advertisement {
     @Column(name = "tag", nullable = false)
     @CollectionTable(name = "advertisement_tags", joinColumns = {@JoinColumn(name = "advertisement_id")})
     private Set<Tag> tags;
+    private String pictureName;
 
     public Advertisement() {
     }
@@ -60,6 +83,7 @@ public class Advertisement {
         this.originalAmount = originalAmount;
         this.price = price;
         this.expireDate = expireDate;
+        this.createdAt = LocalDateTime.now();
         this.tags = tags;
     }
 
@@ -149,6 +173,22 @@ public class Advertisement {
 
     public void setTags(Set<Tag> tags) {
         this.tags = tags;
+    }
+
+    public String getPictureName() {
+        return pictureName;
+    }
+
+    public void setPictureName(String pictureName) {
+        this.pictureName = pictureName;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 
     @Override

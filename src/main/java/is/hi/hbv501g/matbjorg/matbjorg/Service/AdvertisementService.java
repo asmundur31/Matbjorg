@@ -2,7 +2,9 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,7 +19,7 @@ public interface AdvertisementService {
      * @param seller eigandi auglýsingar
      * @return auglýsing sem var verið að vista
      */
-    Advertisement save(Advertisement advertisement, Seller seller);
+    Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture);
 
     /**
      * Eyðir auglýsingu
@@ -80,4 +82,8 @@ public interface AdvertisementService {
      * @return skilar lista af auglýsingum sem valin tög eiga
      */
     List<Advertisement> filterByTags(List<String> tags);
+
+    List<Advertisement> createdToday();
+
+    List<Advertisement> expireToday();
 }

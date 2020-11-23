@@ -4,6 +4,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,16 +20,21 @@ import javax.servlet.http.HttpSession;
 public class BuyerController {
     /**
      * buyerService er þjónusta fyrir Buyer
+     * orderService er þjónusta fyrir Order
      */
     private BuyerService buyerService;
+    private OrderService orderService;
 
     /**
      * Smiður fyrir BuyerController
+     *
      * @param buyerService þjónusta fyrir Buyer
+     * @param orderService þjónusta fyrir Order
      */
     @Autowired
-    public BuyerController(BuyerService buyerService) {
+    public BuyerController(BuyerService buyerService, OrderService orderService) {
         this.buyerService = buyerService;
+        this.orderService = orderService;
     }
 
     /**
@@ -44,6 +50,7 @@ public class BuyerController {
             return "redirect:/";
         }
         model.addAttribute("buyer", buyer);
+        model.addAttribute("previousOrders", orderService.findByBuyerAndActive(buyer, false));
         return "buyerProfile";
     }
 }

@@ -4,6 +4,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,10 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.Optional;
 
 /**
  * AdvertisementController er controller klasi sem sér um breytingar og birtingar á auglýsingum (klasanum Advertisement)
@@ -26,14 +28,17 @@ public class AdvertisementController {
      * advertisementService er þjónusta fyrir Advertisement
      */
     private AdvertisementService advertisementService;
+    private SellerService sellerService;
 
     /**
      * Smiður fyrir AdvertisementController
      * @param advertisementService þjónusta fyrir Advertisement
+     * @param sellerService þjónusta fyrir Seller
      */
     @Autowired
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, SellerService sellerService) {
         this.advertisementService = advertisementService;
+        this.sellerService = sellerService;
     }
 
     /**
@@ -46,6 +51,8 @@ public class AdvertisementController {
     public String advertisements(Model model, HttpSession session) {
         advertisementService.updateActive();
         model.addAttribute("advertisements", advertisementService.findByActive(true));
+        model.addAttribute("tags", Tag.values());
+        model.addAttribute("sellers", sellerService.findAll());
         String userType = (String) session.getAttribute("userType");
         if(userType == null) {
             model.addAttribute("userType", "noUser");
@@ -68,7 +75,9 @@ public class AdvertisementController {
         if(seller == null) {
             return "redirect:/";
         }
-        model.addAttribute("advertisement", new Advertisement());
+        Advertisement newAdvertisement = new Advertisement();
+        newAdvertisement.setOriginalAmount(0.25);
+        model.addAttribute("advertisement", newAdvertisement);
         model.addAttribute("tags", Tag.values());
         return "addAdvertisement";
     }
@@ -83,11 +92,12 @@ public class AdvertisementController {
      * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
     @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
-    public String addAdvertisementPOST(@Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
+    public String addAdvertisementPOST(@RequestParam("picture") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "addAdvertisement";
+            System.out.println(result.getFieldError());
+            return "redirect:/addadvertisement";
         }
-        advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"));
+        advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"), picture);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
     }

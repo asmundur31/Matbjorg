@@ -91,7 +91,7 @@ public class OrderServiceImplementation implements OrderService {
      * @return kall á fallið findByBuyerAndActive úr orderRepository með buyer og active
      */
     @Override
-    public Order findByBuyerAndActive(Buyer buyer, boolean active) {
+    public List<Order> findByBuyerAndActive(Buyer buyer, boolean active) {
         return orderRepository.findByBuyerAndActive(buyer, active);
     }
 
@@ -133,6 +133,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public double totalPrice(Order order) {
         double total = 0;
+        
         for (OrderItem item : order.getItems()) {
             total += item.getAmount() * item.getAdvertisement().getPrice();
         }

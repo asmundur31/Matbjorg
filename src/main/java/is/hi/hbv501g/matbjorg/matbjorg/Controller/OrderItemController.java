@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -32,9 +33,10 @@ public class OrderItemController {
 
     /**
      * Smiður fyrir OrderItemController
-     * @param orderItemService þjónusta fyrir OrderItem
+     *
+     * @param orderItemService     þjónusta fyrir OrderItem
      * @param advertisementService þjónusta fyrir Advertisement
-     * @param orderService þjónusta fyrir Order
+     * @param orderService         þjónusta fyrir Order
      */
     @Autowired
     public OrderItemController(OrderItemService orderItemService, AdvertisementService advertisementService, OrderService orderService) {
@@ -51,14 +53,23 @@ public class OrderItemController {
      *         skránni sem birtir auglýsinguna sem var valin
      */
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
-    public String addToOrderGET(@PathVariable long advertisementId, Model model) {
+    public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
+        Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
+        if(buyer == null) {
+            return "redirect:/";
+        }
+        model.addAttribute("loggedInUser", buyer);
+        model.addAttribute("userType", "buyer");
+        
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
             model.addAttribute("advertisements", advertisementService.findAll());
             return "redirect:/advertisements";
         }
         model.addAttribute("advertisement", ad.get());
-        model.addAttribute("orderItem", new OrderItem());
+        OrderItem newOrderItem = new OrderItem();
+        newOrderItem.setAmount(0.25);
+        model.addAttribute("orderItem", newOrderItem);
         return "orderItemForm";
     }
 
@@ -84,22 +95,23 @@ public class OrderItemController {
             return "redirect:/login";
         }
         // Byrjum að tékka hvort til er Order sem er virkt fyrir Buyer b
-        Order exists = orderService.findByBuyerAndActive(b, true);
-        if(exists == null) { // Ekkert til virkt order fyrir buyer
-            exists = new Order(b);
-            orderService.save(exists);
+        List<Order> exists = orderService.findByBuyerAndActive(b, true);
+        if (exists.isEmpty()) { // Ekkert til virkt order fyrir buyer
+            Order newOrder = new Order(b);
+            orderService.save(newOrder);
         }
 
+        Order order = orderService.findByBuyerAndActive(b, true).get(0);
         // Sækjum advertisement sem er verið að kaupa
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         orderItem.setAdvertisement(ad.get());
-        orderItem.setOrder(exists);
+        orderItem.setOrder(order);
 
         // Vista OrderItem í gangnagrunn
         orderItemService.save(orderItem);
 
         // Förum í körfuna
-        model.addAttribute("order", exists);
+        model.addAttribute("order", order);
         return "redirect:/order";
     }
 }

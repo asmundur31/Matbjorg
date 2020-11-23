@@ -137,14 +137,14 @@ public class LoginController {
     @RequestMapping(value = "/signup/newseller", method = RequestMethod.POST)
     public String signupSellerPOST(@Valid Seller user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "signupUser";
+            return "redirect:/signup/newseller";
         }
         Seller exists1 = sellerService.findByEmail(user.getEmail());
         Buyer exists2 = buyerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             sellerService.save(user);
         } else {
-            return "signupUser";
+            return "redirect:/signup/newseller";
         }
         return "redirect:/login";
     }
@@ -160,14 +160,14 @@ public class LoginController {
     @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.POST)
     public String signupBuyerPOST(@Valid Buyer user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "signupUser";
+            return "redirect:/signup/newbuyer";
         }
         Buyer exists1 = buyerService.findByEmail(user.getEmail());
         Seller exists2 = sellerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             buyerService.save(user);
         } else {
-            return "signupUser";
+            return "redirect:/signup/newbuyer";
         }
         return "redirect:/login";
     }

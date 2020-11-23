@@ -1,6 +1,9 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,6 +31,11 @@ public class Order {
 
     private boolean active = true;
 
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime timeOfPurchase;
+
+    private double totalPrice;
+
     /**
      * tómur smiður fyrir Order
      */
@@ -42,7 +50,7 @@ public class Order {
     public Order(Buyer buyer) {
         this.buyer = buyer;
     }
-    
+
     public long getId() {
         return id;
     }
@@ -73,5 +81,21 @@ public class Order {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public LocalDateTime getTimeOfPurchase() {
+        return timeOfPurchase;
+    }
+
+    public void setTimeOfPurchase(LocalDateTime timeOfPurchase) {
+        this.timeOfPurchase = timeOfPurchase;
+    }
+
+    public double getTotalPrice() {
+        return totalPrice;
+    }
+
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 }

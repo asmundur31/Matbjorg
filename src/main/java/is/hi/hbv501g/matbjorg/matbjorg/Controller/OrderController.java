@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * OrderController er Controller klasi sem grípur allar fyrirspurnir sem tengjast körfu kaupanda
@@ -59,7 +60,15 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        Order o = orderService.findByBuyerAndActive(b, true);
+        List<Order> orderList = orderService.findByBuyerAndActive(b, true);
+        if (orderList.isEmpty()) {
+            Order o = new Order(b);
+            o.setActive(true);
+            orderList.add(o);
+        }
+        Order o = orderList.get(0);
+        model.addAttribute("loggedInUser", b);
+        model.addAttribute("userType", "buyer");
         model.addAttribute("order", o);
         model.addAttribute("buyer", b);
         model.addAttribute("totalPrice", orderService.totalPrice(o));
@@ -111,12 +120,9 @@ public class OrderController {
         }
 
         OrderItem orderItem = orderItemService.findById(orderItemId).orElseThrow(() -> new IllegalArgumentException("Invalid OrderItem ID"));
-        orderItem.setAmount(orderItem.getAmount() + amount);
-        if (orderItem.getAmount() <= 0) {
-            orderItemService.delete(orderItem);
-        } else {
-            orderItemService.save(orderItem);
-        }
+
+        orderItem.setAmount(amount);
+        orderItemService.save(orderItem);
 
         return "redirect:/order";
     }
@@ -140,12 +146,16 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        Order o = orderService.findByBuyerAndActive(b, true);
+        Order o = orderService.findByBuyerAndActive(b, true).get(0);
+        o.setTimeOfPurchase(LocalDateTime.now());
+        o.setTotalPrice(orderService.totalPrice(o));
         o = orderService.confirmOrder(o);
+
         if (o == null) {
             // Eitthver villuskilaboð um að eitthver hluttur í körfunni er active=false eða currentAmount < amount
             return "redirect:/order";
         }
+
         model.addAttribute("order", o);
         model.addAttribute("time", LocalDateTime.now());
         model.addAttribute("totalPrice", orderService.totalPrice(o));

@@ -8,30 +8,30 @@
     <title>Add advertisement</title>
 </head>
 <body>
-<form action="#" th:action="@{/addadvertisement}" th:object="${advertisement}" method="post">
+<form action="#" th:action="@{/addadvertisement}" th:object="${advertisement}" enctype="multipart/form-data" method="post">
     <label for="name">Heiti</label>
-    <input type="text" th:field="*{name}" id="name" placeholder="Gefðu auglýsingunni heiti">
+    <input type="text" th:field="*{name}" id="name" placeholder="Gefðu auglýsingunni heiti" required>
     <span th:if="${#fields.hasErrors('name')}" th:error="*{name}"></span>
     <label for="description">Lýsing</label>
-    <input type="text" th:field="*{description}" id="description" placeholder="Lýsing á vöru">
+    <input type="text" th:field="*{description}" id="description" placeholder="Lýsing á vöru" required>
     <span th:if="${#fields.hasErrors('description')}" th:error="*{description}"></span>
-    <label for="amount">Magn</label>
-    <input type="number" th:field="*{originalAmount}" id="amount" placeholder="Magn(kg)" step=".25">
+    <label for="amount">Magn(kg)</label>
+    <input type="number" th:field="*{originalAmount}" id="amount" step=".25" min=".25" required>
     <span th:if="${#fields.hasErrors('originalAmount')}" th:error="*{originalAmount}"></span>
-    <label for="price">Verð</label>
-    <input type="number" th:field="*{price}" id="price" placeholder="Verð(kr.)">
+    <label for="price">Verð(Kr.)</label>
+    <input type="number" th:field="*{price}" id="price" min="0" required>
     <span th:if="${#fields.hasErrors('price')}" th:error="*{price}"></span>
     <label for="expireDate">Gildir til</label>
-    <input type="datetime-local" th:field="*{expireDate}" id="expireDate">
+    <input type="datetime-local" th:field="*{expireDate}" id="expireDate" required>
     <span th:if="${#fields.hasErrors('expireDate')}" th:error="*{expireDate}"></span>
     <label for="tags">Vöruflokkar</label>
     <input type="checkbox" id="tags"
            th:each="tag : ${tags}"
            th:text="${tag}"
            th:value="${tag}"
-           th:field="*{tags}"
-    />
+           th:field="*{tags}">
     <span th:if="${#fields.hasErrors('tags')}" th:error="*{tags}"></span>
+    <input type="file" name="picture" accept=".png,.jpeg,.jpg,.gif">
     <input type="submit" value="Birta auglýsingu">
 </form>
 </body>

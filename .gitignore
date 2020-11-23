@@ -7,6 +7,9 @@ target/
 ### Hunsum application.properties ###
 /src/main/resources/application.properties
 
+### Hunsum myndir sem eru í img/advertisementImages ###
+/src/main/resources/static/img/advertisementImages
+
 ### STS ###
 .apt_generated
 .classpath
