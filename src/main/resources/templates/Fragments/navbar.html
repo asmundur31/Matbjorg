@@ -3,9 +3,9 @@
 <div th:fragment="navbar">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary main-nav">
         <a href="/" class="navbar-brand navbar-brand-primary">Matbjörg</a>
-        <form class="form-inline my-2 my-lg-0 main-search-box">
+        <form class="form-inline my-2 my-lg-0 main-search-box" th:action="@{/searchByKeyword}">
             <div class="input-group w-100">
-                <input type="search" placeholder="Leitaðu að vöru" class="form-control searchBar">
+                <input type="search" placeholder="Leitaðu að vöru" class="form-control searchBar" name="search" id="search" th:value="${search}">
                 <div class="input-group-append">
                     <input type="submit" class="btn btn-outline-light" value="Leita">
                 </div>

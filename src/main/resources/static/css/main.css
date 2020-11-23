@@ -49,6 +49,14 @@ body {
   width: 200px;
 }
 
+.lowercase-capitalize {
+    text-transform: lowercase;
+}
+
+.lowercase-capitalize:first-letter {
+    text-transform: uppercase;
+}
+
 .btn-delete {
   background-color: #b21f2d;
 }

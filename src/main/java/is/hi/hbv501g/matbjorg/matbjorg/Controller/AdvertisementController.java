@@ -4,6 +4,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +28,17 @@ public class AdvertisementController {
      * advertisementService er þjónusta fyrir Advertisement
      */
     private AdvertisementService advertisementService;
+    private SellerService sellerService;
 
     /**
      * Smiður fyrir AdvertisementController
      * @param advertisementService þjónusta fyrir Advertisement
+     * @param sellerService þjónusta fyrir Seller
      */
     @Autowired
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, SellerService sellerService) {
         this.advertisementService = advertisementService;
+        this.sellerService = sellerService;
     }
 
     /**
@@ -47,6 +51,8 @@ public class AdvertisementController {
     public String advertisements(Model model, HttpSession session) {
         advertisementService.updateActive();
         model.addAttribute("advertisements", advertisementService.findByActive(true));
+        model.addAttribute("tags", Tag.values());
+        model.addAttribute("sellers", sellerService.findAll());
         String userType = (String) session.getAttribute("userType");
         if(userType == null) {
             model.addAttribute("userType", "noUser");

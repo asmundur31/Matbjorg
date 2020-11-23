@@ -14,11 +14,13 @@ public class WebConfigurer implements WebMvcConfigurer {
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/img/advertisementImages/**", "/css/**", "/img/**")
+        registry.addResourceHandler("/img/advertisementImages/**", "/css/**", "/img/**", "/js/**")
                 .addResourceLocations(
                         "file:" + uploadDirectory + "/",
                         "classpath:/static/css/",
                         "classpath:/static/img/",
-                        "classpath:/static/img/advertisementImages");
+                        "classpath:/static/img/advertisementImages",
+                        "classpath:/static/js/"
+                        );
     }
 }
