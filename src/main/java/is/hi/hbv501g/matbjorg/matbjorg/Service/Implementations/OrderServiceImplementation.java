@@ -133,6 +133,7 @@ public class OrderServiceImplementation implements OrderService {
     @Override
     public double totalPrice(Order order) {
         double total = 0;
+        
         for (OrderItem item : order.getItems()) {
             total += item.getAmount() * item.getAdvertisement().getPrice();
         }

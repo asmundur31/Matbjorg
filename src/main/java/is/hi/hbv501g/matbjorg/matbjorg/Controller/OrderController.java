@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * OrderController er Controller klasi sem grípur allar fyrirspurnir sem tengjast körfu kaupanda
@@ -59,7 +60,13 @@ public class OrderController {
             // Það þarf að vera loggaður inn buyer
             return "redirect:/login";
         }
-        Order o = orderService.findByBuyerAndActive(b, true).get(0);
+        List<Order> orderList = orderService.findByBuyerAndActive(b, true);
+        if (orderList.isEmpty()) {
+            Order o = new Order(b);
+            o.setActive(true);
+            orderList.add(o);
+        }
+        Order o = orderList.get(0);
         model.addAttribute("order", o);
         model.addAttribute("buyer", b);
         model.addAttribute("totalPrice", orderService.totalPrice(o));
