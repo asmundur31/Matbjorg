@@ -38,9 +38,8 @@
                 <div th:case="*">
                     <div class="row row-cols-1">
                         <div th:each="advertisement : ${advertisements}" class="card w-100">
-                            <div th:class="row + ' ' + no-gutters + ' ' + advertisement + ' ' + ${advertisement.owner}"
-                                 th:each="tag : ${advertisement.tags}"
-                                 th:classappend="${tag}">
+                            <div class="row no-gutters advertisement"
+                                 th:attr="data-tags=${advertisement.getTagString()}, data-owner=${advertisement.owner}">
                                     <div class="col-md-4">
                                         <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><img th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img"></a>
                                     </div>

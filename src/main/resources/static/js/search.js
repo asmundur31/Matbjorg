@@ -2,6 +2,7 @@ var allInputs = document.querySelectorAll('input[type="checkbox"]');
 var allAds = document.querySelectorAll('.advertisement');
 var selected = new Set();
 
+
 allInputs.forEach((input) => {
     input.addEventListener('change', (event) => {
       var id = event.target.id;
@@ -22,9 +23,9 @@ function updateFilter() {
     } else {
         allAds.forEach((ad) => {
             hide(ad);
-            var classList = ad.className.split(' ');
+            var classList = ad.dataset.tags.split(' ');
+            classList.push(ad.dataset.owner);
             classList.forEach((tag) => {
-                console.log(tag);
                 if(selected.has(tag)) {
                     show(ad);
                 }
