@@ -1,51 +1,70 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
     <meta charset="UTF-8">
     <title>Order</title>
 </head>
 <body>
-<h1 th:text="@{'Karfa fyrir '} + ${buyer}"></h1>
+<div th:insert="Fragments/navbar.html"></div>
+<h1 th:text="@{'Karfa fyrir '} + ${buyer}" class="p-4"></h1>
+
 <div th:switch="${#lists.size(order.items)}">
     <h2 th:case="'0'"> Karfan er tóm </h2>
     <div th:case="*">
-        <table>
-            <thead>
-            <tr>
-                <th>Söluaðili</th>
-                <th>Heiti</th>
-                <th>Lýsing</th>
-                <th>Magn</th>
-                <!--<th>Breyta magni</th>-->
-                <th>Verð</th>
-                <th>Gildir til</th>
-                <th>Fjarlægja úr körfu</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="item : ${order.items}">
-                <td th:text="${item.advertisement.owner}"></td>
-                <td th:text="${item.advertisement.name}"></td>
-                <td th:text="${item.advertisement.description}"></td>
-                <td th:text="${item.amount}"></td>
-                <td th:text="${item.advertisement.price}"></td>
-                <td th:text="${item.advertisement.expireDate}"></td>
-                <td><a th:href="@{/removeFromOrder/{id}(id=${item.id})}">Eyða úr körfu</a></td>
-                <td>
-                    <form th:action="@{/changeAmount/} + ${item.id}">
-                        <label for="amount">Breyta magni</label>
-                        <input type="number" name="amount" id="amount" th:value="${amount}" min=".25" step=".25"
-                               th:max="${item.advertisement.currentAmount}"
-                               required>
-                        <input type="submit" value="Staðfesta">
-                    </form>
-                </td>
-
-            </tr>
-            </tbody>
-        </table>
-        <p th:text="'Samtals: ' + ${totalPrice}"></p>
-        <p><a href="/receipt">Kaupa</a></p>
+        <div class="container">
+            <div class="row">
+                <div class="col-12 pt-1" th:each="item : ${order.items}">
+                    <div class="row">
+                        <div class="col-3">
+                            <img th:src="@{/img/advertisementImages/} + ${item.advertisement.pictureName}" class="img-thumbnail advertisement-image m-auto">
+                        </div>
+                        <div class="col-4 d-flex flex-column">
+                            <h3 th:text="${item.advertisement.name}"></h3>
+                            <div class="p-1">
+                                <label for="owner" class="font-weight-bold">Söluaðili:</label>
+                                <span th:text="${item.advertisement.owner}" id="owner"></span>
+                            </div>
+                            <div class="p-1">
+                                <label for="description" class="font-weight-bold">Lýsing:</label>
+                                <span th:text="${item.advertisement.description}" id="description"></span>
+                            </div>
+                            <div class="p-1">
+                                <label for="amountNow" class="font-weight-bold">Magn:</label>
+                                <span th:text="${item.amount} + ' kg'" id="amountNow"></span>
+                            </div>
+                            <div class="p-1">
+                                <label for="price" class="font-weight-bold">Verð:</label>
+                                <span th:text="${item.advertisement.price} + ' kr./kg'" id="price"></span>
+                            </div>
+                            <div class="p-1">
+                                <label for="expires" class="font-weight-bold">Gildir til:</label>
+                                <span th:text="${item.advertisement.expireDate}" id="expires"></span>
+                            </div>
+                            <div class="p-1">
+                                <form th:action="@{/changeAmount/} + ${item.id}">
+                                    <label for="amount" class="font-weight-bold">Breyta magni</label>
+                                    <input type="number" name="amount" id="amount" th:value="${amount}" min=".25" step=".25"
+                                           th:max="${item.advertisement.currentAmount}"
+                                           required>
+                                    <input type="submit" value="Staðfesta" class="btn btn-primary">
+                                </form>
+                            </div>
+                        </div>
+                        <div class="col-2 ml-auto mt-auto mb-auto">
+                            <a th:href="@{/removeFromOrder/{id}(id=${item.id})}" class="btn btn-primary btn-delete">Eyða úr körfu</a>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+            </div>
+            <div class="row d-flex flex-column">
+                <p th:text="'Samtals: ' + ${totalPrice} + ' kr.'" class="font-weight-bold"></p>
+                <a href="/receipt" class="btn btn-primary">Kaupa</a>
+            </div>
+        </div>
     </div>
 </div>
 </body>

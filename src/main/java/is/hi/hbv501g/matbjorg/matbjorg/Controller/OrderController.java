@@ -67,6 +67,8 @@ public class OrderController {
             orderList.add(o);
         }
         Order o = orderList.get(0);
+        model.addAttribute("loggedInUser", b);
+        model.addAttribute("userType", "buyer");
         model.addAttribute("order", o);
         model.addAttribute("buyer", b);
         model.addAttribute("totalPrice", orderService.totalPrice(o));
