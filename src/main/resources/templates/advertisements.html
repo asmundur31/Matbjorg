@@ -42,7 +42,7 @@
                                  th:each="tag : ${advertisement.tags}"
                                  th:classappend="${tag}">
                                     <div class="col-md-4">
-                                        <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><img src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img"></a>
+                                        <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><img th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img"></a>
                                     </div>
                                     <div class="col-md-8">
                                         <div class="card-body">

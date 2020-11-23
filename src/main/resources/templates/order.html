@@ -9,12 +9,16 @@
 </head>
 <body>
 <div th:insert="Fragments/navbar.html"></div>
-<h1 th:text="@{'Karfa fyrir '} + ${buyer}" class="p-4"></h1>
+
 
 <div th:switch="${#lists.size(order.items)}">
-    <h2 th:case="'0'"> Karfan er tóm </h2>
+    <div th:case="'0'">
+        <div class="container pt-5">
+            <h2>Karfan er tóm!</h2>
+        </div>
+    </div>
     <div th:case="*">
-        <div class="container">
+        <div class="container pt-5">
             <div class="row">
                 <div class="col-12 pt-1" th:each="item : ${order.items}">
                     <div class="row">
