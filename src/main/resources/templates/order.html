@@ -34,7 +34,9 @@
                 <td>
                     <form th:action="@{/changeAmount/} + ${item.id}">
                         <label for="amount">Breyta magni</label>
-                        <input type="number" name="amount" id="amount" th:value="${amount}" step=".25" required>
+                        <input type="number" name="amount" id="amount" th:value="${amount}" min=".25" step=".25"
+                               th:max="${item.advertisement.currentAmount}"
+                               required>
                         <input type="submit" value="Staðfesta">
                     </form>
                 </td>
