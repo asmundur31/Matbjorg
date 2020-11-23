@@ -118,12 +118,9 @@ public class OrderController {
         }
 
         OrderItem orderItem = orderItemService.findById(orderItemId).orElseThrow(() -> new IllegalArgumentException("Invalid OrderItem ID"));
-        orderItem.setAmount(orderItem.getAmount() + amount);
-        if (orderItem.getAmount() <= 0) {
-            orderItemService.delete(orderItem);
-        } else {
-            orderItemService.save(orderItem);
-        }
+
+        orderItem.setAmount(amount);
+        orderItemService.save(orderItem);
 
         return "redirect:/order";
     }
