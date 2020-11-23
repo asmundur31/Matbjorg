@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 
-@Configuration
 @SpringBootApplication
 @EnableJpaRepositories
 public class MatbjorgApplication {
