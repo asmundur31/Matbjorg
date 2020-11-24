@@ -187,7 +187,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public List<Advertisement> createdToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> adToday = new ArrayList<>();
-        for(Advertisement ad: repository.findAll()){
+        for(Advertisement ad: repository.findByActive(true)){
             if(lt.isEqual(ad.getCreatedAt().toLocalDate())) {
                 adToday.add(ad);
             }
@@ -199,7 +199,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public List<Advertisement> expireToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> exToday = new ArrayList<>();
-        for(Advertisement ad: repository.findAll()){
+        for(Advertisement ad: repository.findByActive(true)){
             if(lt.isEqual(ad.getExpireDate().toLocalDate())) {
                 exToday.add(ad);
             }
