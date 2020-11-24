@@ -31,8 +31,13 @@
            th:value="${tag}"
            th:field="*{tags}">
     <span th:if="${#fields.hasErrors('tags')}" th:error="*{tags}"></span>
-    <input type="file" name="picture" accept=".png,.jpeg,.jpg,.gif">
+    <div class="form-group position-relative">
+        <input type="file" name="picture" accept=".png,.jpeg,.jpg,.gif">
+        <div class="invalid-tooltip">Mynd er of stór eða er hefur ekki endingu .jpeg, .jpg, .png eða .gif!</div>
+    </div>
     <input type="submit" value="Birta auglýsingu">
 </form>
+<script type="text/javascript" th:src="@{/js/imageHandling.js}"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </body>
 </html>
