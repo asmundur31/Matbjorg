@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.BuyerRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +62,11 @@ public class BuyerServiceImplementation implements BuyerService {
     }
 
     @Override
-    public Buyer login(Buyer buyer) {
-        if(buyer == null) {
-            return null;
-        }
-        Buyer exists = findByEmail(buyer.getEmail());
+    public Buyer login(User user) {
+        Buyer exists = findByEmail(user.getEmail());
         if(exists != null) {
-            if(exists.getPassword().equals(buyer.getPassword())) {
-                return buyer;
+            if(exists.getPassword().equals(user.getPassword())) {
+                return exists;
             }
         }
         return null;
