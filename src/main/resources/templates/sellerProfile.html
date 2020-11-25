@@ -1,23 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <head th:insert="/Fragments/headerLinks.html">
-
-    </head>
+    <head th:insert="/Fragments/headerLinks.html"></head>
     <title>Profile</title>
 </head>
 <body>
 <div th:insert="Fragments/navbar.html"></div>
 
-<h1 th:text="${seller.name} + ' söluaðili'"></h1>
-<p th:text="${seller.email}"></p>
-<hr>
+
+<div class="card card-body">
+  <h1 class="card-title" th:text="${seller.name}"></h1>
+  <p class="card-subtitle">Söluaðili</p>
+  <p class="card-text" th:text="${seller.email}"></p>
+</div>
+
+<a href="/addAdvertisement" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Setja inn nýja auglýsingu</a>
 <div th:switch="${#lists.size(advertisementsActive)}">
     <h2 th:case="0"> Þú hefur ekki sett inn virkar auglýsingar</h2>
     <div th:case="*">
         <h2>Þínar virku auglýsingar</h2>
-        <table>
-            <thead>
+        <table class="table table-bordered th">
+            <thead class="table thead-light th">
             <tr>
                 <th>Heiti</th>
                 <th>Lýsing</th>
@@ -47,8 +50,8 @@
     <h2 th:case="0"> Engar óvirkar auglýsingar</h2>
     <div th:case="*">
         <h2>Þínar óvirku auglýsingar</h2>
-        <table>
-            <thead>
+        <table class="table table-bordered th">
+            <thead class="table thead-light th">
             <tr>
                 <th>Heiti</th>
                 <th>Lýsing</th>
@@ -73,6 +76,5 @@
         </table>
     </div>
 </div>
-<p><a href="/addadvertisement">Setja inn nýja auglýsingu</a></p>
 </body>
 </html>

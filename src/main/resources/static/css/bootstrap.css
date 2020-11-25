@@ -1660,9 +1660,10 @@ pre code {
 }
 
 .table {
-  width: 100%;
-  margin-bottom: 1rem;
+  width: 80%;
+  /*margin-bottom: 1rem;*/
   color: #212529;
+  margin: 0 auto;
 }
 
 .table th,
@@ -1687,12 +1688,12 @@ pre code {
 }
 
 .table-bordered {
-  border: 1px solid #dee2e6;
+  border: 1px solid #52b788;
 }
 
 .table-bordered th,
 .table-bordered td {
-  border: 1px solid #dee2e6;
+  border: 1px solid #52b788;
 }
 
 .table-bordered thead th,
@@ -1914,9 +1915,10 @@ pre code {
 }
 
 .table .thead-light th {
-  color: #495057;
-  background-color: #e9ecef;
-  border-color: #dee2e6;
+  color: #ffffff;
+  background-color: #52b788;
+  /*border-color: #dee2e6;*/
+  border-color: #52b788;
 }
 
 .table-dark {
@@ -2495,6 +2497,7 @@ textarea.form-control {
 }
 
 .btn {
+  margin: 0 auto;
   display: inline-block;
   font-weight: 400;
   color: #212529;
@@ -4727,6 +4730,7 @@ input[type="button"].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  margin: 0 auto;
 }
 
 .card > hr {
@@ -10256,7 +10260,7 @@ a.text-dark:hover, a.text-dark:focus {
   }
   .table-bordered th,
   .table-bordered td {
-    border: 1px solid #dee2e6 !important;
+    border: 1px solid #52b788 !important;
   }
   .table-dark {
     color: inherit;

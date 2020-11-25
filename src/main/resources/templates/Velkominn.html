@@ -42,7 +42,7 @@
                             <div th:case="*">
                                 <h5 class="card-title">Profile</h5>
                                 <a th:href="@{/profile/} + ${userType}">Heimasvæði</a>
-                                <a th:href="@{/order}" th:if="${userType} == 'buyer'">Skoða körfu</a>
+                                <a th:href="@{/order}" th:if="${userType} == 'Buyer'">Skoða körfu</a>
                                 <a href="/logout">Útskráning</a>
                             </div>
                         </div>
@@ -92,7 +92,7 @@
                                 </div>
                             </div>
                         </div>
-                    </th:block>
+                 </th:block>
             </div>
         </div>
     </section>

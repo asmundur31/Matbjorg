@@ -71,10 +71,10 @@ public class LoginController {
             return "loginPage";
         } else if(exists2 == null) {
             session.setAttribute("loggedInUser", exists1);
-            session.setAttribute("userType", "seller");
+            session.setAttribute("userType", "Seller");
         } else {
             session.setAttribute("loggedInUser", exists2);
-            session.setAttribute("userType", "buyer");
+            session.setAttribute("userType", "Buyer");
         }
         return "redirect:/";
     }
@@ -107,9 +107,9 @@ public class LoginController {
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @return strengur sem er nafnið á html síðunni sem verður birt
      */
-    @RequestMapping(value = "/signup/newseller", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup/newSeller", method = RequestMethod.GET)
     public String signupSellerGET(Model model) {
-        model.addAttribute("userType", "seller");
+        model.addAttribute("userType", "Seller");
         model.addAttribute("user", new Seller());
         return "signupUser";
     }
@@ -119,9 +119,9 @@ public class LoginController {
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @return strengur sem er nafnið á html síðunni sem verður birt
      */
-    @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup/newBuyer", method = RequestMethod.GET)
     public String signupBuyerGET(Model model) {
-        model.addAttribute("userType", "buyer");
+        model.addAttribute("userType", "Buyer");
         model.addAttribute("user", new Buyer());
         return "signupUser";
     }
@@ -134,17 +134,17 @@ public class LoginController {
      * @return Ef enginn Seller eða Buyer er til með innslegið netfang þá endursendum við notandann á loginn síðuna
      *         annars leyfum við notanda að reyna aftur
      */
-    @RequestMapping(value = "/signup/newseller", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup/newSeller", method = RequestMethod.POST)
     public String signupSellerPOST(@Valid Seller user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/signup/newseller";
+            return "redirect:/signup/newSeller";
         }
         Seller exists1 = sellerService.findByEmail(user.getEmail());
         Buyer exists2 = buyerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             sellerService.save(user);
         } else {
-            return "redirect:/signup/newseller";
+            return "redirect:/signup/newSeller";
         }
         return "redirect:/login";
     }
@@ -157,17 +157,17 @@ public class LoginController {
      * @return Ef enginn Seller eða Buyer er til með innslegið netfang þá endursendum við notandann á loginn síðuna
      *         annars leyfum við notanda að reyna aftur
      */
-    @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup/newBuyer", method = RequestMethod.POST)
     public String signupBuyerPOST(@Valid Buyer user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/signup/newbuyer";
+            return "redirect:/signup/newBuyer";
         }
         Buyer exists1 = buyerService.findByEmail(user.getEmail());
         Seller exists2 = sellerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             buyerService.save(user);
         } else {
-            return "redirect:/signup/newbuyer";
+            return "redirect:/signup/newBuyer";
         }
         return "redirect:/login";
     }
@@ -181,7 +181,7 @@ public class LoginController {
         if(usertype == null) {
             return "redirect:/";
         }
-        if(usertype.equals("seller")) {
+        if(usertype.equals("Seller")) {
             Seller sessionUser = (Seller) session.getAttribute("loggedInUser");
             if(sessionUser  != null){
                 model.addAttribute("loggedInUser", sessionUser);

@@ -52,6 +52,7 @@ public class OrderItemController {
      * @return endursendir notandann á auglýsingasíðunna ef auglýsing finnst ekki annars streng sem er nafnið á html
      *         skránni sem birtir auglýsinguna sem var valin
      */
+
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
     public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
         Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
@@ -60,7 +61,7 @@ public class OrderItemController {
         }
         model.addAttribute("loggedInUser", buyer);
         model.addAttribute("userType", "buyer");
-        
+      
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
             model.addAttribute("advertisements", advertisementService.findAll());
@@ -84,10 +85,10 @@ public class OrderItemController {
      *         ef enginn er loggaður inn þá er notandinn sendur í login
      *         annars er sendum við notandann í körfuna sína
      */
-    @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/orderItem/{advertisementId}", method = RequestMethod.POST)
     public String addToOrderPOST(@Valid OrderItem orderItem, @PathVariable long advertisementId, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
-            return "redirect:/orderitem/"+advertisementId;
+            return "redirect:/orderItem/"+advertisementId;
         }
         // Sækjum buyer sem ætlar að kaupa
         Buyer b = (Buyer) session.getAttribute("loggedInUser");
