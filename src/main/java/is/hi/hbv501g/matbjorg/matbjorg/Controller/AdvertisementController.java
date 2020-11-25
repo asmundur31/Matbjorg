@@ -108,7 +108,7 @@ public class AdvertisementController {
         }
         advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"), picture);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
-        return "redirect:/profile/Seller";
+        return "redirect:/profile/seller";
     }
 
     /**
@@ -127,7 +127,7 @@ public class AdvertisementController {
         Advertisement advertisement = advertisementService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid advertisement ID"));
         advertisementService.delete(advertisement);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
-        return "redirect:/profile/Seller";
+        return "redirect:/profile/seller";
     }
 
     @RequestMapping(value = "/advertisements/categories", method = RequestMethod.GET)
@@ -143,7 +143,6 @@ public class AdvertisementController {
             } else {
                 model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
             }
-
         }
         return "categories";
     }

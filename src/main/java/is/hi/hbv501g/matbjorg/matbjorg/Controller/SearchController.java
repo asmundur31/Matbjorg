@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Controller;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
@@ -59,6 +60,11 @@ public class SearchController {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
 
         return "search";
@@ -82,6 +88,11 @@ public class SearchController {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
 
         return "search";
@@ -109,6 +120,11 @@ public class SearchController {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
 
         return "advertisements";
@@ -143,6 +159,11 @@ public class SearchController {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
 
         return "advertisements";
@@ -172,6 +193,11 @@ public class SearchController {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
 
         return "advertisements";

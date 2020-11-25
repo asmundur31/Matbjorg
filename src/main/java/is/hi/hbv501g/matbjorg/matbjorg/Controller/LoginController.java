@@ -109,7 +109,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/signup/newSeller", method = RequestMethod.GET)
     public String signupSellerGET(Model model) {
-        model.addAttribute("userType", "Seller");
+        model.addAttribute("userType", "seller");
         model.addAttribute("user", new Seller());
         return "signupUser";
     }
@@ -121,7 +121,7 @@ public class LoginController {
      */
     @RequestMapping(value = "/signup/newBuyer", method = RequestMethod.GET)
     public String signupBuyerGET(Model model) {
-        model.addAttribute("userType", "Buyer");
+        model.addAttribute("userType", "buyer");
         model.addAttribute("user", new Buyer());
         return "signupUser";
     }
@@ -181,7 +181,7 @@ public class LoginController {
         if(usertype == null) {
             return "redirect:/";
         }
-        if(usertype.equals("Seller")) {
+        if(usertype.equals("seller")) {
             Seller sessionUser = (Seller) session.getAttribute("loggedInUser");
             if(sessionUser  != null){
                 model.addAttribute("loggedInUser", sessionUser);
