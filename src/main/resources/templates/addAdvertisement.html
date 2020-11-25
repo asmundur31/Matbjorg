@@ -50,8 +50,8 @@
                     <div class="row row-cols-4">
                         <th:block th:each="tag : ${tags}">
                             <div class="col form-check">
-                                <input class="form-check-input" th:value="${tag}" th:field="*{tags}" type="checkbox" id="${tag}">
-                                <label class="form-check-label" for="${tag}" th:text="${tag}"></label>
+                                <input class="form-check-input" th:value="${tag}" th:field="*{tags}" type="checkbox" th:id="${tag}">
+                                <label class="form-check-label" th:for="${tag}" th:text="${tag}"></label>
                             </div>
                         </th:block>
                         <span th:if="${#fields.hasErrors('tags')}" th:error="*{tags}"></span>
