@@ -54,6 +54,12 @@ public class OrderItemController {
      */
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
     public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+        }
         Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
         if(buyer == null) {
             return "redirect:/";
