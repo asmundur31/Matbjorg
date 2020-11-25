@@ -107,7 +107,7 @@ public class LoginController {
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @return strengur sem er nafnið á html síðunni sem verður birt
      */
-    @RequestMapping(value = "/signup/newSeller", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup/newseller", method = RequestMethod.GET)
     public String signupSellerGET(Model model) {
         model.addAttribute("userType", "seller");
         model.addAttribute("user", new Seller());
@@ -119,7 +119,7 @@ public class LoginController {
      * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @return strengur sem er nafnið á html síðunni sem verður birt
      */
-    @RequestMapping(value = "/signup/newBuyer", method = RequestMethod.GET)
+    @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.GET)
     public String signupBuyerGET(Model model) {
         model.addAttribute("userType", "buyer");
         model.addAttribute("user", new Buyer());
@@ -134,17 +134,17 @@ public class LoginController {
      * @return Ef enginn Seller eða Buyer er til með innslegið netfang þá endursendum við notandann á loginn síðuna
      *         annars leyfum við notanda að reyna aftur
      */
-    @RequestMapping(value = "/signup/newSeller", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup/newseller", method = RequestMethod.POST)
     public String signupSellerPOST(@Valid Seller user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/signup/newSeller";
+            return "redirect:/signup/newseller";
         }
         Seller exists1 = sellerService.findByEmail(user.getEmail());
         Buyer exists2 = buyerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             sellerService.save(user);
         } else {
-            return "redirect:/signup/newSeller";
+            return "redirect:/signup/newseller";
         }
         return "redirect:/login";
     }
@@ -157,17 +157,17 @@ public class LoginController {
      * @return Ef enginn Seller eða Buyer er til með innslegið netfang þá endursendum við notandann á loginn síðuna
      *         annars leyfum við notanda að reyna aftur
      */
-    @RequestMapping(value = "/signup/newBuyer", method = RequestMethod.POST)
+    @RequestMapping(value = "/signup/newbuyer", method = RequestMethod.POST)
     public String signupBuyerPOST(@Valid Buyer user, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return "redirect:/signup/newBuyer";
+            return "redirect:/signup/newbuyer";
         }
         Buyer exists1 = buyerService.findByEmail(user.getEmail());
         Seller exists2 = sellerService.findByEmail(user.getEmail());
         if(exists1 == null && exists2 == null) {
             buyerService.save(user);
         } else {
-            return "redirect:/signup/newBuyer";
+            return "redirect:/signup/newbuyer";
         }
         return "redirect:/login";
     }
