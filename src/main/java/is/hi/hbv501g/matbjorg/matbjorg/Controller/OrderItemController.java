@@ -55,14 +55,17 @@ public class OrderItemController {
 
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
     public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
-        Buyer buyer;
-        try {
-            buyer = (Buyer) session.getAttribute("loggedInUser");
-        } catch(ClassCastException e) {
-            return "redirect:/";
+        String userType = (String) session.getAttribute("userType");
+        if (userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
         }
-        model.addAttribute("loggedInUser", buyer);
-        model.addAttribute("userType", "buyer");
       
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
