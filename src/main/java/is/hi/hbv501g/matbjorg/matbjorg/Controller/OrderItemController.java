@@ -54,8 +54,10 @@ public class OrderItemController {
      */
     @RequestMapping(value = "/orderitem/{advertisementId}", method = RequestMethod.GET)
     public String addToOrderGET(@PathVariable long advertisementId, Model model, HttpSession session) {
-        Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
-        if(buyer == null) {
+        Buyer buyer;
+        try {
+            buyer = (Buyer) session.getAttribute("loggedInUser");
+        } catch(ClassCastException e) {
             return "redirect:/";
         }
         model.addAttribute("loggedInUser", buyer);
