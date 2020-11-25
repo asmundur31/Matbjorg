@@ -129,4 +129,22 @@ public class AdvertisementController {
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
     }
+
+    @RequestMapping(value = "/advertisements/categories", method = RequestMethod.GET)
+    public String advertisementCategoriesGET(Model model, HttpSession session) {
+        model.addAttribute("tags", Tag.values());
+        String userType = (String) session.getAttribute("userType");
+        if(userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
+
+        }
+        return "categories";
+    }
 }

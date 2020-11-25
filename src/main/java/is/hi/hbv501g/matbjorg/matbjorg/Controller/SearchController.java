@@ -145,7 +145,7 @@ public class SearchController {
             model.addAttribute("userType", userType);
         }
 
-        return "search";
+        return "advertisements";
     }
 
     /**
@@ -165,6 +165,7 @@ public class SearchController {
         model.addAttribute("advertisements", advertisementList);
         model.addAttribute("sellers", sellerService.findAll());
         model.addAttribute("tags", Tag.values());
+        model.addAttribute("search", "");
 
         String userType = (String) session.getAttribute("userType");
         if (userType == null) {
@@ -173,7 +174,7 @@ public class SearchController {
             model.addAttribute("userType", userType);
         }
 
-        return "search";
+        return "advertisements";
     }
 
 }
