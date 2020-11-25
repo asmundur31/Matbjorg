@@ -23,7 +23,6 @@
     <div th:case="*">
         <h2>Þínar pantanir</h2>
         <div th:each="order : ${previousOrders}">
-
             <table class="table table-bordered th">
                 <caption th:text=" 'Tími kaupa: ' +${order.timeOfPurchase}"></caption>
                 <thead class="table thead-light th">
@@ -39,9 +38,11 @@
                     <td th:text="${item.amount}"></td>
                     <td th:text="${item.advertisement.price}"></td>
                 </tr>
+                <tr>
+                    <td th:text="'Heildarverð: ' + ${order.totalPrice}"></td>
+                </tr>
                 </tbody>
             </table>
-            <p th:text="'Heildarverð: ' + ${order.totalPrice}"></p>
 
         </div>
     </div>
