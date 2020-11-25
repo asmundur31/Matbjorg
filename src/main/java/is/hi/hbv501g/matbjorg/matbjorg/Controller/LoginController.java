@@ -71,10 +71,10 @@ public class LoginController {
             return "loginPage";
         } else if(exists2 == null) {
             session.setAttribute("loggedInUser", exists1);
-            session.setAttribute("userType", "Seller");
+            session.setAttribute("userType", "seller");
         } else {
             session.setAttribute("loggedInUser", exists2);
-            session.setAttribute("userType", "Buyer");
+            session.setAttribute("userType", "buyer");
         }
         return "redirect:/";
     }
