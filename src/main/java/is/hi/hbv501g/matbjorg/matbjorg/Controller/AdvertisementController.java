@@ -82,6 +82,8 @@ public class AdvertisementController {
         if(seller == null) {
             return "redirect:/";
         }
+        model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+        model.addAttribute("userType", "seller");
         Advertisement newAdvertisement = new Advertisement();
         newAdvertisement.setOriginalAmount(0.25);
         model.addAttribute("advertisement", newAdvertisement);
