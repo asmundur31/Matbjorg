@@ -1,24 +1,26 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen" />
+    <head th:insert="/Fragments/headerLinks.html"></head>
     <meta charset="UTF-8">
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${buyer.name} + ' kaupandi'"></h1>
-<p th:text = ${buyer.email}></p>
-<hr>
+<div th:insert="Fragments/navbar.html"></div>
+
+<div class="card card-body">
+  <h1 class="card-title" th:text="${buyer.name}"></h1>
+    <p class="card-subtitle">Kaupandi</p>
+  <p class="card-text" th:text = ${buyer.email}></p>
+</div>
 <div th:switch="${#lists.size(previousOrders)}">
     <h2 th:case="0"> Engar pantanir </h2>
     <div th:case="*">
         <h2>Þínar pantanir</h2>
         <div th:each="order : ${previousOrders}">
             <h4 th:text=" 'Tími kaupa: ' +${order.timeOfPurchase}"></h4>
-            <table>
-                <thead>
+            <table class="table table-bordered th">
+                <thead class="table thead-light th">
                 <tr>
                     <th>Heiti</th>
                     <th>Magn</th>
