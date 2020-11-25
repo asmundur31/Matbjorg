@@ -1,45 +1,74 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
+
     <title>Advertisments</title>
 </head>
 <body>
-<h1>Auglýsingar</h1>
-<div th:switch="${#lists.size(advertisements)}">
-    <h2 th:case="0"> Það eru engar virkar auglýsingar</h2>
-    <div th:case="*">
-        <table>
-            <thead>
-            <tr>
-                <th>Söluaðili</th>
-                <th>Heiti</th>
-                <th>Lýsing</th>
-                <th>Upphaflegt magn</th>
-                <th>Eftirstöðvar</th>
-                <th>Verð</th>
-                <th>Gildir til</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="advertisement : ${advertisements}">
-                <td th:text="${advertisement.owner}"></td>
-                <td th:text="${advertisement.name}"></td>
-                <td th:text="${advertisement.description}"></td>
-                <td th:text="${advertisement.originalAmount}"></td>
-                <td th:text="${advertisement.currentAmount}"></td>
-                <td th:text="${advertisement.price}"></td>
-                <td th:text="${advertisement.expireDate}"></td>
-                <td><a th:href="@{/orderItem/} + ${advertisement.id}" th:if="${userType.equals('Buyer')}">Skoða</a></td>
-            </tr>
-            </tbody>
-        </table>
+<div th:insert="Fragments/navbar.html"></div>
+<div class="container">
+    <div class="row pt-5">
+        <div class="col-2">
+            <div class="row justify-content-start row-cols-1">
+                <form action="/ads" class="row row-cols-1">
+                    <h2 class="h6">Vöruflokkar</h2>
+                    <div th:each="tag : ${tags}">
+                        <div class="form-group form-check">
+                            <input type="checkbox" th:id="${tag}" class="form-check-input">
+                            <label th:for="${tag}" class="form-check-label lowercase-capitalize" th:text="${tag}"></label>
+                        </div>
+                    </div>
+                    <hr>
+                    <h2 class="h6">Söluaðili</h2>
+                    <div th:each="seller : ${sellers}">
+                        <div class="form-group form-check">
+                            <input type="checkbox" th:id="${seller}" class="form-check-input">
+                            <label th:for="${seller}" class="form-check-label" th:text="${seller}"></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="col-10">
+            <div th:switch="${#lists.size(advertisements)}">
+                <th:block th:case="0">
+                    <p th:if="${!(search == null)}" class="d-flex justify-content-end"><a href="/advertisements">Skoða allar auglýsingar</a></p>
+                    <th:block th:switch="${search}">
+                        <h2 th:case="null">Það eru engar virkar auglýsingar</h2>
+                        <h2 th:case="*">Engar leitarniðurstöður</h2>
+                    </th:block>
+                </th:block>
+                <div th:case="*">
+
+                    <div class="row row-cols-1">
+                        <p th:if="${!(search == null)}" class="d-flex justify-content-end"><a href="/advertisements">Skoða allar auglýsingar</a></p>
+                        <div th:each="advertisement : ${advertisements}" class="card w-100">
+                            <div class="row no-gutters advertisement"
+                                 th:attr="data-tags=${advertisement.getTagString()}, data-owner=${advertisement.owner}">
+                                    <div class="col-md-4">
+                                        <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><img th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img"></a>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><h5 class="card-title" th:text="${advertisement.name}"></h5></a>
+                                            <p class="card-text"><strong th:text="${advertisement.owner}"></strong></p>
+                                            <p class="card-text"><strong th:text="${advertisement.price}"></strong></p>
+                                            <p class="card-text" th:text="${advertisement.description}"></p>
+                                        </div>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
-<p><a href="/search">Leita í auglýsingum</a></p>
+
+
+<script type="text/javascript" th:src="@{/js/search.js}"></script>
 </body>
 </html>

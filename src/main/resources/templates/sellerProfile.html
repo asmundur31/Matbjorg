@@ -7,6 +7,7 @@
 <body>
 <div th:insert="Fragments/navbar.html"></div>
 
+
 <div class="card card-body">
   <h1 class="card-title" th:text="${seller.name}"></h1>
   <p class="card-subtitle">Söluaðili</p>
@@ -14,7 +15,6 @@
 </div>
 
 <a href="/addAdvertisement" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Setja inn nýja auglýsingu</a>
-
 <div th:switch="${#lists.size(advertisementsActive)}">
     <h2 th:case="0"> Þú hefur ekki sett inn virkar auglýsingar</h2>
     <div th:case="*">

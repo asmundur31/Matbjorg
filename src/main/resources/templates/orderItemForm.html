@@ -10,7 +10,7 @@
         <div class="container">
             <div class="row">
                 <div class="col-6">
-                    <img class="w-100 h-auto" src="https://source.unsplash.com/6Z7Ss9jlEL0" alt="Tomatoes">
+                    <img class="w-100 h-auto" th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" th:alt="${advertisement.pictureName}">
                 </div>
                 <div class="col-6">
                     <div class="row">

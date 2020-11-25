@@ -49,6 +49,8 @@ public class SellerController {
         if (seller == null) {
             return "redirect:/";
         }
+        model.addAttribute("loggedInUser", seller);
+        model.addAttribute("userType", "seller");
         model.addAttribute("seller", seller);
         model.addAttribute("advertisementsActive", advertisementService.findByOwnerAndActive(seller, true));
         model.addAttribute("advertisementsInactive", advertisementService.findByOwnerAndActive(seller, false));

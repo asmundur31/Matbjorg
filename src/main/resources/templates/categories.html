@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="https://thymeleaf.org">
+<head>
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
+    <title>Flokkar</title>
+</head>
+<body>
+<div th:insert="Fragments/navbar.html"></div>
+<div class="container pt-5">
+    <div class="row">
+        <th:block th:each="tag : ${tags}">
+            <div class="col-3">
+                <a th:href="'/filterByTags?tags=' + ${tag}" class="card-linkable">
+                    <div class="card shadow bg-white rounded d-flex justify-content-center mb-3">
+                        <div class="card-body d-flex justify-content-center">
+                            <h5 class="card-title lowercase-capitalize" th:text="${tag}"></h5>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </th:block>
+    </div>
+</div>
+</body>
+</html>

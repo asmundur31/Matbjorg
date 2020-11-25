@@ -44,3 +44,23 @@ body {
 .card-linkable:hover {
     color: inherit;
 }
+
+.advertisement-image {
+  width: 200px;
+}
+
+.lowercase-capitalize {
+    text-transform: lowercase;
+}
+
+.lowercase-capitalize:first-letter {
+    text-transform: uppercase;
+}
+
+.btn-delete {
+  background-color: #b21f2d;
+}
+
+.btn-delete:hover {
+  background-color: #721c24;
+}

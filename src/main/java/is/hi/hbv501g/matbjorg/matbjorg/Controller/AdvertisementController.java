@@ -1,9 +1,11 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Controller;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,14 +29,17 @@ public class AdvertisementController {
      * advertisementService er þjónusta fyrir Advertisement
      */
     private AdvertisementService advertisementService;
+    private SellerService sellerService;
 
     /**
      * Smiður fyrir AdvertisementController
      * @param advertisementService þjónusta fyrir Advertisement
+     * @param sellerService þjónusta fyrir Seller
      */
     @Autowired
-    public AdvertisementController(AdvertisementService advertisementService) {
+    public AdvertisementController(AdvertisementService advertisementService, SellerService sellerService) {
         this.advertisementService = advertisementService;
+        this.sellerService = sellerService;
     }
 
     /**
@@ -47,11 +52,19 @@ public class AdvertisementController {
     public String advertisements(Model model, HttpSession session) {
         advertisementService.updateActive();
         model.addAttribute("advertisements", advertisementService.findByActive(true));
+        model.addAttribute("tags", Tag.values());
+        model.addAttribute("sellers", sellerService.findAll());
         String userType = (String) session.getAttribute("userType");
         if(userType == null) {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
+
         }
         return "advertisements";
     }
@@ -69,6 +82,8 @@ public class AdvertisementController {
         if(seller == null) {
             return "redirect:/";
         }
+        model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+        model.addAttribute("userType", "seller");
         Advertisement newAdvertisement = new Advertisement();
         newAdvertisement.setOriginalAmount(0.25);
         model.addAttribute("advertisement", newAdvertisement);
@@ -113,5 +128,23 @@ public class AdvertisementController {
         advertisementService.delete(advertisement);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/Seller";
+    }
+
+    @RequestMapping(value = "/advertisements/categories", method = RequestMethod.GET)
+    public String advertisementCategoriesGET(Model model, HttpSession session) {
+        model.addAttribute("tags", Tag.values());
+        String userType = (String) session.getAttribute("userType");
+        if(userType == null) {
+            model.addAttribute("userType", "noUser");
+        } else {
+            model.addAttribute("userType", userType);
+            if(userType.equals("seller")) {
+                model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
+            } else {
+                model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
+            }
+
+        }
+        return "categories";
     }
 }

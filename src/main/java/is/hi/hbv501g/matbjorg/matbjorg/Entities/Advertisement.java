@@ -175,6 +175,14 @@ public class Advertisement {
         this.tags = tags;
     }
 
+    public String getTagString() {
+        String tagString = "";
+        for(Tag tag: tags) {
+            tagString += tag + " ";
+        }
+        return tagString;
+    }
+
     public String getPictureName() {
         return pictureName;
     }

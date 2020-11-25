@@ -49,6 +49,8 @@ public class BuyerController {
         if(buyer == null) {
             return "redirect:/";
         }
+        model.addAttribute("loggedInUser", buyer);
+        model.addAttribute("userType", "buyer");
         model.addAttribute("buyer", buyer);
         model.addAttribute("previousOrders", orderService.findByBuyerAndActive(buyer, false));
         return "buyerProfile";

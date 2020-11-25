@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
     <title>Logged In User</title>
 </head>
 <body>
-<h1>Notandi sem er skráður inn</h1>
+<div th:insert="Fragments/navbar.html"></div>
+
+<h1>Notandi sem er srkáður inn</h1>
 <p th:text="${loggedInUser.name}"></p>
 <p th:text="${loggedInUser.email}"></p>
 <p th:text="${loggedInUser.password}"></p>
