@@ -1,13 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
     <title>Profile</title>
 </head>
 <body>
+<div th:insert="Fragments/navbar.html"></div>
+
 <h1 th:text="${seller.name} + ' söluaðili'"></h1>
 <p th:text="${seller.email}"></p>
 <hr>
