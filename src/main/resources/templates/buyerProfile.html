@@ -7,18 +7,25 @@
 <body>
 <div th:insert="Fragments/navbar.html"></div>
 
-<div class="card card-body">
-  <h1 class="card-title" th:text="${buyer.name}"></h1>
-    <p class="card-subtitle">Kaupandi</p>
-  <p class="card-text" th:text = ${buyer.email}></p>
+<div class="text-center p-2">
+    <div class="card text-center border-primary w-50">
+        <div class="card-body">
+          <h1 class="card-title" th:text="${buyer.name}"></h1>
+          <p class="card-subtitle">Kaupandi</p>
+          <p class="card-text" th:text = ${buyer.email}></p>
+        </div>
+    </div>
 </div>
+
+<div class="container">
 <div th:switch="${#lists.size(previousOrders)}">
     <h2 th:case="0"> Engar pantanir </h2>
     <div th:case="*">
         <h2>Þínar pantanir</h2>
         <div th:each="order : ${previousOrders}">
-            <h4 th:text=" 'Tími kaupa: ' +${order.timeOfPurchase}"></h4>
+
             <table class="table table-bordered th">
+                <caption th:text=" 'Tími kaupa: ' +${order.timeOfPurchase}"></caption>
                 <thead class="table thead-light th">
                 <tr>
                     <th>Heiti</th>
@@ -35,8 +42,10 @@
                 </tbody>
             </table>
             <p th:text="'Heildarverð: ' + ${order.totalPrice}"></p>
+
         </div>
     </div>
+</div>
 </div>
 </body>
 </html>

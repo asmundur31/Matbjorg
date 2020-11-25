@@ -7,19 +7,25 @@
 <body>
 <div th:insert="Fragments/navbar.html"></div>
 
-
-<div class="card card-body">
-  <h1 class="card-title" th:text="${seller.name}"></h1>
-  <p class="card-subtitle">Söluaðili</p>
-  <p class="card-text" th:text="${seller.email}"></p>
+<div class="text-center p-2">
+ <div class="card text-center border-primary w-50">
+    <div class="card-body">
+      <h1 class="card-title" th:text="${seller.name}"></h1>
+      <h4 class="card-subtitle">Söluaðili</h4>
+        <p class="card-text" th:text="${seller.email}"></p>
+    </div>
+ </div>
 </div>
 
-<a href="/addAdvertisement" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Setja inn nýja auglýsingu</a>
+<div class="text-center p-2">
+  <a href="/addAdvertisement" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Setja inn nýja auglýsingu</a>
+</div>
+
 <div th:switch="${#lists.size(advertisementsActive)}">
     <h2 th:case="0"> Þú hefur ekki sett inn virkar auglýsingar</h2>
     <div th:case="*">
-        <h2>Þínar virku auglýsingar</h2>
         <table class="table table-bordered th">
+            <caption>Þínar virku auglýsingar</caption>
             <thead class="table thead-light th">
             <tr>
                 <th>Heiti</th>
@@ -49,9 +55,9 @@
 <div th:switch="${#lists.size(advertisementsInactive)}">
     <h2 th:case="0"> Engar óvirkar auglýsingar</h2>
     <div th:case="*">
-        <h2>Þínar óvirku auglýsingar</h2>
-        <table class="table table-bordered th">
-            <thead class="table thead-light th">
+        <table class="table table-bordered">
+            <caption>Þínar óvirku auglýsingar</caption>
+            <thead class="thead-dark">
             <tr>
                 <th>Heiti</th>
                 <th>Lýsing</th>
