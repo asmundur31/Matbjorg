@@ -76,7 +76,7 @@ public class AdvertisementController {
      * @return ef notandi er ekki seller förum við á forsíðuna annars förum við á html-síðuna addAdvertisement
      * til að bæta við auglýsingu
      */
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.GET)
+    @RequestMapping(value = "/addAdvertisement", method = RequestMethod.GET)
     public String addAdvertisementGET(Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
         if(seller == null) {
@@ -100,11 +100,11 @@ public class AdvertisementController {
      * @return ef upp kemur villa, þ.e. auglýsing sem átti að bæta við var ekki á réttu formi, þá erum við aftur
      * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
-    @RequestMapping(value = "/addadvertisement", method = RequestMethod.POST)
+    @RequestMapping(value = "/addAdvertisement", method = RequestMethod.POST)
     public String addAdvertisementPOST(@RequestParam("picture") MultipartFile picture, @Valid Advertisement advertisement, BindingResult result, Model model, HttpSession session) {
         if (result.hasErrors()) {
             System.out.println(result.getFieldError());
-            return "redirect:/addadvertisement";
+            return "redirect:/addAdvertisement";
         }
         advertisementService.save(advertisement, (Seller) session.getAttribute("loggedInUser"), picture);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
@@ -143,7 +143,6 @@ public class AdvertisementController {
             } else {
                 model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
             }
-
         }
         return "categories";
     }

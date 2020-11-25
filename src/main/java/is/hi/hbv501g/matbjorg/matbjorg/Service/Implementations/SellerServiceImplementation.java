@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service.Implementations;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.SellerRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,14 +62,11 @@ public class SellerServiceImplementation implements SellerService {
     }
 
     @Override
-    public Seller login(Seller seller) {
-        if (seller == null) {
-            return null;
-        }
-        Seller exists = findByEmail(seller.getEmail());
+    public Seller login(User user) {
+        Seller exists = findByEmail(user.getEmail());
         if (exists != null) {
-            if (exists.getPassword().equals(seller.getPassword())) {
-                return seller;
+            if (exists.getPassword().equals(user.getPassword())) {
+                return exists;
             }
         }
         return null;

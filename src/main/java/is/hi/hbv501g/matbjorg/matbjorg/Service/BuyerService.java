@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -52,9 +53,9 @@ public interface BuyerService {
 
     /**
      * Athugum hvort kaupandi er skráður inn
-     * @param buyer kaupandi sem á að athuga
+     * @param user kaupandi sem á að athuga
      * @return skilar okkur null ef kaupandi er ekki skráður inn. Annars skilar það okkur
      * viðeigandi kaupanda
      */
-    Buyer login(Buyer buyer);
+    Buyer login(User user);
 }
