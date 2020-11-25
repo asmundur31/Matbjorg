@@ -52,7 +52,7 @@
     </div>
 </div>
 
-<div th:switch="${#lists.size(advertisementsInactive)}">
+<div th:switch="${#lists.size(advertisementsInactive)}" class="mb-5">
     <h2 th:case="0"> Engar óvirkar auglýsingar</h2>
     <div th:case="*">
         <table class="table table-bordered">

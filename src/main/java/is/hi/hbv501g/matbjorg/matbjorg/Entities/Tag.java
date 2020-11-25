@@ -6,5 +6,5 @@ public enum Tag {
     ÞURRVARA,
     BRAUÐ,
     BAKKELSI,
-    ÁVEXTIR
+    ÁVEXTIR;
 }
