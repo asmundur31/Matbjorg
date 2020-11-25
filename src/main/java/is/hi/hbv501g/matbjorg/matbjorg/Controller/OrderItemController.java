@@ -66,12 +66,6 @@ public class OrderItemController {
                 model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
             }
         }
-        Buyer buyer = (Buyer) session.getAttribute("loggedInUser");
-        if(buyer == null) {
-            return "redirect:/";
-        }
-        model.addAttribute("loggedInUser", buyer);
-        model.addAttribute("userType", "buyer");
       
         Optional<Advertisement> ad = advertisementService.findById(advertisementId);
         if(ad.isEmpty()) {
