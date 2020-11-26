@@ -8,7 +8,10 @@ target/
 /src/main/resources/application.properties
 
 ### Hunsum myndir sem eru í img/advertisementImages ###
-/src/main/resources/static/img/advertisementImages
+/src/main/resources/static/img/advertisementImages/*
+### Nema default.jpg ###
+!/src/main/resources/static/img/advertisementImages/default.jpg
+
 
 ### STS ###
 .apt_generated
