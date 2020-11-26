@@ -27,12 +27,13 @@
             </div>
             <div class="form-row">
                 <div class="form-group col-sm-6">
-                    <label for="amount">Magn(kg)</label>
-                    <input class="form-control" type="number" th:field="*{originalAmount}" id="amount" step=".25" min=".25" required>
+                    <label for="amount">Magn(einingar)</label>
+                    <input class="form-control" type="number" th:field="*{originalAmount}" id="amount" step="1" min="1"
+                           required>
                     <span th:if="${#fields.hasErrors('originalAmount')}" th:error="*{originalAmount}"></span>
                 </div>
                 <div class="form-group col-sm-6">
-                    <label for="price">Verð(Kr./kg)</label>
+                    <label for="price">Verð(Kr./eining)</label>
                     <input class="form-control" type="number" th:field="*{price}" id="price" min="0" required>
                     <span th:if="${#fields.hasErrors('price')}" th:error="*{price}"></span>
                 </div>

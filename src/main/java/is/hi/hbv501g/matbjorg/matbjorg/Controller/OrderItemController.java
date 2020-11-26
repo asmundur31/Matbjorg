@@ -74,7 +74,7 @@ public class OrderItemController {
         }
         model.addAttribute("advertisement", ad.get());
         OrderItem newOrderItem = new OrderItem();
-        newOrderItem.setAmount(0.25);
+        newOrderItem.setAmount(1);
         model.addAttribute("orderItem", newOrderItem);
         return "orderItemForm";
     }
