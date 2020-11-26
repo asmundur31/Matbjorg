@@ -85,7 +85,7 @@ public class AdvertisementController {
         model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
         model.addAttribute("userType", "seller");
         Advertisement newAdvertisement = new Advertisement();
-        newAdvertisement.setOriginalAmount(0.25);
+        newAdvertisement.setOriginalAmount(1);
         model.addAttribute("advertisement", newAdvertisement);
         model.addAttribute("tags", Tag.values());
         return "addAdvertisement";

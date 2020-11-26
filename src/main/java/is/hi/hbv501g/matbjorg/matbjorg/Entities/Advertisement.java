@@ -44,7 +44,7 @@ public class Advertisement {
     private String description;
     private boolean active = true;
 
-    @DecimalMin(value = "0.25")
+    @DecimalMin(value = "1")
     @Column(nullable = false)
     private double originalAmount;
 

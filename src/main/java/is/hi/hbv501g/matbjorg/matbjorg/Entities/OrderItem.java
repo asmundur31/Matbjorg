@@ -22,7 +22,7 @@ public class OrderItem {
     @ManyToOne
     private Advertisement advertisement;
 
-    @DecimalMin(value = "0.25")
+    @DecimalMin(value = "1")
     @Column(nullable = false)
     private double amount;
 

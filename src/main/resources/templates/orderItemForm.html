@@ -5,36 +5,40 @@
     <head th:insert="Fragments/headerLinks.html"></head>
 </head>
 <body>
-    <div th:insert="/Fragments/navbar.html"></div>
-    <div class="pt-5">
-        <div class="container">
-            <div class="row">
-                <div class="col-6">
-                    <img class="w-100 h-auto" th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" th:alt="${advertisement.pictureName}">
-                </div>
-                <div class="col-6">
-                    <div class="row">
-                        <div class="col-12">
-                            <h1 th:text="${advertisement.name}"></h1>
-                            <h2 th:text="${advertisement.price} + kr" class="pl-2 h5"></h2>
-                            <p th:text="${advertisement.description}" class="pl-2 pt-2 lead"></p>
-                            <div  class="pl-2 pt-2"><strong>Eftirstöðvar: </strong><p th:text="${advertisement.currentAmount}"></p></div>
-                            <div  class="pl-2 pt-2"><strong>Gildir til: </strong><p th:text="${advertisement.expireDate}"></p></div>
-                            <form th:if="${userType} == 'buyer'" action="#" th:action="@{/orderItem/} + ${advertisement.id}" th:object="${orderItem}" method="post" class="pl-2 pt-2">
-                                <div class="input-group">
-                                    <div class="input-group-append">
-                                        <input class="btn btn-outline-primary" type="submit" value="Setja í körfu">
-                                    </div>
-                                <input type="number" th:field="*{amount}" id="amount" placeholder="Magn" step=".25"
-                                       min=".25" th:max="${advertisement.currentAmount}" required>
+<div th:insert="/Fragments/navbar.html"></div>
+<div class="pt-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <img class="w-100 h-auto" th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}"
+                     th:alt="${advertisement.pictureName}">
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12">
+                        <h1 th:text="${advertisement.name}"></h1>
+                        <h2 th:text="${advertisement.price} + kr" class="pl-2 h5"></h2>
+                        <p th:text="${advertisement.description}" class="pl-2 pt-2 lead"></p>
+                        <div class="pl-2 pt-2"><strong>Eftirstöðvar: </strong>
+                            <p th:text="${advertisement.currentAmount}"></p></div>
+                        <div class="pl-2 pt-2"><strong>Gildir til: </strong>
+                            <p th:text="${advertisement.expireDate}"></p></div>
+                        <form th:if="${userType} == 'buyer'" action="#" th:action="@{/orderItem/} + ${advertisement.id}"
+                              th:object="${orderItem}" method="post" class="pl-2 pt-2">
+                            <div class="input-group">
+                                <div class="input-group-append">
+                                    <input class="btn btn-outline-primary" type="submit" value="Setja í körfu">
                                 </div>
-                                <span th:if="${#fields.hasErrors('amount')}" th:error="*{amount}"></span>
-                            </form>
-                        </div>
+                                <input type="number" th:field="*{amount}" id="amount" placeholder="Magn" step="1"
+                                       min="1" th:max="${advertisement.currentAmount}" required>
+                            </div>
+                            <span th:if="${#fields.hasErrors('amount')}" th:error="*{amount}"></span>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </body>
 </html>
