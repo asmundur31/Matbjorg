@@ -25,7 +25,7 @@ Nokkrar athugasemdir áður en tenging við remote gagnagrunnin er sett upp.
 1. Það eru eitthver gögn inn á gagnagrunninum
 2. Auglýsingar sem eru þar inni gætu verið útrunnar þegar þið tengist honum og þá sjást engar auglýsingar á síðunni.
 3. Við geymum aðeins nöfn mynda í gagnagrunninum, þannig að enginn mynd mun birtast nema þið hafið myndir með viðeigandi
-nöfn í möppunni static/img/advertisementImages í file systeminu ykkar.
+nöfn í möppunni src/main/resources/static/img/advertisementImages í verkefna skipulaginu á ykkar tölvu.
 4. Notað er Heroku til að setja upp gagnagrunninn og þeir hámarka 20 tengingar við hann. JPA heldur utan um pool af 
 tengingum svo í raun er ein tenging jafngild 10 tengingum. Það þýðir að aðeins tveir geta tengst í einu.
 
@@ -37,11 +37,11 @@ Við gerum ráð fyrir eins og áður að verkefnið sé keyrt í IntelliJ IDEA.
 2. Opna verkefnið í IntelliJ IDEA.
 3. Passa að öll Maven dependencies eru sótt sem eru skilgreind í pom.xml skránni.
 4. Setjið eftirfarnadi kóðalínur í application.properties í staðinn fyrir sambærilegar línur þar:
-```
-spring.datasource.url=jdbc:postgresql://ec2-54-205-248-255.compute-1.amazonaws.com:5432/dcl712pkc92os7
-spring.datasource.username=jnnnqrzurvsecy
-spring.datasource.password=7464dbf02bdbdff94606bd136abc3c9625b4980d180343aeba1aaf815218cfb6
-```
+    ```
+    spring.datasource.url=jdbc:postgresql://ec2-54-205-248-255.compute-1.amazonaws.com:5432/dcl712pkc92os7
+    spring.datasource.username=jnnnqrzurvsecy
+    spring.datasource.password=7464dbf02bdbdff94606bd136abc3c9625b4980d180343aeba1aaf815218cfb6
+    ```
 5. Nú er allt klárt til að keyra verkefnið og hægt er að smella á 'Run'.
 
 ## Vinnuskipulag
