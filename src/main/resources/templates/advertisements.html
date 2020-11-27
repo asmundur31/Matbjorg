@@ -34,13 +34,20 @@
         </div>
         <div class="col-10">
             <div th:switch="${#lists.size(advertisements)}">
-                <h2 th:case="0">Það eru engar virkar auglýsingar</h2>
+                <th:block th:case="0">
+                    <p th:if="${!(search == null)}" class="d-flex justify-content-end"><a href="/advertisements">Skoða allar auglýsingar</a></p>
+                    <th:block th:switch="${search}">
+                        <h2 th:case="null">Það eru engar virkar auglýsingar</h2>
+                        <h2 th:case="*">Engar leitarniðurstöður</h2>
+                    </th:block>
+                </th:block>
                 <div th:case="*">
+
                     <div class="row row-cols-1">
+                        <p th:if="${!(search == null)}" class="d-flex justify-content-end"><a href="/advertisements">Skoða allar auglýsingar</a></p>
                         <div th:each="advertisement : ${advertisements}" class="card w-100">
-                            <div th:class="row + ' ' + no-gutters + ' ' + advertisement + ' ' + ${advertisement.owner}"
-                                 th:each="tag : ${advertisement.tags}"
-                                 th:classappend="${tag}">
+                            <div class="row no-gutters advertisement"
+                                 th:attr="data-tags=${advertisement.getTagString()}, data-owner=${advertisement.owner}">
                                     <div class="col-md-4">
                                         <a th:href="@{/orderitem/} + ${advertisement.id}" class="card-linkable"><img th:src="@{/img/advertisementImages/} + ${advertisement.pictureName}" class="card-img"></a>
                                     </div>
@@ -61,7 +68,7 @@
     </div>
 </div>
 
-<p><a href="/search">Leita í auglýsingum</a></p>
+
 <script type="text/javascript" th:src="@{/js/search.js}"></script>
 </body>
 </html>

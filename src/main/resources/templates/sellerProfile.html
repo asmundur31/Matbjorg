@@ -1,22 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <link href="../static/css/bootstrap.css"
-          th:href="@{/css/bootstrap.css}"
-          rel="stylesheet" media="screen"/>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html"></head>
     <title>Profile</title>
 </head>
 <body>
-<h1 th:text="${seller.name} + ' söluaðili'"></h1>
-<p th:text="${seller.email}"></p>
-<hr>
+<div th:insert="Fragments/navbar.html"></div>
+
+<div class="text-center p-2">
+ <div class="card text-center border-primary w-50">
+    <div class="card-body">
+      <h1 class="card-title" th:text="${seller.name}"></h1>
+      <h4 class="card-subtitle">Söluaðili</h4>
+        <p class="card-text" th:text="${seller.email}"></p>
+    </div>
+ </div>
+</div>
+
+<div class="text-center p-2">
+  <a href="/addAdvertisement" class="btn btn-primary btn-lg" role="button" aria-pressed="true">Setja inn nýja auglýsingu</a>
+</div>
+
 <div th:switch="${#lists.size(advertisementsActive)}">
     <h2 th:case="0"> Þú hefur ekki sett inn virkar auglýsingar</h2>
     <div th:case="*">
-        <h2>Þínar virku auglýsingar</h2>
-        <table>
-            <thead>
+        <table class="table table-bordered th">
+            <caption>Þínar virku auglýsingar</caption>
+            <thead class="table thead-light th">
             <tr>
                 <th>Heiti</th>
                 <th>Lýsing</th>
@@ -42,12 +52,12 @@
     </div>
 </div>
 
-<div th:switch="${#lists.size(advertisementsInactive)}">
+<div th:switch="${#lists.size(advertisementsInactive)}" class="mb-5">
     <h2 th:case="0"> Engar óvirkar auglýsingar</h2>
     <div th:case="*">
-        <h2>Þínar óvirku auglýsingar</h2>
-        <table>
-            <thead>
+        <table class="table table-bordered">
+            <caption>Þínar óvirku auglýsingar</caption>
+            <thead class="thead-dark">
             <tr>
                 <th>Heiti</th>
                 <th>Lýsing</th>
@@ -72,6 +82,5 @@
         </table>
     </div>
 </div>
-<p><a href="/addadvertisement">Setja inn nýja auglýsingu</a></p>
 </body>
 </html>

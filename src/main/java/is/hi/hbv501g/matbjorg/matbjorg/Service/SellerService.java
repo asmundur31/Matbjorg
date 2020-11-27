@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,8 +60,8 @@ public interface SellerService {
     /**
      * Skráir söluaðila inn
      *
-     * @param seller hlutur af taginu Seller sem á að skrá inn
+     * @param user hlutur af taginu User sem á að skrá inn
      * @return hlutur af taginu Seller sem var verið að skrá inn
      */
-    Seller login(Seller seller);
+    Seller login(User user);
 }

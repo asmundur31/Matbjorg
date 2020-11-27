@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="https://thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <head th:insert="/Fragments/headerLinks.html">
+
+    </head>
     <title>Search</title>
 </head>
 <body>
@@ -60,7 +62,7 @@
                 <td th:text="${advertisement.currentAmount}"></td>
                 <td th:text="${advertisement.price}"></td>
                 <td th:text="${advertisement.expireDate}"></td>
-                <td><a th:href="@{/orderitem/} + ${advertisement.id}" th:if="${userType.equals('buyer')}">Skoða</a></td>
+                <td><a th:href="@{/orderItem/} + ${advertisement.id}" th:if="${userType.equals('Buyer')}">Skoða</a></td>
             </tr>
             </tbody>
         </table>

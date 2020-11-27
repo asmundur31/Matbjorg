@@ -156,6 +156,8 @@ public class OrderController {
             return "redirect:/order";
         }
 
+        model.addAttribute("loggedInUser", b);
+        model.addAttribute("userType", "buyer");
         model.addAttribute("order", o);
         model.addAttribute("time", LocalDateTime.now());
         model.addAttribute("totalPrice", orderService.totalPrice(o));

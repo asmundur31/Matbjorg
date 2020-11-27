@@ -22,13 +22,15 @@ function updateFilter() {
     } else {
         allAds.forEach((ad) => {
             hide(ad);
-            var classList = ad.className.split(' ');
-            classList.forEach((tag) => {
-                console.log(tag);
-                if(selected.has(tag)) {
-                    show(ad);
-                }
-            })
+            if(ad.hasAttribute('data-tags')) {
+                var classList = ad.dataset.tags.split(' ');
+                classList.push(ad.dataset.owner);
+                classList.forEach((tag) => {
+                    if(selected.has(tag)) {
+                        show(ad);
+                    }
+                })
+            }
         })
     }
 }

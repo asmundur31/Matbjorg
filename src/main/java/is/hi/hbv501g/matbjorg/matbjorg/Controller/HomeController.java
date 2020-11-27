@@ -31,7 +31,7 @@ public class HomeController {
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return skilar okkur á html-síðuna Velkominn
      */
-    @RequestMapping(value = "/")
+    @RequestMapping("/")
     public String Home(Model model, HttpSession session) {
         model.addAttribute("loggedInUser", session.getAttribute("loggedInUser"));
         String userType = (String) session.getAttribute("userType");

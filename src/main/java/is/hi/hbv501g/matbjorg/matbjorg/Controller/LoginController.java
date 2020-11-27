@@ -65,8 +65,8 @@ public class LoginController {
         if (result.hasErrors()) {
             return "loginPage";
         }
-        Seller exists1 = sellerService.login(sellerService.findByEmail(user.getEmail()));
-        Buyer exists2 = buyerService.login(buyerService.findByEmail(user.getEmail()));
+        Seller exists1 = sellerService.login(user);
+        Buyer exists2 = buyerService.login(user);
         if (exists1 == null && exists2 == null) {
             return "loginPage";
         } else if(exists2 == null) {
