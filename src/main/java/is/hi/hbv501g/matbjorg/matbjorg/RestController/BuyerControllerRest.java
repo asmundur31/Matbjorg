@@ -24,7 +24,7 @@ public class BuyerControllerRest {
         this.orderService = orderService;
     }
 
-    @GetMapping("/")
+    @GetMapping("")
     String all() {
         List<Buyer> buyers = buyerService.findAll();
         Gson gson = new Gson();
