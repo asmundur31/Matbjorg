@@ -14,7 +14,7 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/rest")
+@RequestMapping("/rest/buyers")
 public class BuyerControllerRest {
     private BuyerService buyerService;
     private OrderService orderService;
@@ -24,7 +24,7 @@ public class BuyerControllerRest {
         this.orderService = orderService;
     }
 
-    @GetMapping("/buyers")
+    @GetMapping("/")
     String all() {
         List<Buyer> buyers = buyerService.findAll();
         Gson gson = new Gson();
@@ -32,7 +32,7 @@ public class BuyerControllerRest {
         return json;
     }
 
-    @GetMapping("/buyers/{id}")
+    @GetMapping("/{id}")
     String one(@PathVariable Long id) {
         Optional<Buyer> buyer = buyerService.findById(id);
         if(buyer.isEmpty()) {
