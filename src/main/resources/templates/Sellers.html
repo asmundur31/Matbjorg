@@ -5,7 +5,7 @@
     <title>Sellers</title>
 </head>
 <body>
-<div th:insert="Fragments/navbar.html"></div>
+<div th:replace="Fragments/navbar :: navbar"></div>
 
 <div th:switch="${lists.size(sellers)}">
     <h2 th:case="0"> No sellers yet!</h2>

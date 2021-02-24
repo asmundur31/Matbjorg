@@ -5,7 +5,7 @@
     <title>Logged In User</title>
 </head>
 <body>
-<div th:insert="Fragments/navbar.html"></div>
+<div th:replace="Fragments/navbar :: navbar"></div>
 
 <h1>Notandi sem er srkáður inn</h1>
 <p th:text="${loggedInUser.name}"></p>

@@ -9,7 +9,7 @@
     <title>Login</title>
 </head>
 <body>
-<div th:insert="Fragments/navbar.html"></div>
+<div th:replace="Fragments/navbar :: navbar"></div>
 <div class="form-section">
     <form action="#" th:action="@{/login}" th:object="${user}" method="post" class="form-signin">
         <h1 class="font-weight-bold">Innskráning</h1>
