@@ -1,7 +1,6 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Controller;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
