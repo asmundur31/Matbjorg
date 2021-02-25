@@ -25,11 +25,11 @@ public class BuyerControllerRest {
     }
 
     @GetMapping("")
-    String all() {
+    List<Buyer> all() {
         List<Buyer> buyers = buyerService.findAll();
         Gson gson = new Gson();
         String json = gson.toJson(buyers);
-        return json;
+        return buyers;
     }
 
     @GetMapping("/{id}")
