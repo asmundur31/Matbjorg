@@ -1,8 +1,6 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
-import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.web.bind.annotation.GetMapping;

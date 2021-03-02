@@ -1,5 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
+import net.minidev.json.annotate.JsonIgnore;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
@@ -36,12 +38,15 @@ public class Seller {
     @Column(unique = true, nullable = false)
     private String email;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Advertisement> activeAdvertisements = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Advertisement> pastAdvertisements = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
 
