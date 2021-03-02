@@ -15,11 +15,11 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/rest/buyers")
-public class BuyerControllerRest {
+public class BuyerRestController {
     private BuyerService buyerService;
     private OrderService orderService;
 
-    public BuyerControllerRest(BuyerService buyerService, OrderService orderService) {
+    public BuyerRestController(BuyerService buyerService, OrderService orderService) {
         this.buyerService = buyerService;
         this.orderService = orderService;
     }
@@ -27,20 +27,12 @@ public class BuyerControllerRest {
     @GetMapping("")
     List<Buyer> all() {
         List<Buyer> buyers = buyerService.findAll();
-        Gson gson = new Gson();
-        String json = gson.toJson(buyers);
         return buyers;
     }
 
     @GetMapping("/{id}")
-    String one(@PathVariable Long id) {
+    Optional<Buyer> one(@PathVariable Long id) {
         Optional<Buyer> buyer = buyerService.findById(id);
-        if(buyer.isEmpty()) {
-            String notFound = "{ \"Not found\": \"Fann ekki buyer " + id + "\"}";
-            return notFound;
-        }
-        Gson gson = new Gson();
-        String json = gson.toJson(buyer);
-        return json;
+        return buyer;
     }
 }
