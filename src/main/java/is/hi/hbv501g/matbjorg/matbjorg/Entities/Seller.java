@@ -38,15 +38,12 @@ public class Seller {
     @Column(unique = true, nullable = false)
     private String email;
 
-    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Advertisement> activeAdvertisements = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Advertisement> pastAdvertisements = new ArrayList<>();
 
-    @JsonIgnore
     @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
 
