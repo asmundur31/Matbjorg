@@ -1,8 +1,5 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class SellerDTO {
     private long id;
     private String name;
