@@ -34,9 +34,11 @@ public class LoginRestController {
             return null;
         } else if(buyer == null) {
             user.setId(seller.getId());
+            user.setType("seller");
             return user;
         } else {
             user.setId(buyer.getId());
+            user.setType("buyer");
             return user;
         }
     }
