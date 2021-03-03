@@ -2,15 +2,15 @@ package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
 public class OrderItemDTO {
     private long id;
-    private AdvertisementDTO advertisement;
+    private long advertisementId;
     private double amount;
 
     public OrderItemDTO() {
     }
 
-    public OrderItemDTO(long id, AdvertisementDTO advertisement, double amount) {
+    public OrderItemDTO(long id, long advertisementId, double amount) {
         this.id = id;
-        this.advertisement = advertisement;
+        this.advertisementId = advertisementId;
         this.amount = amount;
     }
 
@@ -22,12 +22,12 @@ public class OrderItemDTO {
         this.id = id;
     }
 
-    public AdvertisementDTO getAdvertisement() {
-        return advertisement;
+    public long getAdvertisementId() {
+        return advertisementId;
     }
 
-    public void setAdvertisement(AdvertisementDTO advertisement) {
-        this.advertisement = advertisement;
+    public void setAdvertisementId(long advertisementId) {
+        this.advertisementId = advertisementId;
     }
 
     public double getAmount() {
