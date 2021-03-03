@@ -31,19 +31,21 @@ public class SellerRestController {
         List<Seller> sellers = sellerService.findAll();
         List<SellerDTO> sellersDTO = new ArrayList<>();
         for(int i=0; i<sellers.size(); i++) {
-            SellerDTO sellerDTO = parseSeller(sellers.get(i));
-            sellersDTO.add(sellerDTO);
+            Seller seller = sellers.get(i);
+            sellersDTO.add(new SellerDTO(seller.getId(), seller.getName(), seller.getEmail()));
         }
-        // TODO: eitthver galli í active og past advertisements, þurfum eitthvað að skoða þetta
         return sellersDTO;
     }
 
     @GetMapping("/{id}")
     SellerDTO one(@PathVariable Long id) {
-        Optional<Seller> seller = sellerService.findById(id);
-        SellerDTO sellerDTO = parseSeller(seller.get());
-        // TODO: eitthver galli í active og past advertisements
-        return sellerDTO;
+        Optional<Seller> s = sellerService.findById(id);
+        if(!s.isEmpty()) {
+            Seller seller = s.get();
+            SellerDTO sellerDTO = new SellerDTO(seller.getId(), seller.getName(), seller.getEmail());
+            return sellerDTO;
+        }
+        return null;
     }
 
     /**
@@ -51,7 +53,7 @@ public class SellerRestController {
      * @param seller
      * @return
      */
-    private SellerDTO parseSeller(Seller seller) {
+    /*private SellerDTO parseSeller(Seller seller) {
         SellerDTO sellerDTO = new SellerDTO();
         sellerDTO.setId(seller.getId());
         sellerDTO.setName(seller.getName());
@@ -79,14 +81,14 @@ public class SellerRestController {
         sellerDTO.setActiveOrders(activeOrderDTOs);
 
         return sellerDTO;
-    }
+    }*/
 
     /**
      * Hjálpar fall til að parse-a advertisement í advertisementDTO
      * @param advertisement
      * @return
      */
-    private AdvertisementDTO parseAdvertisement(Advertisement advertisement) {
+    /*private AdvertisementDTO parseAdvertisement(Advertisement advertisement) {
         AdvertisementDTO advertisementDTO = new AdvertisementDTO();
         advertisementDTO.setId(advertisement.getId());
         advertisementDTO.setName(advertisement.getName());
@@ -100,14 +102,14 @@ public class SellerRestController {
         advertisementDTO.setTags(advertisement.getTags());
         advertisementDTO.setPictureName(advertisement.getPictureName());
         return advertisementDTO;
-    }
+    }*/
 
     /**
      * Hjálparfall til að parse-a order í orderDTO
      * @param order
      * @return
      */
-    private OrderDTO parseOrder(Order order) {
+    /*private OrderDTO parseOrder(Order order) {
         OrderDTO orderDTO = new OrderDTO();
         orderDTO.setId(order.getId());
 
@@ -126,19 +128,19 @@ public class SellerRestController {
         orderDTO.setTimeOfPurchase(order.getTimeOfPurchase());
         orderDTO.setTotalPrice(order.getTotalPrice());
         return orderDTO;
-    }
+    }*/
 
     /**
      * Hjálparfall til að parse-a orderItem í orderItemDTO
      * @param orderItem
      * @return
      */
-    private OrderItemDTO parseOrderItem(OrderItem orderItem) {
+    /*private OrderItemDTO parseOrderItem(OrderItem orderItem) {
         OrderItemDTO orderItemDTO = new OrderItemDTO();
         orderItemDTO.setId(orderItem.getId());
         Advertisement advertisement = orderItem.getAdvertisement();
         orderItemDTO.setAdvertisement(parseAdvertisement(advertisement));
         orderItemDTO.setAmount(orderItem.getAmount());
         return orderItemDTO;
-    }
+    }*/
 }
