@@ -7,6 +7,8 @@ import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping("/rest/login")
 public class LoginRestController {
@@ -26,19 +28,21 @@ public class LoginRestController {
      * @return Skilum notanda sem skráði sig inn annars engu
      */
     @PostMapping("")
-    public User login(@RequestParam String email, @RequestParam String password) {
+    public User login(@RequestParam String email, @RequestParam String password, HttpSession session) {
         User user = new User(email, password);
         Seller seller = sellerService.login(user);
         Buyer buyer = buyerService.login(user);
         if (seller == null && buyer == null) {
             return null;
-        } else if(buyer == null) {
+        } else if (buyer == null) {
             user.setId(seller.getId());
             user.setType("seller");
+            user.setToken(seller.getToken());
             return user;
         } else {
             user.setId(buyer.getId());
             user.setType("buyer");
+            user.setToken(buyer.getToken());
             return user;
         }
     }

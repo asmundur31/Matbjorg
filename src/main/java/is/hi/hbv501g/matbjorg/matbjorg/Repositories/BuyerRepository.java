@@ -49,4 +49,6 @@ public interface BuyerRepository extends JpaRepository<Buyer, Long> {
      * @return skilar íláti með hlut af kaupanda með tilgreint auðkenni
      */
     Optional<Buyer> findById(long id);
+
+    Buyer findByToken(String token);
 }
