@@ -1,5 +1,6 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 
 import java.time.LocalDateTime;
@@ -13,7 +14,9 @@ public class AdvertisementDTO {
     private double originalAmount;
     private double currentAmount;
     private double price;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime expireDate;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
     private LocalDateTime createdAt;
     private Set<Tag> tags;
     private String pictureName;

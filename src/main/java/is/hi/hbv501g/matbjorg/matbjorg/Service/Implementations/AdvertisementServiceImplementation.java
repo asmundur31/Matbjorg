@@ -5,7 +5,6 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
-import org.apache.tomcat.jni.Local;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -15,7 +14,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -33,10 +31,11 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
      * UPLOAD_PICTURE_PATH er strengur sem að hefur rétt path á möppuna sem á að geyma myndir
      */
     AdvertisementRepository repository;
-    public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir")+"/src/main/resources/static/img/advertisementImages/";
+    public static String UPLOAD_PICTURE_PATH = System.getProperty("user.dir") + "/src/main/resources/static/img/advertisementImages/";
 
     /**
      * Smiður fyrir AdvertisementServiceImplementation
+     *
      * @param advertisementRepository repository sem hefur samskipti við töfluna Advertisement í gagnagrunninum
      */
     @Autowired
@@ -49,6 +48,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         return repository.findByActive(active);
     }
 
+
     @Override
     public Advertisement save(Advertisement advertisement, Seller seller, MultipartFile picture) {
         advertisement.setOwner(seller);
@@ -56,14 +56,19 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         advertisement.setCreatedAt(LocalDateTime.now());
         // Vistum auglýsinguna í gagnagrunnin til að gefa því id
         repository.save(advertisement);
-        // Pössu uppá að þetta sé unique nafn
-        String pictureName = "("+advertisement.getId()+")"+picture.getOriginalFilename();
-        // Uploadum myndinni í img/advertisementImages
-        Boolean tokst = uploadImage(picture, pictureName);
-        if(tokst) {
-            advertisement.setPictureName(pictureName);
-        } else {
+        if (picture == null) {
             advertisement.setPictureName("default.jpg");
+        } else {
+            // Pössu uppá að þetta sé unique nafn
+            String pictureName = "(" + advertisement.getId() + ")" + picture.getOriginalFilename();
+            // Uploadum myndinni í img/advertisementImages
+
+            Boolean tokst = uploadImage(picture, pictureName);
+            if (tokst) {
+                advertisement.setPictureName(pictureName);
+            } else {
+                advertisement.setPictureName("default.jpg");
+            }
         }
         return repository.save(advertisement);
     }
@@ -72,7 +77,7 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         Boolean tokst = false;
         List<String> contentTypes = Arrays.asList("image/png", "image/jpeg", "image/jpg", "image/gif");
         // Ef mynd er með rétt extension
-        if(contentTypes.contains(picture.getContentType())) {
+        if (contentTypes.contains(picture.getContentType())) {
             try {
                 byte[] bytes = picture.getBytes();
                 Path path = Paths.get(UPLOAD_PICTURE_PATH, pictureName);
@@ -91,12 +96,12 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
         repository.delete(advertisement);
     }
 
-   @Override
+    @Override
     public void updateActive() {
         LocalDateTime lt = LocalDateTime.now();
-        for(Advertisement ad: repository.findAll()){
-            if(ad.getCurrentAmount()<=0 || lt.compareTo(ad.getExpireDate())>0) {
-                repository.updateActive(ad.getId(),false);
+        for (Advertisement ad : repository.findAll()) {
+            if (ad.getCurrentAmount() <= 0 || lt.compareTo(ad.getExpireDate()) > 0) {
+                repository.updateActive(ad.getId(), false);
             }
         }
     }
@@ -187,8 +192,8 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public List<Advertisement> createdToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> adToday = new ArrayList<>();
-        for(Advertisement ad: repository.findByActive(true)){
-            if(lt.isEqual(ad.getCreatedAt().toLocalDate())) {
+        for (Advertisement ad : repository.findByActive(true)) {
+            if (lt.isEqual(ad.getCreatedAt().toLocalDate())) {
                 adToday.add(ad);
             }
         }
@@ -199,8 +204,8 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
     public List<Advertisement> expireToday() {
         LocalDate lt = LocalDate.now();
         List<Advertisement> exToday = new ArrayList<>();
-        for(Advertisement ad: repository.findByActive(true)){
-            if(lt.isEqual(ad.getExpireDate().toLocalDate())) {
+        for (Advertisement ad : repository.findByActive(true)) {
+            if (lt.isEqual(ad.getExpireDate().toLocalDate())) {
                 exToday.add(ad);
             }
         }

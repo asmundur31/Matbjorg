@@ -33,8 +33,9 @@ public class AdvertisementController {
 
     /**
      * Smiður fyrir AdvertisementController
+     *
      * @param advertisementService þjónusta fyrir Advertisement
-     * @param sellerService þjónusta fyrir Seller
+     * @param sellerService        þjónusta fyrir Seller
      */
     @Autowired
     public AdvertisementController(AdvertisementService advertisementService, SellerService sellerService) {
@@ -44,7 +45,8 @@ public class AdvertisementController {
 
     /**
      * Grípur fyrirspurn þegar notandi vill skoða auglýsingar
-     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     *
+     * @param model   hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return sendum notanda á html-síðuna advertisement sem inniheldur allar auglýsingar
      */
@@ -55,11 +57,11 @@ public class AdvertisementController {
         model.addAttribute("tags", Tag.values());
         model.addAttribute("sellers", sellerService.findAll());
         String userType = (String) session.getAttribute("userType");
-        if(userType == null) {
+        if (userType == null) {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
-            if(userType.equals("seller")) {
+            if (userType.equals("seller")) {
                 model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
             } else {
                 model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
@@ -71,7 +73,8 @@ public class AdvertisementController {
 
     /**
      * Grípur fyrirspurn þegar seller vill bæta við auglýsingu
-     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     *
+     * @param model   hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return ef notandi er ekki seller förum við á forsíðuna annars förum við á html-síðuna addAdvertisement
      * til að bæta við auglýsingu
@@ -79,7 +82,7 @@ public class AdvertisementController {
     @RequestMapping(value = "/addAdvertisement", method = RequestMethod.GET)
     public String addAdvertisementGET(Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
-        if(seller == null) {
+        if (seller == null) {
             return "redirect:/";
         }
         model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
@@ -93,10 +96,11 @@ public class AdvertisementController {
 
     /**
      * Grípur fyrirspurn til að bæta við auglýsingu
+     *
      * @param advertisement auglýsing sem á að bæta við
-     * @param result hlutur af taginu BindingResult sem geymir upplýsingar um villur í Advertisement hlutnum
-     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
-     * @param session hlutur af taginu HttpSession sem geymir key-value pör
+     * @param result        hlutur af taginu BindingResult sem geymir upplýsingar um villur í Advertisement hlutnum
+     * @param model         hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     * @param session       hlutur af taginu HttpSession sem geymir key-value pör
      * @return ef upp kemur villa, þ.e. auglýsing sem átti að bæta við var ekki á réttu formi, þá erum við aftur
      * send á addAdvertisement síðuna. Ef engin villa kemur þá erum við send á heimasvæði hjá seller
      */
@@ -113,18 +117,19 @@ public class AdvertisementController {
 
     /**
      * Grípur fyrirspurn til að eyða auglýsingu
-     * @param id auðkenning á auglýsingu sem á að eyða
-     * @param model hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
+     *
+     * @param id      auðkenning á auglýsingu sem á að eyða
+     * @param model   hlutur af taginu Model sem geymir key-value pör sem hægt er að nota í html template-unum
      * @param session hlutur af taginu HttpSession sem geymir key-value pör
      * @return skilar okkur á forsíðuna ef við erum ekki seller. Annars förum við á heimasvæði hjá seller
      */
     @RequestMapping(value = "/advertisements/delete/{id}", method = RequestMethod.GET)
     public String deleteAdvertisementGET(@PathVariable("id") long id, Model model, HttpSession session) {
         Seller seller = (Seller) session.getAttribute("loggedInUser");
-        if(seller == null) {
+        if (seller == null) {
             return "redirect:/";
         }
-        Advertisement advertisement = advertisementService.findById(id).orElseThrow(()-> new IllegalArgumentException("Invalid advertisement ID"));
+        Advertisement advertisement = advertisementService.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid advertisement ID"));
         advertisementService.delete(advertisement);
         model.addAttribute("advertisements", advertisementService.findByActive(true));
         return "redirect:/profile/seller";
@@ -134,11 +139,11 @@ public class AdvertisementController {
     public String advertisementCategoriesGET(Model model, HttpSession session) {
         model.addAttribute("tags", Tag.values());
         String userType = (String) session.getAttribute("userType");
-        if(userType == null) {
+        if (userType == null) {
             model.addAttribute("userType", "noUser");
         } else {
             model.addAttribute("userType", userType);
-            if(userType.equals("seller")) {
+            if (userType.equals("seller")) {
                 model.addAttribute("loggedInUser", (Seller) session.getAttribute("loggedInUser"));
             } else {
                 model.addAttribute("loggedInUser", (Buyer) session.getAttribute("loggedInUser"));
