@@ -21,6 +21,7 @@ public class Seller {
      * activeAdvertisements er listi af öllum virkum auglýsingum söluaðilans
      * pastAdvertisements er listi af öllum óvirku auglýsingum söluaðilans
      * activeOrders er listi af öllum virku pöntunum söluaðilans
+     * token sem er auðkenni söluaðilans þegar hann gerir api köll frá framenda
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,6 +47,9 @@ public class Seller {
 
     @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
+
+    @Column(unique = true)
+    private String token;
 
     /**
      * tómur smiður fyrir Seller
@@ -119,6 +123,14 @@ public class Seller {
 
     public void setActiveOrders(List<Order> activeOrders) {
         this.activeOrders = activeOrders;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override

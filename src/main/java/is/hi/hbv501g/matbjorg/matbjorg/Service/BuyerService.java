@@ -58,4 +58,6 @@ public interface BuyerService {
      * viðeigandi kaupanda
      */
     Buyer login(User user);
+
+    Buyer findByToken(String token);
 }

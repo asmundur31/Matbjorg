@@ -1,8 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,17 @@ public class OrderDTO {
         this.active = active;
         this.timeOfPurchase = timeOfPurchase;
         this.totalPrice = totalPrice;
+    }
+
+    public OrderDTO(Order order) {
+        this.id = order.getId();
+        for (int i=0; i<order.getItems().size(); i++) {
+            this.items.add(new OrderItemDTO(order.getItems().get(i)));
+        }
+        this.buyer = new BuyerDTO(order.getBuyer());
+        this.active = order.isActive();
+        this.timeOfPurchase = order.getTimeOfPurchase();
+        this.totalPrice = order.getTotalPrice();
     }
 
     public long getId() {

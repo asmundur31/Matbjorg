@@ -1,5 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+
 public class BuyerDTO {
     private long id;
     private String name;
@@ -12,6 +14,12 @@ public class BuyerDTO {
         this.id = id;
         this.name = name;
         this.email = email;
+    }
+
+    public BuyerDTO(Buyer buyer) {
+        this.id = buyer.getId();
+        this.name = buyer.getName();
+        this.email = buyer.getEmail();
     }
 
     public long getId() {

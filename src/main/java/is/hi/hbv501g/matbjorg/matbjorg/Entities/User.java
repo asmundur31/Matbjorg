@@ -5,6 +5,7 @@ public class User {
     private String email;
     private String password;
     private String type;
+    private String token;
 
     public User(String email, String password) {
         this.email = email;
@@ -41,5 +42,13 @@ public class User {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 }

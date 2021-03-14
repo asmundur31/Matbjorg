@@ -62,10 +62,21 @@ public class BuyerServiceImplementation implements BuyerService {
     }
 
     @Override
+    public Buyer findByToken(String token) {
+        return repository.findByToken(token);
+    }
+
+    @Override
     public Buyer login(User user) {
         Buyer exists = findByEmail(user.getEmail());
-        if(exists != null) {
-            if(exists.getPassword().equals(user.getPassword())) {
+        if (exists != null) {
+            if (exists.getPassword().equals(user.getPassword())) {
+                // Bætum við token
+                TokenGenerator generator = new TokenGenerator();
+                String token = generator.generateToken(exists.getId(), exists.getEmail());
+                exists.setToken(token);
+                // Vistum þetta ofaní gagnagrunninn
+                repository.save(exists);
                 return exists;
             }
         }
