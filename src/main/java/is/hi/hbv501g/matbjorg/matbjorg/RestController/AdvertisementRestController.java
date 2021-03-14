@@ -27,7 +27,7 @@ public class AdvertisementRestController {
         List<AdvertisementDTO> adsDTO = new ArrayList<>();
         for(int i=0; i<ads.size(); i++) {
             Advertisement ad = ads.get(i);
-            adsDTO.add(new AdvertisementDTO(ad.getId(), ad.getName(), ad.getDescription(), ad.isActive(), ad.getOriginalAmount(), ad.getCurrentAmount(), ad.getPrice(), ad.getExpireDate(), ad.getCreatedAt(), ad.getTags(), ad.getPictureName()));
+            adsDTO.add(new AdvertisementDTO(ad));
         }
         return adsDTO;
     }

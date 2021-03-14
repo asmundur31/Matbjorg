@@ -126,18 +126,7 @@ public class OrderRestController {
         List<OrderDTO> ordersDTO = new ArrayList<>();
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
-
-            List<OrderItem> orderItems = order.getItems();
-            List<OrderItemDTO> orderItemsDTO = new ArrayList<>();
-
-            Buyer buyer = order.getBuyer();
-            BuyerDTO buyerDTO = new BuyerDTO(buyer.getId(), buyer.getName(), buyer.getEmail());
-
-            for (int j = 0; j < orderItems.size(); j++) {
-                OrderItem orderItem = orderItems.get(j);
-                orderItemsDTO.add(new OrderItemDTO(orderItem.getId(), orderItem.getAdvertisement().getId(), orderItem.getAmount()));
-            }
-            ordersDTO.add(new OrderDTO(order.getId(), orderItemsDTO, buyerDTO, order.isActive(), order.getTimeOfPurchase(), order.getTotalPrice()));
+            ordersDTO.add(new OrderDTO(order));
         }
         return ordersDTO;
     }
@@ -157,15 +146,7 @@ public class OrderRestController {
 
         for (int i = 0; i < orders.size(); i++) {
             Order order = orders.get(i);
-
-            List<OrderItem> orderItems = order.getItems();
-            List<OrderItemDTO> orderItemsDTO = new ArrayList<>();
-
-            for (int j = 0; j < orderItems.size(); j++) {
-                OrderItem orderItem = orderItems.get(j);
-                orderItemsDTO.add(new OrderItemDTO(orderItem.getId(), orderItem.getAdvertisement().getId(), orderItem.getAmount()));
-            }
-            ordersDTO.add(new OrderDTO(order.getId(), orderItemsDTO, buyerDTO, order.isActive(), order.getTimeOfPurchase(), order.getTotalPrice()));
+            ordersDTO.add(new OrderDTO(order));
         }
         return ordersDTO;
     }

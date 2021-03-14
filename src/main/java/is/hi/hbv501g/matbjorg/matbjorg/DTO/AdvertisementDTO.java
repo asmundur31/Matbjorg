@@ -27,7 +27,7 @@ public class AdvertisementDTO {
     public AdvertisementDTO() {
     }
 
-    public AdvertisementDTO(long id, String name, String sellerName, String description, boolean active, double originalAmount, double currentAmount, double price, String expireDate, String createdAt, Set<Tag> tags, String pictureName) {
+    public AdvertisementDTO(long id, String name, String sellerName, String description, boolean active, double originalAmount, double currentAmount, double price, LocalDateTime expireDate, LocalDateTime createdAt, Set<Tag> tags, String pictureName) {
         this.id = id;
         this.name = name;
         this.sellerName = sellerName;
@@ -51,9 +51,8 @@ public class AdvertisementDTO {
         this.originalAmount = advertisement.getOriginalAmount();
         this.currentAmount = advertisement.getCurrentAmount();
         this.price = advertisement.getPrice();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
-        this.expireDate = advertisement.getExpireDate().format(formatter);
-        this.createdAt = advertisement.getCreatedAt().format(formatter);
+        this.expireDate = advertisement.getExpireDate();
+        this.createdAt = advertisement.getCreatedAt();
         this.tags = advertisement.getTags();
         this.pictureName = advertisement.getPictureName();
     }
@@ -122,19 +121,19 @@ public class AdvertisementDTO {
         this.price = price;
     }
 
-    public String getExpireDate() {
+    public LocalDateTime getExpireDate() {
         return expireDate;
     }
 
-    public void setExpireDate(String expireDate) {
+    public void setExpireDate(LocalDateTime expireDate) {
         this.expireDate = expireDate;
     }
 
-    public String getCreatedAt() {
+    public LocalDateTime getCreatedAt() {
         return createdAt;
     }
 
-    public void setCreatedAt(String createdAt) {
+    public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
     }
 

@@ -20,7 +20,7 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(long id, List<OrderItemDTO> items, BuyerDTO buyer, boolean active, String timeOfPurchase, double totalPrice) {
+    public OrderDTO(long id, List<OrderItemDTO> items, BuyerDTO buyer, boolean active, LocalDateTime timeOfPurchase, double totalPrice) {
         this.id = id;
         this.items = items;
         this.buyer = buyer;
@@ -36,10 +36,7 @@ public class OrderDTO {
         }
         this.buyer = new BuyerDTO(order.getBuyer());
         this.active = order.isActive();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
-        if (order.getTimeOfPurchase() != null) {
-            this.timeOfPurchase = order.getTimeOfPurchase().format(formatter);
-        }
+        this.timeOfPurchase = order.getTimeOfPurchase();
         this.totalPrice = order.getTotalPrice();
     }
 
@@ -75,11 +72,11 @@ public class OrderDTO {
         this.active = active;
     }
 
-    public String getTimeOfPurchase() {
+    public LocalDateTime getTimeOfPurchase() {
         return timeOfPurchase;
     }
 
-    public void setTimeOfPurchase(String timeOfPurchase) {
+    public void setTimeOfPurchase(LocalDateTime timeOfPurchase) {
         this.timeOfPurchase = timeOfPurchase;
     }
 
