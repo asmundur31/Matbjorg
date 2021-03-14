@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -12,7 +13,8 @@ public class OrderDTO {
     private List<OrderItemDTO> items = new ArrayList<>();
     private BuyerDTO buyer;
     private boolean active = true;
-    private String timeOfPurchase;
+    @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime timeOfPurchase;
     private double totalPrice;
 
     public OrderDTO() {
