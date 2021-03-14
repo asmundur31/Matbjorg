@@ -31,18 +31,13 @@ public class AdvertisementRestController {
     public AdvertisementRestController(AdvertisementService advertisementService, SellerService sellerService) {
         this.advertisementService = advertisementService;
         this.sellerService = sellerService;
-
-
-    public AdvertisementRestController(AdvertisementService advertisementService) {
-        this.advertisementService = advertisementService;
-
     }
 
     @GetMapping("")
     List<AdvertisementDTO> all() {
         List<Advertisement> ads = advertisementService.findAll();
         List<AdvertisementDTO> adsDTO = new ArrayList<>();
-        for(int i=0; i<ads.size(); i++) {
+        for (int i = 0; i < ads.size(); i++) {
             Advertisement ad = ads.get(i);
             adsDTO.add(new AdvertisementDTO(ad));
         }
@@ -66,5 +61,5 @@ public class AdvertisementRestController {
         AdvertisementDTO adDTO = new AdvertisementDTO(ad);
         return adDTO;
     }
-        
+
 }
