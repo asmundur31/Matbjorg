@@ -1,8 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.DTO;
 
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,13 +20,27 @@ public class OrderDTO {
     public OrderDTO() {
     }
 
-    public OrderDTO(long id, List<OrderItemDTO> items, BuyerDTO buyer, boolean active, LocalDateTime timeOfPurchase, double totalPrice) {
+    public OrderDTO(long id, List<OrderItemDTO> items, BuyerDTO buyer, boolean active, String timeOfPurchase, double totalPrice) {
         this.id = id;
         this.items = items;
         this.buyer = buyer;
         this.active = active;
         this.timeOfPurchase = timeOfPurchase;
         this.totalPrice = totalPrice;
+    }
+
+    public OrderDTO(Order order) {
+        this.id = order.getId();
+        for (int i=0; i<order.getItems().size(); i++) {
+            this.items.add(new OrderItemDTO(order.getItems().get(i)));
+        }
+        this.buyer = new BuyerDTO(order.getBuyer());
+        this.active = order.isActive();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd, HH:mm:ss");
+        if (order.getTimeOfPurchase() != null) {
+            this.timeOfPurchase = order.getTimeOfPurchase().format(formatter);
+        }
+        this.totalPrice = order.getTotalPrice();
     }
 
     public long getId() {
@@ -59,11 +75,11 @@ public class OrderDTO {
         this.active = active;
     }
 
-    public LocalDateTime getTimeOfPurchase() {
+    public String getTimeOfPurchase() {
         return timeOfPurchase;
     }
 
-    public void setTimeOfPurchase(LocalDateTime timeOfPurchase) {
+    public void setTimeOfPurchase(String timeOfPurchase) {
         this.timeOfPurchase = timeOfPurchase;
     }
 

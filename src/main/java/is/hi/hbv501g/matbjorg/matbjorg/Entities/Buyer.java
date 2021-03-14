@@ -16,6 +16,7 @@ public class Buyer {
      * name sem tilgreinir nafn kaupanda
      * password sem er lykilorð kaupanda
      * email sem er netfang kaupanda
+     * token sem er auðkenni kaupanda þegar hann gerir api köll frá framenda
      */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,6 +33,9 @@ public class Buyer {
     @Email(regexp = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$")
     @Column(unique = true, nullable = false)
     private String email;
+
+    @Column(unique = true)
+    private String token;
 
     public Buyer() {
     }
@@ -79,6 +83,14 @@ public class Buyer {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
     }
 
     @Override
