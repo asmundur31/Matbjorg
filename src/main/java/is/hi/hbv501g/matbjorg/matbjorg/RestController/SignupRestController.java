@@ -26,15 +26,32 @@ public class SignupRestController {
      * @return Skilum notanda sem að búið var til annars engu
      */
     @PostMapping("")
-    public User signup(@RequestParam String name, @RequestParam String email, @RequestParam String password) {
-        Buyer user_check = buyerService.findByEmail(email);
-        if(user_check == null) {
-            Buyer buyer = new Buyer(name, email, password);
-            buyerService.save(buyer);
-            User user = new User(email, password);
-            user.setId(buyer.getId());
-            buyerService.login(user);
-            return user;
+    public User signup(@RequestParam String type, @RequestParam String name, @RequestParam String email, @RequestParam String password) {
+
+        if(type.equals("Buyer")) {
+            Buyer user_check = buyerService.findByEmail(email);
+            if (user_check == null) {
+                Buyer buyer = new Buyer(name, email, password);
+                buyerService.save(buyer);
+                User user = new User(email, password);
+                user.setId(buyer.getId());
+                user.setType("Buyer");
+                buyerService.login(user);
+                return user;
+            }
+            return null;
+        } else if(type.equals("Seller")) {
+            Seller user_check = sellerService.findByEmail(email);
+            if (user_check == null) {
+                Seller seller = new Seller(name, email, password);
+                sellerService.save(seller);
+                User user = new User(email, password);
+                user.setId(seller.getId());
+                user.setType("Seller");
+                sellerService.login(user);
+                return user;
+            }
+            return null;
         }
 
         return null;
