@@ -1,7 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
 import com.google.gson.Gson;
+import is.hi.hbv501g.matbjorg.matbjorg.DTO.BuyerDTO;
+import is.hi.hbv501g.matbjorg.matbjorg.DTO.SellerDTO;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,14 +29,24 @@ public class BuyerRestController {
     }
 
     @GetMapping("")
-    List<Buyer> all() {
+    List<BuyerDTO> all() {
         List<Buyer> buyers = buyerService.findAll();
-        return buyers;
+        List<BuyerDTO> buyersDTO = new ArrayList<>();
+        for(int i=0; i<buyers.size(); i++) {
+            Buyer buyer = buyers.get(i);
+            buyersDTO.add(new BuyerDTO(buyer.getId(), buyer.getName(), buyer.getEmail()));
+        }
+        return buyersDTO;
     }
 
     @GetMapping("/{id}")
-    Optional<Buyer> one(@PathVariable Long id) {
-        Optional<Buyer> buyer = buyerService.findById(id);
-        return buyer;
+    BuyerDTO one(@PathVariable Long id) {
+        Optional<Buyer> b = buyerService.findById(id);
+        if(!b.isEmpty()) {
+            Buyer buyer = b.get();
+            BuyerDTO buyerDTO = new BuyerDTO(buyer.getId(), buyer.getName(), buyer.getEmail());
+            return buyerDTO;
+        }
+        return null;
     }
 }
