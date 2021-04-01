@@ -27,35 +27,30 @@ public class SignupRestController {
      */
     @PostMapping("")
     public User signup(@RequestParam String type, @RequestParam String name, @RequestParam String email, @RequestParam String password) {
-
-        if(type.equals("Buyer")) {
-            Buyer user_check = buyerService.findByEmail(email);
-            if (user_check == null) {
-                Buyer buyer = new Buyer(name, email, password);
-                buyerService.save(buyer);
-                User user = new User(email, password);
-                user.setId(buyer.getId());
-                user.setType("Buyer");
-                buyerService.login(user);
-                return user;
-            }
-            return null;
-        } else if(type.equals("Seller")) {
-            Seller user_check = sellerService.findByEmail(email);
-            if (user_check == null) {
-                Seller seller = new Seller(name, email, password);
-                sellerService.save(seller);
-                User user = new User(email, password);
-                user.setId(seller.getId());
-                user.setType("Seller");
-                sellerService.login(user);
-                return user;
-            }
+        // Pössum uppá að notandi með email sé ekki til
+        Seller seller_check = sellerService.findByEmail(email);
+        Buyer buyer_check = buyerService.findByEmail(email);
+        if (seller_check != null || buyer_check != null) {
             return null;
         }
-
+        // Notandi með email er ekki til ef við komumst hér
+        if(type.equals("Buyer")) {
+            Buyer buyer = new Buyer(name, email, password);
+            buyerService.save(buyer);
+            User user = new User(email, password);
+            user.setId(buyer.getId());
+            user.setType("Buyer");
+            buyerService.login(user);
+            return user;
+        } else if(type.equals("Seller")) {
+            Seller seller = new Seller(name, email, password);
+            sellerService.save(seller);
+            User user = new User(email, password);
+            user.setId(seller.getId());
+            user.setType("Seller");
+            sellerService.login(user);
+            return user;
+        }
         return null;
-
-
     }
 }
