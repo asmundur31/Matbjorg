@@ -3,24 +3,14 @@ package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.AdvertisementDTO;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import is.hi.hbv501g.matbjorg.matbjorg.DTO.SellerDTO;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
-import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.time.LocalDateTime;
+import java.util.*;
 
 @RestController
 @RequestMapping("/rest/advertisements")
@@ -48,14 +38,21 @@ public class AdvertisementRestController {
     AdvertisementDTO addAdvertisement(@RequestParam long sellerId, @RequestParam String name,
                                       @RequestParam String description, @RequestParam double originalAmount,
                                       @RequestParam double price, @RequestParam
-                                      @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime expireDate) {
+                                      @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime expireDate,
+                                      @RequestParam("tags") List<String> tags) {
+
         Optional<Seller> seller = sellerService.findById(sellerId);
         if (seller.isEmpty()) {
             return null;
         }
 
-        //  engin tögs send með - athuga þetta seinna
-        Advertisement ad = new Advertisement(name, seller.get(), description, originalAmount, price, expireDate, null);
+        List<Tag> tagList = new ArrayList<>();
+        for (String s : tags) {
+            tagList.add(Tag.valueOf(s));
+        }
+        Set<Tag> tagSet = new HashSet<>(tagList);
+
+        Advertisement ad = new Advertisement(name, seller.get(), description, originalAmount, price, expireDate, tagSet);
         advertisementService.save(ad, seller.get(), null);
 
         AdvertisementDTO adDTO = new AdvertisementDTO(ad);
