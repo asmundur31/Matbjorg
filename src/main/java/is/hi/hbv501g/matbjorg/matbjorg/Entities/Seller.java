@@ -1,6 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.Entities;
 
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.annotations.Cascade;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -48,6 +49,9 @@ public class Seller {
     @OneToMany
     private List<Order> activeOrders = new ArrayList<>();
 
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private List<Location> locations = new ArrayList<>();
+
     @Column(unique = true)
     private String token;
 
@@ -67,6 +71,20 @@ public class Seller {
         this.name = name;
         this.password = password;
         this.email = email;
+    }
+
+    /**
+     * Nýr smiður sem tekur inn líka locations
+     * @param name
+     * @param email
+     * @param password
+     * @param locations
+     */
+    public Seller(String name, String email, String password, List<Location> locations) {
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.locations = locations;
     }
 
     public long getId() {
@@ -123,6 +141,14 @@ public class Seller {
 
     public void setActiveOrders(List<Order> activeOrders) {
         this.activeOrders = activeOrders;
+    }
+
+    public List<Location> getLocations() {
+        return locations;
+    }
+
+    public void setLocations(List<Location> locations) {
+        this.locations = locations;
     }
 
     public String getToken() {

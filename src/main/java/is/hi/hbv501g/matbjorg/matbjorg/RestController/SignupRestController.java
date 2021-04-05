@@ -1,11 +1,19 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Location;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.User;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
+import net.minidev.json.JSONObject;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/rest/signup")
@@ -20,13 +28,15 @@ public class SignupRestController {
 
     /**
      * Fall sem að býr til nýjan notanda með netfangi og lykilorði
+     * @param body map sem inniheldur allar upplýsingar sem þarf til að skrá sig
+     * @param type strengur með týpu notanda
      * @param email Strengur með netfangi
      * @param password Strengur með lykilorði
      * @param name Strengur með nafni notanda
      * @return Skilum notanda sem að búið var til annars engu
      */
     @PostMapping("")
-    public User signup(@RequestParam String type, @RequestParam String name, @RequestParam String email, @RequestParam String password) {
+    public User signup(@RequestParam String type, @RequestParam String name, @RequestParam String email, @RequestParam String password, @RequestBody Map<String,List<Location>> body) {
         // Pössum uppá að notandi með email sé ekki til
         Seller seller_check = sellerService.findByEmail(email);
         Buyer buyer_check = buyerService.findByEmail(email);
@@ -40,15 +50,18 @@ public class SignupRestController {
             User user = new User(email, password);
             user.setId(buyer.getId());
             user.setType("Buyer");
-            buyerService.login(user);
+            Buyer b = buyerService.login(user);
+            user.setToken(b.getToken());
             return user;
         } else if(type.equals("Seller")) {
-            Seller seller = new Seller(name, email, password);
+            List<Location> locations = body.get("locations");
+            Seller seller = new Seller(name, email, password, locations);
             sellerService.save(seller);
             User user = new User(email, password);
             user.setId(seller.getId());
             user.setType("Seller");
-            sellerService.login(user);
+            Seller s = sellerService.login(user);
+            user.setToken(s.getToken());
             return user;
         }
         return null;

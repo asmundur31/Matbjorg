@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.Repositories;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
