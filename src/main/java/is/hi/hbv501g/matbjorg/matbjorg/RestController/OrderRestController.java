@@ -3,9 +3,11 @@ package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.BuyerDTO;
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.OrderDTO;
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.OrderItemDTO;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Buyer;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Order;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.OrderItem;
+import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.BuyerService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderItemService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.OrderService;
@@ -27,11 +29,13 @@ public class OrderRestController {
     private OrderService orderService;
     private OrderItemService orderItemService;
     private BuyerService buyerService;
+    private AdvertisementService adService;
 
-    public OrderRestController(OrderService orderService, OrderItemService orderItemService, BuyerService buyerService) {
+    public OrderRestController(OrderService orderService, OrderItemService orderItemService, BuyerService buyerService, AdvertisementService advertisementService) {
         this.orderService = orderService;
         this.orderItemService = orderItemService;
         this.buyerService = buyerService;
+        this.adService = advertisementService;
     }
 
     /**
@@ -149,5 +153,32 @@ public class OrderRestController {
             ordersDTO.add(new OrderDTO(order));
         }
         return ordersDTO;
+    }
+
+    @PostMapping("/addToCart/{advertisementId}")
+    OrderItemDTO addToCart(@PathVariable long advertisementId, @RequestParam double amount, @RequestParam String token) {
+        // Athugum hvort það sé til buyer fyrir gefið token
+        Buyer b = buyerService.findByToken(token);
+        if (b == null) {
+            System.out.println("Notandi hefur ekki rétt token");
+            return null;
+        }
+        // Byrjum að tékka hvort til er Order sem er virkt fyrir Buyer b???
+        /*List<Order> exists = orderService.findByBuyerAndActive(b, true);
+        if (exists.isEmpty()) { // Ekkert til virkt order fyrir buyer
+            Order newOrder = new Order(b);
+            orderService.save(newOrder);
+        }*/
+        //Náum í order hjá þessum kaupanda til að bæta orderItem við það order
+        Order o = orderService.findByBuyerAndActive(b, true).get(0);
+        Optional<Advertisement> adCheck = adService.findById(advertisementId);
+        if(adCheck.isEmpty()) {
+            return null;
+        }
+        Advertisement advertisement = adCheck.get();
+        OrderItem orderItem = new OrderItem(advertisement, amount, o);
+        orderItemService.save(orderItem);
+        OrderItemDTO orderItemDTO = new OrderItemDTO(orderItem);
+        return orderItemDTO;
     }
 }

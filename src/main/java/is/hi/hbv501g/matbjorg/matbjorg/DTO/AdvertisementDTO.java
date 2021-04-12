@@ -22,12 +22,11 @@ public class AdvertisementDTO {
     private LocalDateTime createdAt;
     private Set<Tag> tags;
     private String pictureName;
-    private LocationDTO location;
 
     public AdvertisementDTO() {
     }
 
-    public AdvertisementDTO(long id, String name, String sellerName, String description, boolean active, double originalAmount, double currentAmount, double price, LocalDateTime expireDate, LocalDateTime createdAt, Set<Tag> tags, String pictureName, LocationDTO location) {
+    public AdvertisementDTO(long id, String name, String sellerName, String description, boolean active, double originalAmount, double currentAmount, double price, LocalDateTime expireDate, LocalDateTime createdAt, Set<Tag> tags, String pictureName) {
         this.id = id;
         this.name = name;
         this.sellerName = sellerName;
@@ -40,7 +39,6 @@ public class AdvertisementDTO {
         this.createdAt = createdAt;
         this.tags = tags;
         this.pictureName = pictureName;
-        this.location = location;
     }
 
     public AdvertisementDTO(Advertisement advertisement) {
@@ -56,7 +54,6 @@ public class AdvertisementDTO {
         this.createdAt = advertisement.getCreatedAt();
         this.tags = advertisement.getTags();
         this.pictureName = advertisement.getPictureName();
-        this.location = new LocationDTO(advertisement.getLocation());
     }
 
     public long getId() {
@@ -153,13 +150,5 @@ public class AdvertisementDTO {
 
     public void setPictureName(String pictureName) {
         this.pictureName = pictureName;
-    }
-
-    public LocationDTO getLocation() {
-        return location;
-    }
-
-    public void setLocation(LocationDTO location) {
-        this.location = location;
     }
 }
