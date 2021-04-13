@@ -164,11 +164,11 @@ public class OrderRestController {
             return null;
         }
         // Byrjum að tékka hvort til er Order sem er virkt fyrir Buyer b???
-        /*List<Order> exists = orderService.findByBuyerAndActive(b, true);
+        List<Order> exists = orderService.findByBuyerAndActive(b, true);
         if (exists.isEmpty()) { // Ekkert til virkt order fyrir buyer
             Order newOrder = new Order(b);
             orderService.save(newOrder);
-        }*/
+        }
         //Náum í order hjá þessum kaupanda til að bæta orderItem við það order
         Order o = orderService.findByBuyerAndActive(b, true).get(0);
         Optional<Advertisement> adCheck = adService.findById(advertisementId);
