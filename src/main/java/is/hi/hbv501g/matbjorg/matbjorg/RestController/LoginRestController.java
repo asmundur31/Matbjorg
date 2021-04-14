@@ -28,7 +28,7 @@ public class LoginRestController {
      * @return Skilum notanda sem skráði sig inn annars engu
      */
     @PostMapping("")
-    public User login(@RequestParam String email, @RequestParam String password, HttpSession session) {
+    public User login(@RequestParam String email, @RequestParam String password) {
         User user = new User(email, password);
         Seller seller = sellerService.login(user);
         Buyer buyer = buyerService.login(user);
