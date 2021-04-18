@@ -1,26 +1,18 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.AdvertisementDTO;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.*;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Location;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.LocationService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
+
 import java.time.LocalDateTime;
 import java.util.*;
-
-import is.hi.hbv501g.matbjorg.matbjorg.DTO.SellerDTO;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
-import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/rest/advertisements")
@@ -46,19 +38,33 @@ public class AdvertisementRestController {
         return adsDTO;
     }
 
+    @GetMapping("/seller")
+    List<AdvertisementDTO> getSellerAds(@RequestParam long sellerId) {
+        Optional<Seller> seller = sellerService.findById(sellerId);
+        List<AdvertisementDTO> sellerAdsDTO = new ArrayList<>();
+        if (seller.isEmpty()) {
+            return sellerAdsDTO;
+        }
+        List<Advertisement> ads = advertisementService.findByOwner(seller.get());
+        for (Advertisement ad : ads) {
+            sellerAdsDTO.add(new AdvertisementDTO(ad));
+        }
+        return sellerAdsDTO;
+    }
+
     @PostMapping("/add")
     AdvertisementDTO addAdvertisement(@RequestParam long sellerId, @RequestParam String name,
                                       @RequestParam String description, @RequestParam double originalAmount,
                                       @RequestParam double price, @RequestParam
                                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime expireDate,
-                                      @RequestParam long locationId, @RequestBody Map<String,List<String>> body) {
+                                      @RequestParam long locationId, @RequestBody Map<String, List<String>> body) {
         Optional<Seller> seller = sellerService.findById(sellerId);
         if (seller.isEmpty()) {
             return null;
         }
         List<String> t = body.get("tags");
         Set<Tag> tags = new HashSet<>();
-        for (int i=0; i<t.size(); i++) {
+        for (int i = 0; i < t.size(); i++) {
             tags.add(Tag.valueOf(t.get(i)));
         }
         Location location = locationService.findById(locationId);
