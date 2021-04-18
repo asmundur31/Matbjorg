@@ -40,6 +40,7 @@ public interface SellerService {
      */
     Seller findByName(String name);
 
+    Seller findByToken(String token);
 
     /**
      * Sækir Seller sem hefur email sem Email
