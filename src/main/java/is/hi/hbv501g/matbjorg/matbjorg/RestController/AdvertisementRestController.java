@@ -1,10 +1,7 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.AdvertisementDTO;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Location;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.*;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.LocationService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
@@ -53,13 +50,14 @@ public class AdvertisementRestController {
     }
 
     @PostMapping("/add")
-    AdvertisementDTO addAdvertisement(@RequestParam long sellerId, @RequestParam String name,
+    AdvertisementDTO addAdvertisement(@RequestParam String token, @RequestParam String name,
                                       @RequestParam String description, @RequestParam double originalAmount,
                                       @RequestParam double price, @RequestParam
                                       @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime expireDate,
                                       @RequestParam long locationId, @RequestBody Map<String, List<String>> body) {
-        Optional<Seller> seller = sellerService.findById(sellerId);
-        if (seller.isEmpty()) {
+        Seller seller = sellerService.findByToken(token);
+        if (seller == null) {
+            System.out.println("notandi hefur ekki rétt token");
             return null;
         }
         List<String> t = body.get("tags");
@@ -68,11 +66,45 @@ public class AdvertisementRestController {
             tags.add(Tag.valueOf(t.get(i)));
         }
         Location location = locationService.findById(locationId);
-        Advertisement ad = new Advertisement(name, seller.get(), description, originalAmount, price, expireDate, tags, location);
-        advertisementService.save(ad, seller.get(), null);
+        Advertisement ad = new Advertisement(name, seller, description, originalAmount, price, expireDate, tags, location);
+        advertisementService.save(ad, seller, null);
 
         AdvertisementDTO adDTO = new AdvertisementDTO(ad);
         return adDTO;
     }
 
+    @PatchMapping("/change")
+    AdvertisementDTO changeAdvertisement(@RequestParam long advertisementId, @RequestParam String token, @RequestParam String name,
+                                         @RequestParam String description, @RequestParam double originalAmount,
+                                         @RequestParam double price, @RequestParam
+                                         @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm") LocalDateTime expireDate,
+                                         @RequestParam long locationId, @RequestBody Map<String, List<String>> body) {
+        Seller seller = sellerService.findByToken(token);
+        if (seller == null) {
+            System.out.println("notandi hefur ekki rétt token");
+            return null;
+        }
+        Optional<Advertisement> advertisement = advertisementService.findById(advertisementId);
+        if (advertisement.isEmpty()) {
+            return null;
+        }
+        advertisement.get().setName(name);
+        advertisement.get().setDescription(description);
+        advertisement.get().setOriginalAmount(originalAmount);
+        advertisement.get().setPrice(price);
+        advertisement.get().setExpireDate(expireDate);
+        Location location = locationService.findById(locationId);
+        advertisement.get().setLocation(location);
+        List<String> t = body.get("tags");
+        Set<Tag> tags = new HashSet<>();
+        for (int i = 0; i < t.size(); i++) {
+            tags.add(Tag.valueOf(t.get(i)));
+        }
+        advertisement.get().setTags(tags);
+        Advertisement changedAdvertisement = advertisementService.save(advertisement.get(), seller, null);
+
+        AdvertisementDTO adDTO = new AdvertisementDTO(changedAdvertisement);
+
+        return adDTO;
+    }
 }
