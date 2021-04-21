@@ -6,9 +6,12 @@ import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Repositories.AdvertisementRepository;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -210,5 +213,20 @@ public class AdvertisementServiceImplementation implements AdvertisementService 
             }
         }
         return exToday;
+    }
+
+    @Override
+    public Resource getImage(String pictureName) {
+        try {
+            Path path = Paths.get(UPLOAD_PICTURE_PATH, pictureName);
+            Resource resource = new UrlResource(path.toUri());
+            if(resource.exists()) {
+                return resource;
+            } else {
+                throw new RuntimeException("File not found " + pictureName);
+            }
+        } catch (MalformedURLException ex) {
+            throw new RuntimeException("File not found " + pictureName, ex);
+        }
     }
 }
