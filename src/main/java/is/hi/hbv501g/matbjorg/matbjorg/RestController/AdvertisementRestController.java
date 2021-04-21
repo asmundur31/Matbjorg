@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.AdvertisementDTO;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.*;
+import is.hi.hbv501g.matbjorg.matbjorg.Helpers.BASE64DecodedMultipartFile;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.LocationService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
@@ -17,6 +18,7 @@ import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,13 +59,15 @@ public class AdvertisementRestController {
             return null;
         }
         List<String> t = body.get("tags");
+        String base64encodedPicture = body.get("pic").get(0);
+        BASE64DecodedMultipartFile picture = new BASE64DecodedMultipartFile(base64encodedPicture);
         Set<Tag> tags = new HashSet<>();
         for (int i=0; i<t.size(); i++) {
             tags.add(Tag.valueOf(t.get(i)));
         }
         Location location = locationService.findById(locationId);
         Advertisement ad = new Advertisement(name, seller.get(), description, originalAmount, price, expireDate, tags, location);
-        advertisementService.save(ad, seller.get(), null);
+        advertisementService.save(ad, seller.get(), picture);
 
         AdvertisementDTO adDTO = new AdvertisementDTO(ad);
         return adDTO;
