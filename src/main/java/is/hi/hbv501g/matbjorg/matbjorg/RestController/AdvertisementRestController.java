@@ -1,7 +1,10 @@
 package is.hi.hbv501g.matbjorg.matbjorg.RestController;
 
 import is.hi.hbv501g.matbjorg.matbjorg.DTO.AdvertisementDTO;
-import is.hi.hbv501g.matbjorg.matbjorg.Entities.*;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Location;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import is.hi.hbv501g.matbjorg.matbjorg.Entities.Tag;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.AdvertisementService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.LocationService;
 import is.hi.hbv501g.matbjorg.matbjorg.Service.SellerService;
@@ -37,6 +40,7 @@ public class AdvertisementRestController {
 
     @GetMapping("/seller")
     List<AdvertisementDTO> getSellerAds(@RequestParam long sellerId) {
+        advertisementService.updateActive();
         Optional<Seller> seller = sellerService.findById(sellerId);
         List<AdvertisementDTO> sellerAdsDTO = new ArrayList<>();
         if (seller.isEmpty()) {
