@@ -52,6 +52,11 @@ public class SellerServiceImplementation implements SellerService {
     }
 
     @Override
+    public Seller findByToken(String token) {
+        return repository.findByToken(token);
+    }
+
+    @Override
     public Seller findByEmail(String email) {
         return repository.findByEmail(email);
     }
