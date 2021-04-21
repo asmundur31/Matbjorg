@@ -93,7 +93,7 @@ public class AdvertisementRestController {
         Location location = locationService.findById(locationId);
       
         Advertisement ad = new Advertisement(name, seller, description, originalAmount, price, expireDate, tags, location);
-        advertisementService.save(ad, seller.get(), picture);
+        advertisementService.save(ad, seller, picture);
 
 
         AdvertisementDTO adDTO = new AdvertisementDTO(ad);
