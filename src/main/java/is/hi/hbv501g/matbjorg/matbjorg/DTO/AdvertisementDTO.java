@@ -55,6 +55,7 @@ public class AdvertisementDTO {
         this.createdAt = advertisement.getCreatedAt();
         this.tags = advertisement.getTags();
         this.pictureName = advertisement.getPictureName();
+        this.location = new LocationDTO(advertisement.getLocation());
     }
 
     public long getId() {

@@ -49,7 +49,7 @@ public class SignupRestController {
             buyerService.save(buyer);
             User user = new User(email, password);
             user.setId(buyer.getId());
-            user.setType("Buyer");
+            user.setType("buyer");
             Buyer b = buyerService.login(user);
             user.setToken(b.getToken());
             return user;
@@ -59,7 +59,7 @@ public class SignupRestController {
             sellerService.save(seller);
             User user = new User(email, password);
             user.setId(seller.getId());
-            user.setType("Seller");
+            user.setType("seller");
             Seller s = sellerService.login(user);
             user.setToken(s.getToken());
             return user;
