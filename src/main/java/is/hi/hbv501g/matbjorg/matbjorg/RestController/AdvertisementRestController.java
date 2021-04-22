@@ -146,13 +146,15 @@ public class AdvertisementRestController {
         advertisement.get().setExpireDate(expireDate);
         Location location = locationService.findById(locationId);
         advertisement.get().setLocation(location);
+        String base64encodedPicture = body.get("pic").get(0);
+        BASE64DecodedMultipartFile picture = new BASE64DecodedMultipartFile(base64encodedPicture);
         List<String> t = body.get("tags");
         Set<Tag> tags = new HashSet<>();
         for (int i = 0; i < t.size(); i++) {
             tags.add(Tag.valueOf(t.get(i)));
         }
         advertisement.get().setTags(tags);
-        Advertisement changedAdvertisement = advertisementService.save(advertisement.get(), seller, null);
+        Advertisement changedAdvertisement = advertisementService.save(advertisement.get(), seller, picture);
 
         AdvertisementDTO adDTO = new AdvertisementDTO(changedAdvertisement);
 
