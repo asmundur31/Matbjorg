@@ -137,6 +137,7 @@ public class OrderRestController {
 
     @GetMapping("/buyer")
     List<OrderDTO> getBuyerOrders(@RequestParam long buyerId) {
+
         Optional<Buyer> buyerCheck = buyerService.findById(buyerId);
         if (buyerCheck.isEmpty()) {
             return null;
@@ -145,7 +146,7 @@ public class OrderRestController {
         Buyer buyer = buyerCheck.get();
         BuyerDTO buyerDTO = new BuyerDTO(buyer.getId(), buyer.getName(), buyer.getEmail());
 
-        List<Order> orders = orderService.findByBuyer(buyer);
+        List<Order> orders = orderService.findByBuyerAndActive(buyer, false);
         List<OrderDTO> ordersDTO = new ArrayList<>();
 
         for (int i = 0; i < orders.size(); i++) {
