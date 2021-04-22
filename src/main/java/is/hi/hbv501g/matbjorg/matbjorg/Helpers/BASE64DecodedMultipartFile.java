@@ -19,7 +19,7 @@ public class BASE64DecodedMultipartFile implements MultipartFile {
 
     public BASE64DecodedMultipartFile(String base64) {
         imgContent = Base64.getDecoder().decode(base64.getBytes(StandardCharsets.UTF_8));
-        fileName = UUID.randomUUID().toString();
+        fileName = UUID.randomUUID().toString() + ".jpg";
         ext = "image/jpg";
     }
 
