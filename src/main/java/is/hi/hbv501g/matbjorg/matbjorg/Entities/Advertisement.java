@@ -73,10 +73,13 @@ public class Advertisement {
     private Set<Tag> tags;
     private String pictureName;
 
+    @OneToOne
+    private Location location;
+
     public Advertisement() {
     }
 
-    public Advertisement(String name, Seller owner, String description, double originalAmount, double price, LocalDateTime expireDate, Set<Tag> tags) {
+    public Advertisement(String name, Seller owner, String description, double originalAmount, double price, LocalDateTime expireDate, Set<Tag> tags, Location location) {
         this.name = name;
         this.owner = owner;
         this.description = description;
@@ -85,6 +88,7 @@ public class Advertisement {
         this.expireDate = expireDate;
         this.createdAt = LocalDateTime.now();
         this.tags = tags;
+        this.location = location;
     }
 
     public long getId() {
@@ -197,6 +201,14 @@ public class Advertisement {
 
     public void setCreatedAt(LocalDateTime createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 
     @Override

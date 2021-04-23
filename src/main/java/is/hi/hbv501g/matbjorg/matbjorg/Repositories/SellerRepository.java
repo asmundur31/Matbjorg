@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.Repositories;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -41,6 +42,8 @@ public interface SellerRepository extends JpaRepository<Seller, Long> {
      * @return hlutur af taginu Seller sem hefur name sem Name
      */
     Seller findByName(String name);
+
+    Seller findByToken(String token);
 
     /**
      * Sækir Seller sem hefur email sem Email

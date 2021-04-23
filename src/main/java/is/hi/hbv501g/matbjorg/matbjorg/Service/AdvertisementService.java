@@ -2,6 +2,7 @@ package is.hi.hbv501g.matbjorg.matbjorg.Service;
 
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Advertisement;
 import is.hi.hbv501g.matbjorg.matbjorg.Entities.Seller;
+import org.springframework.core.io.Resource;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -98,4 +99,6 @@ public interface AdvertisementService {
     List<Advertisement> createdToday();
 
     List<Advertisement> expireToday();
+
+    Resource getImage(String pictureName);
 }
