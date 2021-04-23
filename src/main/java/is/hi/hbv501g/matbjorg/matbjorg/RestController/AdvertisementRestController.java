@@ -103,7 +103,13 @@ public class AdvertisementRestController {
     @GetMapping("/image/{pictureName:.+}")
     public ResponseEntity<Resource> downloadFile(@PathVariable String pictureName, HttpServletRequest request) {
         // Load file as Resource
-        Resource resource = advertisementService.getImage(pictureName);
+        Resource resource;
+        try {
+            resource = advertisementService.getImage(pictureName);
+        } catch (Exception e) {
+            // Myndin fannst ekki
+            return null;
+        }
         System.out.println(resource.getFilename());
         // Try to determine file's content type
         String contentType = null;
