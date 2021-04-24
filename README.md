@@ -1,6 +1,9 @@
 # Matbjörg
 Þetta verkefni er að stuðla gegn matarsóun á Íslandi með því að gefa mat annað tækifæri í neyslu.
 
+Vefsíðan var ekki uppfærð í samræmi við app sem var búið til ofaná þennan bakenda. Sjá [Matbjörg App](https://github.com/asmundur31/Matbjorg-app).
+Upplýsingarnar hér að neðan gætu verið úreltar.
+
 ## Keyra verkefnið á local gagnagrunni
 Athugum að þegar local gagnagrunnur er settur upp þá eru engin gögn inn í honum og þá er síðan frekar tómleg.
 
